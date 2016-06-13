@@ -3,3 +3,4 @@ mdb
 mongod.config
 .idea
 script.iml
+*.iml
