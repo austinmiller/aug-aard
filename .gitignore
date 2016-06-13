@@ -1,0 +1,5 @@
+build
+mdb
+mongod.config
+.idea
+script.iml
