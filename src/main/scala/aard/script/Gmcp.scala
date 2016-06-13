@@ -1,11 +1,11 @@
 package aard.script
 
-import aug.util.JsonUtil
+import aug.util.{JsonUtil, Util}
 
 sealed trait GmcpMessage
 
 case class GmcpRoom(num: Long, name: String, zone: String, terrain: String, details: String, exits: GmcpRoomExits, coord: GmcpRoomCoords) extends GmcpMessage
-case class GmcpRoomExits(n: Long, s: Long, u: Long, d: Long, e: Long) extends GmcpMessage
+case class GmcpRoomExits(n: Long, s: Long, u: Long, d: Long, e: Long, w: Long) extends GmcpMessage
 case class GmcpRoomCoords(id: Long, x: Int, y: Int, cont: Int) extends GmcpMessage
 case object GmcpTick extends GmcpMessage
 case class GmcpVitals(hp: Int, mana: Int, moves: Int) extends GmcpMessage
@@ -22,7 +22,7 @@ case class GmcpChar(name: String, gameClass: String, subClass: String, race: Str
 object Gmcp {
 
   def deserialize(gmcp: String) : GmcpMessage = {
-    val tokens = gmcp.split(" ",2)
+    val tokens = Util.removeColors(gmcp).split(" ",2)
     if(tokens.size < 2) throw new Exception("tokens isn't 2")
     tokens(0) match {
       case "room.info" => JsonUtil.fromJson[GmcpRoom](tokens(1))
