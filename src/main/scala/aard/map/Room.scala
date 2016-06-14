@@ -318,7 +318,10 @@ object Room {
   }
 
   def aliasInfo = {
-    Game.echo(s"current room: ${currentRoom.id}\n")
+    val r = currentRoom
+    Game.header(s"room <${r.id}>")
+    val s = JsonUtil.prettyJson(r)
+    Game.echo(s"$s\n")
   }
 
   def aliasList = {
