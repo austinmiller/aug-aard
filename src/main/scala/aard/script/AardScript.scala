@@ -12,7 +12,9 @@ class AardScript extends ProfileEventListener {
       case TelnetGMCP => data foreach { gmcp =>
         Gmcp.deserialize(gmcp) match {
           case GmcpUnknown(s) => println(s"UNKNOWN GMCP $s")
-          case r: GmcpRoom => Room.setRoom(r)
+          case r: GmcpRoom =>
+            Game.echo(s"<${r.num}> ")
+            Room.setRoom(r)
           case _ =>
         }
       }

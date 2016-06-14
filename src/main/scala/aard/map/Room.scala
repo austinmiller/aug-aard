@@ -96,14 +96,18 @@ class Pather(val room: Room, val rooms: Iterable[Room]) {
       val r = nextToVisit
 
       val dist = links(r).dist
+      if (dist < Integer.MAX_VALUE) {
 
-      for (exit <- r.exits.values if exit.to.isDefined && exit.pathable) {
-        val to = exit.to.get
-        if(rooms.exists{_ == to}) {
-          val alt = dist + exit.weight
-          val p = links(to)
+        for (exit <- r.exits.values if exit.to.isDefined && exit.pathable) {
+          val to = exit.to.get
+          if (rooms.exists {
+            _ == to
+          }) {
+            val alt = dist + exit.weight
+            val p = links(to)
 
-          if (alt < p.dist) links(to) = Link(Some(r), Some(exit), alt)
+            if (alt < p.dist) links(to) = Link(Some(r), Some(exit), alt)
+          }
         }
       }
     }
@@ -111,11 +115,12 @@ class Pather(val room: Room, val rooms: Iterable[Room]) {
     System.currentTimeMillis() - t
   }
 
-  Game.echo(s"pather created for $room in $time ms\n")
+  Game.echo(s"pather created for ${room.id} in $time ms\n")
 
   def pathTo(target: Room) : Path = {
     val seq = List.newBuilder[Exit]
     val link = links.get(target)
+    var i = 0
 
     def addPath(link: Link): Unit = {
       link.prev.foreach {p => if(p != room) addPath(links(p)) }
@@ -191,6 +196,7 @@ object Room {
   }
 
   def roomsByZone(zoneName: String) = rooms.values.filter {_.zoneName == zoneName}
+  def currentZoneRooms = roomsByZone(currentRoom.zoneName)
 
   def load = {
     loadAll
@@ -213,6 +219,7 @@ object Room {
   }
 
   def aliasNextRoom = {
+    //TODO refactor to be less inefficient
     val pather = patherCache.get(current)
 
     val rooms = pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }}
@@ -225,9 +232,24 @@ object Room {
         val bp = pather.pathTo(b)
         if (ap.weight < bp.weight) a else b
       }
-      val exit = target.exits.values.filter { e => e.to.isEmpty }.head
-      val path = pather.pathTo(target) + exit
-      path.runTo
+
+      val tpath = pather.pathTo(target)
+      if(tpath.exits.isEmpty) {
+        Game.echo(s"No path found to any rooms with undiscovered exits.\n")
+      } else {
+        val exit = target.exits.values.filter { e => e.to.isEmpty }.head
+        val path = tpath + exit
+        path.runTo
+      }
+    }
+  }
+
+  def zoneLinks = currentZoneRooms.flatMap { _.externalExits }
+
+
+  def aliasZoneLinks = {
+    zoneLinks.foreach { zl =>
+      Game.echo(s"room ${zl.from.get.id} -> ${zl.to.get.zoneName}")
     }
   }
 
@@ -243,7 +265,17 @@ case class Room(id: Long,
                 coords: Coords,
                 recallable: Boolean = true,
                 portalable: Boolean = true
-               )
+               ) {
+
+  def externalExits: Iterable[Exit] = {
+    exits.values.filter { e=>
+      e.to.exists { to=>
+        to.zoneName != zoneName
+      }
+    }
+  }
+
+}
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
                 locked: Boolean = false, pathable: Boolean = true, weight: Int = 1) {
