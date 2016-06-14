@@ -38,8 +38,9 @@ case class RunList(run: String ="", amt: Int = 0, last: String = "") {
 }
 
 case class Path(val exits: List[Exit]) {
-  lazy val weight = exits.map {_.weight}.sum
+  val weight = exits.map {_.weight}.sum
   def + (exit: Exit) : Path = Path(exits :+ exit)
+  def + (path: Path) : Path = Path(exits ::: path.exits)
 
   def runTo = {
     val cmds = List.newBuilder[String]
@@ -64,14 +65,86 @@ case class Path(val exits: List[Exit]) {
     addRunTo
     cmds.result.foreach { cmd => Game.send(cmd) }
   }
+
+  override def toString: String = {
+    weight + "++" + exits.map {_.name}.mkString(",")
+  }
+}
+
+object InfinitePath extends Path(List[Exit]()) {
+  override val weight: Int = Int.MaxValue
+}
+
+class ZonePather(val room: Room) {
+
+  val links = mutable.Map[Exit,Path]()
+
+  val time = {
+    val t = System.currentTimeMillis()
+    val unvisited = mutable.Set[Exit]()
+
+    def nextToVisit: Exit = {
+      val e : Exit = unvisited.reduceLeft { (a, b) =>
+        if (links(a).weight < links(b).weight) a else b
+      }
+      unvisited.remove(e)
+      e
+    }
+
+    def addToUnvisited(exit: Exit): Unit = {
+      if(unvisited.contains(exit)) return
+      unvisited.add(exit)
+      links(exit) = InfinitePath
+      Room.zoneLinks(exit.to.get.zoneName).foreach {e=>addToUnvisited(e) }
+    }
+
+    val pather = Room.patherCache.get(room)
+    Room.zoneLinks(room.zoneName).foreach {e=>
+      addToUnvisited(e)
+      val path = pather.pathTo(e.from.get) + e
+      links(e) = path
+    }
+
+    while(!unvisited.isEmpty) {
+      val e = nextToVisit
+
+      val basePath = links(e)
+      val from = e.to.get
+      val pather = Room.patherCache.get(from)
+      val zls = Room.zoneLinks(from.zoneName)
+
+      for(zl <- zls) {
+        val to = zl.from.get
+        val pathToTarget = pather.pathTo(to)
+
+        // if weight == 0 then to is unreachable unless from == to
+        if(pathToTarget.weight > 0 || to == from) {
+          val newPath = basePath + pathToTarget + zl // the path to the new zone goes through the zl
+          if(newPath.weight < links(zl).weight) links(zl) = newPath
+        }
+      }
+    }
+    System.currentTimeMillis() - t
+  }
+
+  Game.echo(s"zone pather created for room ${room.id} in $time ms\n")
+
+  def pathsTo(zoneName: String) : Iterable[Path] = links.filter{ x => x._1.to.get.zoneName == zoneName}.values
+
+  def shortestPath(zoneName: String) : Option[Path] = {
+    pathsTo(zoneName).foldLeft(Option[Path](null)) { (a,b)=>
+      if(a.isEmpty) Some(b) else {
+        if(a.get.weight < b.weight) a else Some(b)
+      }
+    }
+  }
+
 }
 
 class Pather(val room: Room, val rooms: Iterable[Room]) {
   private case class Link(prev: Option[Room], exit: Option[Exit], dist: Int = Integer.MAX_VALUE)
 
   private val links = mutable.Map[Room,Link]()
-
-
 
   val time = {
     val t = System.currentTimeMillis()
@@ -148,8 +221,13 @@ object Room {
   def current : Room = synchronized { currentRoom }
 
   val patherCache: LoadingCache[Room, Pather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,Pather]() {
-    override def load(key: Room): Pather = new Pather(key,roomsByZone(key.zoneName))
+    override def load(key: Room): Pather = new Pather(key,zoneRooms(key.zoneName))
   })
+
+  val zonePatherCache: LoadingCache[Room, ZonePather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,ZonePather]() {
+    override def load(key: Room): ZonePather = new ZonePather(key)
+  })
+
 
   private def loadAll = {
     for(file <- dataDir.listFiles if file.getName.endsWith(ext)) {
@@ -169,7 +247,8 @@ object Room {
   }
 
   def save(room: Room) = synchronized {
-    patherCache.invalidate(room)
+    zoneRooms(room.zoneName).foreach {r=>patherCache.invalidate(room)}
+    zonePatherCache.invalidateAll()
     val file = new File(dataDir,s"${room.id}$ext")
     FileUtils.writeStringToFile(file,JsonUtil.toJson(room),charset)
   }
@@ -195,8 +274,8 @@ object Room {
     )
   }
 
-  def roomsByZone(zoneName: String) = rooms.values.filter {_.zoneName == zoneName}
-  def currentZoneRooms = roomsByZone(currentRoom.zoneName)
+  def zoneRooms(zoneName: String = currentRoom.zoneName): Iterable[Room] = rooms.values.filter {_.zoneName == zoneName}
+  def zoneLinks(zoneName: String = currentRoom.zoneName): Iterable[Exit] = zoneRooms(zoneName).flatMap { _.externalExits }
 
   def load = {
     loadAll
@@ -205,6 +284,33 @@ object Room {
     Alias.alias("r next", (m: Matcher) => aliasNextRoom)   // TODO
     Alias.alias("g ([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
+    Alias.alias("r zp", (m: Matcher) => aliasZonePather)
+    Alias.alias("gz (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
+    Alias.alias("r zones", (m: Matcher) => aliasZones)
+  }
+
+  def aliasGotoZone(zoneName: String): Unit = {
+    val shortestPath = zonePatherCache.get(currentRoom).shortestPath(zoneName)
+    if(shortestPath.isEmpty) {
+      Game.echo(s"no path to $zoneName\n")
+    } else {
+      shortestPath.get.runTo
+    }
+  }
+
+
+  def aliasZones(): Unit = {
+    Game.header("zone names")
+    rooms.values.map{_.zoneName}.toSet[String].foreach { s=>
+      Game.echo(s"$s\n")
+    }
+  }
+
+  def aliasZonePather(): Unit = {
+    Game.header(s"zone pather cache from room ${current.id}")
+    zonePatherCache.get(currentRoom).links.foreach { x =>
+      Game.echo(s"${x._1.to.get.zoneName} -> ${x._2}\n")
+    }
   }
 
   def aliasGoto(id: Long): Unit = {
@@ -216,7 +322,7 @@ object Room {
   }
 
   def aliasList = {
-    roomsByZone(currentRoom.zoneName).foreach { r=> Game.echo(s"$r\n") }
+    zoneRooms(currentRoom.zoneName).foreach { r=> Game.echo(s"$r\n") }
   }
 
   def aliasNextRoom = {
@@ -245,12 +351,11 @@ object Room {
     }
   }
 
-  def zoneLinks = currentZoneRooms.flatMap { _.externalExits }
 
 
   def aliasZoneLinks = {
     Game.header("zone links")
-    zoneLinks.foreach { zl =>
+    zoneLinks().foreach { zl =>
       Game.echo(s"room ${zl.from.get.id} -> ${zl.to.get.zoneName}\n")
     }
   }
@@ -273,7 +378,7 @@ case class Room(id: Long,
     exits.values.filter { e=>
       e.to.exists { to=>
         to.zoneName != zoneName
-      }
+      } && e.pathable
     }
   }
 
