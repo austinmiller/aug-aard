@@ -18,6 +18,7 @@ case class GmcpStats(str: Int, int: Int, wis: Int, dex: Int, con: Int, luck: Int
 case class GmcpMaxStats(maxhp: Int, maxmana: Int, maxmoves: Int, maxstr: Int, maxint: Int, maxwis: Int, maxdex: Int, maxcon: Int, maxluck: Int) extends GmcpMessage
 case class GmcpWorth(gold: Long, bank: Long, qp: Int, tp: Int, trains: Int, pracs: Int) extends GmcpMessage
 case class GmcpChar(name: String, gameClass: String, subClass: String, race: String, clan: String, pretitle: String, perlevel: Int, tier:Int, remotes: Int, redos: Int) extends GmcpMessage
+case class GmcpGroup(groupname: String, reason: String) extends GmcpMessage
 
 object Gmcp {
 
@@ -36,6 +37,7 @@ object Gmcp {
       case "char.maxstats" => JsonUtil.fromJson[GmcpMaxStats](tokens(1))
       case "char.worth" => JsonUtil.fromJson[GmcpWorth](tokens(1))
       case "char.base" => JsonUtil.fromJson[GmcpChar](tokens(1))
+      case "group" => JsonUtil.fromJson[GmcpGroup](tokens(1))
       case _ => GmcpUnknown(gmcp)
     }
   }
