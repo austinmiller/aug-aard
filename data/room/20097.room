@@ -1,0 +1,1 @@
+{"id":20097,"terrain":"cave","zoneName":"beer","exits":{"e":{"name":"e","fromId":20097,"toId":20098,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":20097,"toId":20096,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Cave Entrance","coords":{"y":7,"x":19},"recallable":true,"portalable":true}

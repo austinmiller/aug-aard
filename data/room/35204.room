@@ -1,0 +1,1 @@
+{"id":35204,"terrain":"bloodyhall","zoneName":"academy","exits":{"w":{"name":"w","fromId":35204,"toId":35202,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":35204,"toId":35236,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Skills training","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":35230,"terrain":"inside","zoneName":"academy","exits":{"n":{"name":"n","fromId":35230,"toId":35202,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":35230,"toId":35308,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Academy Main Entrance","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

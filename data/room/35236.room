@@ -1,0 +1,1 @@
+{"id":35236,"terrain":"inside","zoneName":"academy","exits":{"d":{"name":"d","fromId":35236,"toId":35380,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":35236,"toId":35204,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Basement Staircase","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

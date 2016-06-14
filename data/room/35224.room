@@ -1,0 +1,1 @@
+{"id":35224,"terrain":"office","zoneName":"academy","exits":{"w":{"name":"w","fromId":35224,"toId":35222,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"An Empty Classroom","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

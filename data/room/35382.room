@@ -1,0 +1,1 @@
+{"id":35382,"terrain":"inside","zoneName":"academy","exits":{"n":{"name":"n","fromId":35382,"toId":35383,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":35382,"toId":35207,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Hallway in the Academy","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":35203,"terrain":"inside","zoneName":"academy","exits":{"e":{"name":"e","fromId":35203,"toId":35202,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Basic Training","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

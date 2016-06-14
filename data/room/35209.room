@@ -1,0 +1,1 @@
+{"id":35209,"terrain":"inside","zoneName":"academy","exits":{"n":{"name":"n","fromId":35209,"toId":35210,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":35209,"toId":35207,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Academy Clinic","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

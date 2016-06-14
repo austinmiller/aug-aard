@@ -1,0 +1,1 @@
+{"id":35205,"terrain":"inside","zoneName":"academy","exits":{"w":{"name":"w","fromId":35205,"toId":35350,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Practice Dummy Storage","coords":{"y":30,"x":20},"recallable":true,"portalable":true}
