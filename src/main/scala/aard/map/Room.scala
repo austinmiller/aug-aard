@@ -204,6 +204,7 @@ object Room {
     Alias.alias("r list",(m: Matcher) => aliasList)
     Alias.alias("r next", (m: Matcher) => aliasNextRoom)   // TODO
     Alias.alias("g ([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
+    Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
   }
 
   def aliasGoto(id: Long): Unit = {
@@ -248,8 +249,9 @@ object Room {
 
 
   def aliasZoneLinks = {
+    Game.header("zone links")
     zoneLinks.foreach { zl =>
-      Game.echo(s"room ${zl.from.get.id} -> ${zl.to.get.zoneName}")
+      Game.echo(s"room ${zl.from.get.id} -> ${zl.to.get.zoneName}\n")
     }
   }
 
