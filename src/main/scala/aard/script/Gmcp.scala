@@ -12,7 +12,7 @@ case class GmcpVitals(hp: Int, mana: Int, moves: Int) extends GmcpMessage
 case class GmcpChannel(chan: String, msg: String, player: String) extends GmcpMessage
 case class GmcpRepop(zone: String) extends GmcpMessage
 case class GmcpUnknown(gmcp: String) extends GmcpMessage
-case class GmcpQuest(action: String, status: String) extends GmcpMessage
+case class GmcpQuest(action: String, targ: String, room: String, area: String, timer: Int) extends GmcpMessage
 case class GmcpStatus(level: Int, tnl: Int, hunger: Int, thirst: Int, align: Int, state: Int, pos: String, enemy: String) extends GmcpMessage
 case class GmcpStats(str: Int, int: Int, wis: Int, dex: Int, con: Int, luck: Int, hr: Int, dr: Int, saves: Int) extends GmcpMessage
 case class GmcpMaxStats(maxhp: Int, maxmana: Int, maxmoves: Int, maxstr: Int, maxint: Int, maxwis: Int, maxdex: Int, maxcon: Int, maxluck: Int) extends GmcpMessage
@@ -31,7 +31,9 @@ object Gmcp {
       case "comm.channel" => JsonUtil.fromJson[GmcpChannel](tokens(1))
       case "comm.repop" => JsonUtil.fromJson[GmcpRepop](tokens(1))
       case "char.vitals" => JsonUtil.fromJson[GmcpVitals](tokens(1))
-      case "comm.quest" => JsonUtil.fromJson[GmcpQuest](tokens(1))
+      case "comm.quest" =>
+        println(tokens(1))
+        JsonUtil.fromJson[GmcpQuest](tokens(1))
       case "char.status" => JsonUtil.fromJson[GmcpStatus](tokens(1))
       case "char.stats" => JsonUtil.fromJson[GmcpStats](tokens(1))
       case "char.maxstats" => JsonUtil.fromJson[GmcpMaxStats](tokens(1))

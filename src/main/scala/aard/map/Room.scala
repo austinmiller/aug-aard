@@ -73,11 +73,23 @@ case class Path(val exits: List[Exit]) {
 
 object InfinitePath extends Path(List[Exit]()) {
   override val weight: Int = Int.MaxValue
+  override def toString : String = "infpath"
 }
 
 class ZonePather(val room: Room) {
 
   val links = mutable.Map[Exit,Path]()
+
+  private def printLinks = {
+    Game.header("links")
+    links.foreach {x=>
+      val zfrom =x._1.from.get.zoneName
+      val zto =x._1.to.get.zoneName
+      val p = x._2
+      Game.echo(s"zone ${zfrom}->$zto via $p\n")
+    }
+    Game.echo("\n")
+  }
 
   val time = {
     val t = System.currentTimeMillis()
@@ -103,8 +115,12 @@ class ZonePather(val room: Room) {
       room.pather.pathTo(e.from.get).foreach(path=>links(e) = path + e)
     }
 
+
+
     while(!unvisited.isEmpty) {
+      printLinks
       val e = nextToVisit
+      Game.echo(s"Calculating ${e.from.get.zoneName}:${e.fromId}->${e.to.get.zoneName}:${e.toId}\n")
 
       val basePath = links(e)
       val from = e.to.get
@@ -131,7 +147,13 @@ class ZonePather(val room: Room) {
 
   def pathsTo(zoneName: String) : Iterable[Path] = links.filter{ x => x._1.to.get.zoneName == zoneName}.values
 
-  def shortest(paths: Iterable[Path]) = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
+  def shortest(paths: Iterable[Path]) = {
+    Game.header("paths")
+    paths.foreach {p=>
+      Game.echo(s"$p\n")
+    }
+    Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
+  }
 
   def pathTo(zoneName: String) : Option[Path] = shortest(pathsTo(zoneName))
 
@@ -208,8 +230,31 @@ class Pather(val room: Room, val rooms: Iterable[Room]) {
     link.foreach {l => addPath(l)}
     Some(Path(seq.result()))
   }
+}
 
+case class RList(rooms: Array[Room]) {
 
+  def runTo(i: Int): Unit = {
+    rooms match {
+      case Array() => Game.echo("\nThe rlist is empty.\n")
+      case x =>
+        if(i < 0 || i >= rooms.size) {
+          Game.echo(s"\nERROR: $i is out of bounds [0,${rooms.size-1}]\n")
+        } else {
+          Game.echo(s"\nTrying to run to <${x(i).id}>\n")
+          Room.current.pathTo(x(i)) match {
+            case Some(p) => p.runTo
+            case None => Game.echo(s"\nNo path to <${x(i).id}>\n")
+          }
+        }
+    }
+
+  }
+
+  def print() = {
+    Game.header("room list")
+    rooms.zipWithIndex.foreach{case(r,i)=>Game.echo(f"$i%3d] [${r.zoneName}%15s] ${r.name}%s\n")}
+  }
 }
 
 object Room {
@@ -218,8 +263,11 @@ object Room {
   val ext = ".room"
 
   val rooms = mutable.Map[Long,Room]()
+  val roomsByName = mutable.Map[String,mutable.Set[Room]]()
+
   private var currentRoom : Room = null
   private val charset = StandardCharsets.UTF_8
+  private var rlist : Option[RList] = None
 
   def apply(id: Long) = rooms.get(id)
 
@@ -243,18 +291,24 @@ object Room {
   }
 
   def setRoom(gmcp: GmcpRoom) : Unit = synchronized {
-    currentRoom = rooms.get(gmcp.num).getOrElse {
+    currentRoom = rooms.getOrElse(gmcp.num, {
       val r = fromGmcp(gmcp)
-      rooms(gmcp.num) = r
       save(r)
       r
-    }
+    })
   }
 
   def save(room: Room) = synchronized {
     zoneRooms(room.zoneName).foreach {r=>patherCache.invalidate(room)}
     zonePatherCache.invalidateAll()
     val file = new File(dataDir,s"${room.id}$ext")
+    rooms(room.id) = room
+
+    roomsByName.get(room.name) match {
+      case Some(set) => set += room
+      case None => roomsByName(room.name) = mutable.Set(room)
+    }
+
     FileUtils.writeStringToFile(file,JsonUtil.toJson(room),charset)
   }
 
@@ -287,11 +341,23 @@ object Room {
     Alias.alias("r info",(m: Matcher) => aliasInfo)
     Alias.alias("r list",(m: Matcher) => aliasList)
     Alias.alias("r next", (m: Matcher) => aliasNextRoom)   // TODO
-    Alias.alias("g ([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
+
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
     Alias.alias("r zp", (m: Matcher) => aliasZonePather)
-    Alias.alias("gz (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
     Alias.alias("r zones", (m: Matcher) => aliasZones)
+    Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
+
+    Alias.alias("g zone (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
+    Alias.alias("g #([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
+    Alias.alias("g ([0-9]*)", (m: Matcher) => aliasRListGoto(m.group(1).toInt))
+  }
+
+  def aliasRListGoto(index: Int) = rlist map (_.runTo(index))
+
+
+  def aliasFind(sub: String) = synchronized {
+    rlist = Some(RList(rooms.values.filter(_.name.toLowerCase.contains(sub)).toArray))
+    rlist.get.print
   }
 
   def aliasGotoZone(zoneName: String): Unit = {
