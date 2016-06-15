@@ -1,0 +1,1 @@
+{"id":32557,"terrain":"city","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32557,"toId":32563,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":32557,"toId":32554,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Before the Aylorian Church","coords":{"y":30,"x":20},"recallable":true,"portalable":true}
