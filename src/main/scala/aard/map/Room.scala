@@ -11,7 +11,7 @@ import aug.util.JsonUtil
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
 import org.apache.commons.io.FileUtils
 
-import scala.collection.mutable
+import scala.collection.{Set, mutable}
 
 case class RunList(run: String ="", amt: Int = 0, last: String = "") {
   def +(exit: Exit): RunList = {
@@ -80,6 +80,16 @@ class ZonePather(val room: Room) {
 
   val links = mutable.Map[Exit,Path]()
 
+  private def setPath(exit: Exit,path: Path) = {
+    path.exits match {
+      case Nil =>
+      case l =>
+        val fromId = l.head.fromId
+        if(fromId != room.id) throw new Exception(s"$fromId != ${room.id}")
+        links(exit) = path
+    }
+  }
+
   private def printLinks = {
     Game.header("links")
     links.foreach {x=>
@@ -112,32 +122,40 @@ class ZonePather(val room: Room) {
 
     Room.zoneLinks(room.zoneName).foreach {e=>
       addToUnvisited(e)
-      room.pather.pathTo(e.from.get).foreach(path=>links(e) = path + e)
+      room.pather.pathTo(e.from.get).foreach(path=>setPath(e,path + e))
     }
 
 
 
     while(!unvisited.isEmpty) {
-      printLinks
+//      printLinks
       val e = nextToVisit
-      Game.echo(s"Calculating ${e.from.get.zoneName}:${e.fromId}->${e.to.get.zoneName}:${e.toId}\n")
+//      Game.echo(s"Calculating ${e.from.get.zoneName}:${e.fromId}->${e.to.get.zoneName}:${e.toId}\n")
 
-      val basePath = links(e)
-      val from = e.to.get
-      val pather = Room.patherCache.get(from)
-      val zls = Room.zoneLinks(from.zoneName)
+      links(e) match {
+        case InfinitePath =>
+        case basePath =>
+//          Game.echo(s"bp $basePath\n")
+          val from = e.to.get
+          val zls = Room.zoneLinks(from.zoneName)
 
-      for(zl <- zls) {
-        val to = zl.from.get
-        val pathToTarget = pather.pathTo(to)
-
-        if(pathToTarget.isDefined) {
-          // if weight == 0 then to is unreachable unless from == to
-          if (pathToTarget.get.weight > 0 || to == from) {
-            val newPath = basePath + pathToTarget.get + zl // the path to the new zone goes through the zl
-            if (newPath.weight < links(zl).weight) links(zl) = newPath
+          for(zl <- zls) {
+//            Game.echo(s"zl ${zl.from.get.zoneName}->${zl.to.get.zoneName}\n")
+            val to = zl.from.get
+            from.pather.pathTo(to) match {
+              case None => Game.echo(s"no path from <${from.id}> to <${to.id}> \n")
+              case pathToTarget =>
+                // if weight == 0 then to is unreachable unless from == to
+                if (pathToTarget.get.weight > 0 || to == from) {
+//                  Game.echo("here!")
+                  val newPath = basePath + pathToTarget.get + zl // the path to the new zone goes through the zl
+                  if (newPath.weight < links(zl).weight) {
+//                    Game.echo("and here!")
+                    setPath(zl,newPath)
+                  }
+                }
+            }
           }
-        }
       }
     }
     System.currentTimeMillis() - t
@@ -145,7 +163,9 @@ class ZonePather(val room: Room) {
 
   Game.echo(s"zone pather created for room ${room.id} in $time ms\n")
 
-  def pathsTo(zoneName: String) : Iterable[Path] = links.filter{ x => x._1.to.get.zoneName == zoneName}.values
+  def pathsTo(zoneName: String) : Iterable[Path] = links.filter{
+    x => x._1.to.get.zoneName == zoneName && x._2.weight != InfinitePath.weight
+  }.values
 
   def shortest(paths: Iterable[Path]) = {
     Game.header("paths")
@@ -165,47 +185,52 @@ class ZonePather(val room: Room) {
 
 }
 
-class Pather(val room: Room, val rooms: Iterable[Room]) {
-  private case class Link(prev: Option[Room], exit: Option[Exit], dist: Int = Integer.MAX_VALUE)
+class Pather(val room: Room, val rooms: Set[Room]) {
+  private val paths = mutable.Map[Room,Option[Path]]()
 
-  private val links = mutable.Map[Room,Link]()
+  private def printPaths = {
+    Game.header("links")
+    paths.foreach {x=>
+      val r = x._1
+      val ps = x._2.map(_.toString).getOrElse {"Empty"}
+      Game.echo(s"<${r.id}> $ps\n")
+    }
+    Game.echo("\n")
+  }
 
   val time = {
     val t = System.currentTimeMillis()
     val unvisited = mutable.Set[Room]()
 
     rooms.foreach{r=>
-      links.put(r,Link(None,None))
+      paths.put(r,None)
       unvisited.add(r)
     }
 
-    links.put(room,Link(None,None,0))
+    paths.put(room,Some(Path(List[Exit]())))
 
-    def nextToVisit: Room = {
-      val r: Room = unvisited.reduceLeft { (a, b) =>
-        if (links(a).dist < links(b).dist) a else b
+    def nextToVisit: Option[Room] = {
+      Some(unvisited.filter(paths(_).isDefined)).filter(_.nonEmpty).map(_.minBy(paths(_).get.weight)) map { r=>
+        unvisited.remove(r)
+        r
       }
-      unvisited.remove(r)
-      r
     }
 
     while (!unvisited.isEmpty) {
-      val r = nextToVisit
-
-      val dist = links(r).dist
-      if (dist < Integer.MAX_VALUE) {
-
-        for (exit <- r.exits.values if exit.to.isDefined && exit.pathable) {
-          val to = exit.to.get
-          if (rooms.exists {
-            _ == to
-          }) {
-            val alt = dist + exit.weight
-            val p = links(to)
-
-            if (alt < p.dist) links(to) = Link(Some(r), Some(exit), alt)
+      nextToVisit match {
+        case None => unvisited.clear()
+        case Some(r) =>
+          val bp = paths(r).get
+          r.exits.values.filter(e=>e.to.isDefined && e.pathable).foreach { e=>
+            val to = e.to.get
+            if(rooms.contains(to)) {
+              val newPath = bp + e
+              val op = paths(to)
+              if(op.isEmpty || newPath.weight < op.get.weight) {
+                paths(to) = Some(newPath)
+              }
+            }
           }
-        }
       }
     }
 
@@ -214,22 +239,7 @@ class Pather(val room: Room, val rooms: Iterable[Room]) {
 
   Game.echo(s"pather created for ${room.id} in $time ms\n")
 
-  def pathTo(target: Room) : Option[Path] = {
-    val seq = List.newBuilder[Exit]
-    val link = links.get(target)
-    var i = 0
-
-    def addPath(link: Link): Unit = {
-      link.prev.foreach {p => if(p != room) addPath(links(p)) }
-      link.exit.foreach {e=> seq += e}
-    }
-
-    if(link.isEmpty) return None
-    if(link.get.dist == Int.MaxValue) return None
-
-    link.foreach {l => addPath(l)}
-    Some(Path(seq.result()))
-  }
+  def pathTo(target: Room) : Option[Path] = paths.get(target).flatten
 }
 
 case class RList(rooms: Array[Room]) {
@@ -274,7 +284,7 @@ object Room {
   def current : Room = synchronized { currentRoom }
 
   val patherCache: LoadingCache[Room, Pather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,Pather]() {
-    override def load(key: Room): Pather = new Pather(key,zoneRooms(key.zoneName))
+    override def load(key: Room): Pather = new Pather(key,zoneRooms(key.zoneName).toSet)
   })
 
   val zonePatherCache: LoadingCache[Room, ZonePather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,ZonePather]() {
@@ -338,7 +348,9 @@ object Room {
 
   def load = {
     loadAll
-    Alias.alias("r info",(m: Matcher) => aliasInfo)
+    Alias.alias("r info",(m: Matcher) => aliasInfo(currentRoom.id))
+    Alias.alias("r info ([0-9]*)",(m: Matcher) => aliasInfo(m.group(1).toLong))
+    Alias.alias("r path ([0-9]*) ([0-9]*)",(m: Matcher) => aliasPath(m.group(1).toLong,m.group(2).toLong))
     Alias.alias("r list",(m: Matcher) => aliasList)
     Alias.alias("r next", (m: Matcher) => aliasNextRoom)   // TODO
 
@@ -350,6 +362,21 @@ object Room {
     Alias.alias("g zone (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
     Alias.alias("g #([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
     Alias.alias("g ([0-9]*)", (m: Matcher) => aliasRListGoto(m.group(1).toInt))
+  }
+
+  def aliasPath(rid1: Long, rid2: Long) = {
+    rooms.get(rid1) match {
+      case None => Game.echo(s"\nDidn't find room <$rid1>.\n")
+      case Some(r1) =>
+        rooms.get(rid2) match {
+          case None => Game.echo(s"\nDidn't find room <$rid2>.\n")
+          case Some(r2) =>
+            r1.zonePather.pathTo(r2) match {
+              case None => Game.echo("\nno path found.\n")
+              case Some(path) => Game.echo(s"\npath is $path\n")
+            }
+        }
+    }
   }
 
   def aliasRListGoto(index: Int) = rlist map (_.runTo(index))
@@ -395,11 +422,19 @@ object Room {
     }
   }
 
-  def aliasInfo = {
-    val r = currentRoom
-    Game.header(s"room <${r.id}>")
-    val s = JsonUtil.prettyJson(r)
-    Game.echo(s"$s\n")
+  def aliasInfo(id: Long) = {
+    rooms.get(id) match {
+      case None => Game.echo(s"\nRoom <$id> was not found.\n")
+      case Some(room) =>
+        Game.header(s"room <${room.id}>")
+        val s = JsonUtil.prettyJson(room)
+        Game.echo(s"$s\n")
+        Game.header("exits")
+        room.exits.values.foreach {e=>
+          Game.echo(s"${e.name} - ${e.toId} - ${e.to.isDefined}\n")
+        }
+
+    }
   }
 
   def aliasList = {
@@ -410,8 +445,9 @@ object Room {
     //TODO refactor to be less inefficient
     val pather = patherCache.get(current)
 
-    pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }} match {
-      case Nil => Game.echo("There are no rooms with undiscovered exits.\n")
+
+    pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }}.toSeq match {
+      case Seq() => Game.echo("There are no rooms with undiscovered exits.\n")
       case rooms =>
         Some(rooms.flatMap(pather.pathTo(_))).filter(_.nonEmpty).map(_.minBy(_.weight)) match {
           case Some(p) =>
