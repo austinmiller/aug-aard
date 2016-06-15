@@ -1,0 +1,1 @@
+{"id":31514,"terrain":"cave","zoneName":"jotun","exits":{"w":{"name":"w","fromId":31514,"toId":31508,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Thrym's Den","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

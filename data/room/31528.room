@@ -1,0 +1,1 @@
+{"id":31528,"terrain":"mountain","zoneName":"jotun","exits":{"d":{"name":"d","fromId":31528,"toId":31519,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":31528,"toId":31527,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Down into the Abyss","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

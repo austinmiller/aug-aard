@@ -1,0 +1,1 @@
+{"id":31523,"terrain":"cave","zoneName":"jotun","exits":{"n":{"name":"n","fromId":31523,"toId":31525,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Forgotten Lair","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

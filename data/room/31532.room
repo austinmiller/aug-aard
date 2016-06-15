@@ -1,0 +1,1 @@
+{"id":31532,"terrain":"cave","zoneName":"jotun","exits":{"e":{"name":"e","fromId":31532,"toId":31530,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Gunnlod's Home","coords":{"y":30,"x":20},"recallable":true,"portalable":true}
