@@ -1,7 +1,7 @@
 package aard.script
 
 import aard.adventure.{Campaign, Quest}
-import aard.map.Room
+import aard.map.{Room, Zone}
 import aug.profile.{ProfileEvent, ProfileEventListener, ScriptInit, TelnetGMCP}
 import aug.script.Game
 
@@ -31,8 +31,10 @@ class AardScript extends ProfileEventListener {
   def init = {
     Game.info("loaded aard script")
     Room.load
+    Zone.load
     Game.info(s"loaded ${Room.rooms.size}")
     Quest.load
     Campaign.load
+
   }
 }

@@ -316,6 +316,7 @@ object Room {
       case None => roomsByName(room.name) = mutable.Set(room)
     }
 
+    Zone.register(room.zoneName)
     Store.save(s"$path/${room.id}.room",room)
   }
 
@@ -439,9 +440,7 @@ object Room {
   }
 
   def aliasNextRoom = {
-    //TODO refactor to be less inefficient
     val pather = patherCache.get(current)
-
 
     pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }}.toSeq match {
       case Seq() => Game.echo("There are no rooms with undiscovered exits.\n")
@@ -454,8 +453,6 @@ object Room {
         }
     }
   }
-
-
 
   def aliasZoneLinks = {
     Game.header("zone links")
@@ -489,6 +486,7 @@ case class Room(id: Long,
   def pather = Room.patherCache.get(this)
   def zonePather = Room.zonePatherCache.get(this)
   def unknownExits = exits.values.filter(_.to.isEmpty)
+  def zone = Zone(zoneName)
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
