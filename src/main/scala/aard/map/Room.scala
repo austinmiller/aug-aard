@@ -1,7 +1,5 @@
 package aard.map
 
-import java.io.File
-import java.nio.charset.StandardCharsets
 import java.util.regex.Matcher
 
 import aard.db.Store
@@ -9,7 +7,6 @@ import aard.script.GmcpRoom
 import aug.script.{Alias, Game}
 import aug.util.JsonUtil
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
-import org.apache.commons.io.FileUtils
 
 import scala.collection.{Set, mutable}
 
@@ -274,14 +271,14 @@ object Room {
     "The Aylorian Academy" -> "academy"
   )
 
-  val dataDir = new File(Store.dataDir,"room")
+  val path = "room"
   val ext = ".room"
 
   val rooms = mutable.Map[Long,Room]()
   val roomsByName = mutable.Map[String,mutable.Set[Room]]()
 
   private var currentRoom : Room = null
-  private val charset = StandardCharsets.UTF_8
+
   private var rlist : Option[RList] = None
 
   def apply(id: Long) = rooms.get(id)
@@ -298,11 +295,7 @@ object Room {
 
 
   private def loadAll = {
-    for(file <- dataDir.listFiles if file.getName.endsWith(ext)) {
-      val s = FileUtils.readFileToString(file,charset)
-      val r = JsonUtil.fromJson[Room](s)
-      rooms(r.id) = r
-    }
+    Store.loadAll[Room](path,ext).foreach(r=>rooms(r.id)=r)
   }
 
   def setRoom(gmcp: GmcpRoom) : Unit = synchronized {
@@ -316,7 +309,6 @@ object Room {
   def save(room: Room) = synchronized {
     zoneRooms(room.zoneName).foreach {r=>patherCache.invalidate(room)}
     zonePatherCache.invalidateAll()
-    val file = new File(dataDir,s"${room.id}$ext")
     rooms(room.id) = room
 
     roomsByName.get(room.name) match {
@@ -324,7 +316,7 @@ object Room {
       case None => roomsByName(room.name) = mutable.Set(room)
     }
 
-    FileUtils.writeStringToFile(file,JsonUtil.toJson(room),charset)
+    Store.save(s"$path/${room.id}.room",room)
   }
 
   def fromGmcp(gmcp: GmcpRoom) : Room = {
