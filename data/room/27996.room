@@ -1,0 +1,1 @@
+{"id":27996,"terrain":"forest","zoneName":"lidnesh","exits":{"w":{"name":"w","fromId":27996,"toId":27995,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":27996,"toId":27997,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Small Clearing","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

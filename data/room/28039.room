@@ -1,0 +1,1 @@
+{"id":28039,"terrain":"forest","zoneName":"lidnesh","exits":{"w":{"name":"w","fromId":28039,"toId":28038,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":28039,"toId":28040,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Ring of Trees","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":28006,"terrain":"waterswim","zoneName":"lidnesh","exits":{"w":{"name":"w","fromId":28006,"toId":28005,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Large Circular Pool","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

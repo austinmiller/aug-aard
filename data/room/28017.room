@@ -1,0 +1,1 @@
+{"id":28017,"terrain":"inside","zoneName":"lidnesh","exits":{"e":{"name":"e","fromId":28017,"toId":28016,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Inside a Rustic Cabin","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":30335,"terrain":"inside","zoneName":"orlando","exits":{"e":{"name":"e","fromId":30335,"toId":30336,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":30335,"toId":30334,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Imperial Dining Room","coords":{"y":17,"x":16},"recallable":true,"portalable":true}

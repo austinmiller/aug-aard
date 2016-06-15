@@ -1,0 +1,1 @@
+{"id":28010,"terrain":"underground","zoneName":"lidnesh","exits":{"u":{"name":"u","fromId":28010,"toId":28009,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In a Hollow Log","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":30332,"terrain":"inside","zoneName":"orlando","exits":{"w":{"name":"w","fromId":30332,"toId":30331,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Manager's Office","coords":{"y":17,"x":16},"recallable":true,"portalable":true}

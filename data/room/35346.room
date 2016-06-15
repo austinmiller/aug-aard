@@ -1,0 +1,1 @@
+{"id":35346,"terrain":"forest","zoneName":"academy","exits":{"n":{"name":"n","fromId":35346,"toId":35345,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":35346,"toId":35285,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A restful garden","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

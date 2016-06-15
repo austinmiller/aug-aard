@@ -1,0 +1,1 @@
+{"id":30333,"terrain":"inside","zoneName":"orlando","exits":{"e":{"name":"e","fromId":30333,"toId":30331,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Dark Saloon","coords":{"y":17,"x":16},"recallable":true,"portalable":true}

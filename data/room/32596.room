@@ -1,0 +1,1 @@
+{"id":32596,"terrain":"castle","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32596,"toId":32457,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":32596,"toId":32654,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In Black Cat Tower","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

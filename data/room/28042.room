@@ -1,0 +1,1 @@
+{"id":28042,"terrain":"forest","zoneName":"lidnesh","exits":{"s":{"name":"s","fromId":28042,"toId":28038,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Before a Cave Entrance","coords":{"y":35,"x":10},"recallable":true,"portalable":true}
