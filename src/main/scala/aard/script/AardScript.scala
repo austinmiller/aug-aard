@@ -1,6 +1,6 @@
 package aard.script
 
-import aard.adventure.Quest
+import aard.adventure.{Campaign, Quest}
 import aard.map.Room
 import aug.profile.{ProfileEvent, ProfileEventListener, ScriptInit, TelnetGMCP}
 import aug.script.Game
@@ -15,6 +15,7 @@ class AardScript extends ProfileEventListener {
   }
 
   def handleGmcp(gmcp: String) = {
+    println(gmcp)
     Gmcp.deserialize(gmcp) match {
       case GmcpUnknown(s) => println(s"UNKNOWN GMCP $s")
       case q: GmcpQuest =>
@@ -32,5 +33,6 @@ class AardScript extends ProfileEventListener {
     Room.load
     Game.info(s"loaded ${Room.rooms.size}")
     Quest.load
+    Campaign.load
   }
 }
