@@ -486,7 +486,7 @@ case class Room(id: Long,
   def pather = Room.patherCache.get(this)
   def zonePather = Room.zonePatherCache.get(this)
   def unknownExits = exits.values.filter(_.to.isEmpty)
-  def zone = Zone(zoneName)
+  def zone = Zone(zoneName).get // if this doesn't exist, we fucked up
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
