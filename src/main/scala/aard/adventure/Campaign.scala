@@ -30,6 +30,17 @@ object Campaign {
     campaignCheckBuilder.clear()
   }
 
+  var lastMobSlain = Option[String](null)
+  val lastMobSlainTriggerPattern = "(.*) is slain by .*"
+  val lastMobSlainTrigger = Trigger.trigger(lastMobSlainTriggerPattern,(m: Matcher) => {
+    lastMobSlain = Some(m.group(1))
+  })
+
+  val campaignMobKilledTriggerPattern = "Congratulations, that was one of your CAMPAIGN mobs!"
+  val campaignMobKilledTrigger = Trigger.trigger(campaignMobKilledTriggerPattern, (m: Matcher) => {
+    campaignCheck
+  })
+
   def load = {
     Alias.alias("cc",(m: Matcher) => campaignCheck)
 
