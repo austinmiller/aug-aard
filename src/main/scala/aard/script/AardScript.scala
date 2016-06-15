@@ -1,6 +1,6 @@
 package aard.script
 
-import aard.adventure.{Campaign, Quest}
+import aard.adventure.{Campaign, Quest, Targeter}
 import aard.map.{Room, Zone}
 import aard.player.Prompt
 import aug.profile.{ProfileEvent, ProfileEventListener, ScriptInit, TelnetGMCP}
@@ -37,5 +37,6 @@ class AardScript extends ProfileEventListener {
     Quest.load
     Campaign.load
     Prompt.load
+    Targeter.load
   }
 }

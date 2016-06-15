@@ -61,8 +61,13 @@ case class Path(val exits: List[Exit]) {
         addRunTo
         if(exit.locked) cmds += s"unlock ${exit.name}"
         cmds += s"open ${exit.name}"
+        run += exit
+      } else if(exit.name.length > 1) {
+        addRunTo
+        cmds += exit.name
+      } else {
+        run += exit
       }
-      run += exit
     }
 
     addRunTo
@@ -256,9 +261,12 @@ case class RList(rooms: Array[Room]) {
 
   }
 
-  def print() = {
+  def print(begin: Int = 0, end: Int = 20) = {
     Game.header("room list")
-    rooms.zipWithIndex.foreach{case(r,i)=>Game.echo(f"$i%3d] [${r.zoneName}%15s] ${r.name}%s\n")}
+    for(i <- begin until end if i < rooms.size-1) {
+      val r = rooms(i)
+      Game.echo(f"$i%3d] [${r.zoneName}%15s] ${r.name}%s\n")
+    }
   }
 }
 
@@ -305,6 +313,12 @@ object Room {
       r
     })
   }
+
+  def setRList(rooms: Seq[Room]) = synchronized {
+    rlist = Some(RList(rooms.toSet.toArray))
+  }
+
+  def printRList(begin: Int = 0, end: Int = 20) = rlist map (_.print(begin,end))
 
   def save(room: Room) = synchronized {
     zoneRooms(room.zoneName).foreach {r=>patherCache.invalidate(room)}
@@ -382,7 +396,7 @@ object Room {
 
   def aliasFind(sub: String) = synchronized {
     rlist = Some(RList(rooms.values.filter(_.name.toLowerCase.contains(sub)).toArray))
-    rlist.get.print
+    rlist map (_.print())
   }
 
   def aliasGotoZone(zoneName: String): Unit = {

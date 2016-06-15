@@ -19,6 +19,7 @@ object Prompt {
 
   def onPrompt = synchronized {
     callbacks.foreach(_.callback())
+    Trigger.disablePromptTriggers
   }
 
   def load = {
@@ -27,12 +28,11 @@ object Prompt {
 
   def register(callback: PromptCallback) = synchronized { callbacks += callback }
   def unregister(callback: PromptCallback) = synchronized { callbacks -= callback }
-
 }
 
 case class PromptCallback(callback: () => Unit)
 
 case class Prompt(val promptRegex: String) {
-  private val trigger = Trigger.trigger(promptRegex,(m: Matcher) => Prompt.onPrompt,false,TriggerOptions(fragmentTrigger = true))
+  private val trigger = Trigger.trigger(promptRegex,(m: Matcher) => Prompt.onPrompt,true,TriggerOptions(fragmentTrigger = true))
   def unregister = Trigger.unregister(trigger)
 }

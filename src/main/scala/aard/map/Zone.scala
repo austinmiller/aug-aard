@@ -13,7 +13,6 @@ object Zone {
 
   val whereTriggerPattern = "You are in area : (.*)"
   val whereTrigger = Trigger.trigger(whereTriggerPattern,(m: Matcher) => {
-    Game.echo("where fired!\n")
     val long = m.group(1)
     val cur = Room.current.zoneName
     val nz = Zone(cur,long)
