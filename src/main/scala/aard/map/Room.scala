@@ -37,6 +37,12 @@ case class RunList(run: String ="", amt: Int = 0, last: String = "") {
   def command : String = s"run $runString"
 }
 
+object Path {
+  def shortest(paths: Iterable[Path]) : Option[Path] = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
+  def to(zoneName: String) = Room.current.zonePather.pathTo(zoneName)
+  def to(target: Room) = Room.current.zonePather.pathTo(target)
+}
+
 case class Path(val exits: List[Exit]) {
   val weight = exits.map {_.weight}.sum
   def + (exit: Exit) : Path = Path(exits :+ exit)
@@ -167,18 +173,10 @@ class ZonePather(val room: Room) {
     x => x._1.to.get.zoneName == zoneName && x._2.weight != InfinitePath.weight
   }.values
 
-  def shortest(paths: Iterable[Path]) = {
-    Game.header("paths")
-    paths.foreach {p=>
-      Game.echo(s"$p\n")
-    }
-    Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
-  }
-
-  def pathTo(zoneName: String) : Option[Path] = shortest(pathsTo(zoneName))
+  def pathTo(zoneName: String) : Option[Path] = Path.shortest(pathsTo(zoneName))
 
   def pathTo(target: Room) : Option[Path] = {
-    shortest(pathsTo(target.zoneName).flatMap { path =>
+    Path.shortest(pathsTo(target.zoneName).flatMap { path =>
       path.exits.last.to.get.pather.pathTo(target).map(path + _)
     } ++ room.pather.pathTo(target))
   }
@@ -252,7 +250,7 @@ case class RList(rooms: Array[Room]) {
           Game.echo(s"\nERROR: $i is out of bounds [0,${rooms.size-1}]\n")
         } else {
           Game.echo(s"\nTrying to run to <${x(i).id}>\n")
-          Room.current.pathTo(x(i)) match {
+          Path.to(x(i)) match {
             case Some(p) => p.runTo
             case None => Game.echo(s"\nNo path to <${x(i).id}>\n")
           }
@@ -268,6 +266,13 @@ case class RList(rooms: Array[Room]) {
 }
 
 object Room {
+
+  val zones = Map(
+    "Gallows Hill" -> "gallows",
+    "Hotel Orlando" -> "orlando",
+    "The Grand City of Aylor" -> "aylor",
+    "The Aylorian Academy" -> "academy"
+  )
 
   val dataDir = new File(Store.dataDir,"room")
   val ext = ".room"
@@ -414,7 +419,7 @@ object Room {
   def aliasGoto(id: Long): Unit = {
     rooms.get(id) match {
       case Some(r) =>
-        currentRoom.pathTo(r) match {
+        Path.to(r) match {
           case Some(p) => p.runTo
           case None => Game.echo(s"\nNo path to <$id>.\n")
         }
@@ -491,15 +496,11 @@ case class Room(id: Long,
 
   def pather = Room.patherCache.get(this)
   def zonePather = Room.zonePatherCache.get(this)
-
-  def pathTo(target: Room) = zonePather.pathTo(target)
   def unknownExits = exits.values.filter(_.to.isEmpty)
-
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
                 locked: Boolean = false, pathable: Boolean = true, weight: Int = 1) {
   def from = Room(fromId)
   def to = Room(toId)
-
 }
