@@ -261,6 +261,8 @@ class Pather(val room: Room, val rooms: Set[Room]) {
 
 case class RList(rooms: Array[Room]) {
 
+  var nextIndex = 0
+
   def runTo(i: Int): Unit = {
     rooms match {
       case Array() => Game.echo("\nThe rlist is empty.\n")
@@ -276,6 +278,18 @@ case class RList(rooms: Array[Room]) {
         }
     }
 
+  }
+
+  def exhausted = nextIndex >= rooms.size
+
+  def pathToNext : Option[Path] = {
+    if(nextIndex >= rooms.size) {
+      None
+    } else {
+      val p = Path.to(rooms(nextIndex))
+      nextIndex += 1
+      p
+    }
   }
 
   def print(begin: Int = 0, end: Int = 20) = {
@@ -332,13 +346,28 @@ object Room {
     })
   }
 
-  def setRList(rooms: Seq[Room]) = synchronized {
+  def withRList()(f: RList => Unit) = {
+    rlist match {
+      case None => Game.echo("\nrlist is undefined.\n")
+      case Some(rl) => f(rl)
+    }
+  }
+
+  def setRList(rooms: Seq[Room]) : Unit = synchronized {
     rlist = Some(RList(rooms.toSet.toArray))
   }
 
+  def setRList(name: String) : Unit = synchronized { setRList(roomsByName.getOrElse(name,List[Room]()).toSeq) }
+
   def printRList(begin: Int = 0, end: Int = 20) = rlist map (_.print(begin,end))
 
-  def save(room: Room) = synchronized {
+  def save(room: Room) : Unit = synchronized {
+
+    if(room.id < 0) {
+      Game.echo("\nrefusing to save, room.id is negative\n")
+      return
+    }
+
     zoneRooms(room.zoneName).foreach {r=>patherCache.invalidate(room)}
     zonePatherCache.invalidateAll()
     rooms(room.id) = room
@@ -396,7 +425,7 @@ object Room {
     Alias.alias("g cp", (m: Matcher) => runTo(Path.campaign))
     Alias.alias("g zone (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
     Alias.alias("g #([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
-    Alias.alias("g ([0-9]*)", (m: Matcher) => aliasRListGoto(m.group(1).toInt))
+    Alias.alias("g ([0-9]*)", (m: Matcher) => rlistGoto(m.group(1).toInt))
 
     roomsByName ++= rooms.values.groupBy(_.name)
   }
@@ -474,7 +503,7 @@ object Room {
     }
   }
 
-  def aliasRListGoto(index: Int) = rlist map (_.runTo(index))
+  def rlistGoto(index: Int) = rlist map (_.runTo(index))
 
   def aliasFind(sub: String) = synchronized {
     rlist = Some(RList(rooms.values.filter(_.name.toLowerCase.contains(sub)).toArray))
@@ -522,14 +551,6 @@ object Room {
       Game.header("external exits")
       room.externalExits.foreach {e=>
         Game.echo(s"${e.name} - ${e.toId} - ${e.to.isDefined}\n")
-      }
-
-      room.exits.values.foreach { e=>
-//        val dif = e.to.get.zoneName != room.zoneName
-        val exists = e.to.exists { to=>
-          to.zoneName != room.zoneName
-        }
-        Game.echo(s"${e.name} $exists \n")
       }
     }
   }

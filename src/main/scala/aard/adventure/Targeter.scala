@@ -26,6 +26,8 @@ object Targeter {
     Room.printRList()
   }
 
+  def kill = target map (t=>Game.send(s"kill $t"))
+
   def load = {
     Alias.alias("x (.*)",(m: Matcher) => {
       target = Some(m.group(1).trim)
@@ -39,6 +41,27 @@ object Targeter {
         case None => Game.echo("\nNo target loaded, used 'x=<target>'\n")
         case Some(t) => Game.send(s"kill $t")
       }
+    })
+
+    Alias.alias("xn",m=> {
+      Room.withRList() { rl=>
+        if(rl.exhausted) {
+          Game.echo("\nNo more rooms to cycle.\n")
+        } else {
+          rl.pathToNext match {
+            case None => Game.echo("\nNo path to next room.\n")
+            case Some(p) =>
+              p.runTo
+              kill
+          }
+        }
+      }
+    })
+
+    Alias.alias("wh (.*) ([0-9]+)",m=> {
+      val count = m.group(2).toInt
+      val t = m.group(1)
+      for(i <- 1 to count) Game.send(s"where $i.$t")
     })
   }
 

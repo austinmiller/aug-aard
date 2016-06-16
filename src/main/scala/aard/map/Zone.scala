@@ -3,7 +3,7 @@ package aard.map
 import java.util.regex.Matcher
 
 import aard.db.Store
-import aug.script.{Game, Trigger}
+import aug.script.{Alias, Game, Trigger}
 
 import scala.util.{Failure, Try}
 
@@ -31,6 +31,8 @@ object Zone {
     }
 
     Room.rooms.values.map(r=>r.zoneName).toSet[String].foreach(zn=>register(zn))
+
+    Alias.alias("z list",m=>aliasList)
   }
 
   def byLong(long: String) : Option[Zone] = zones.filter(_.long == long).headOption
@@ -48,6 +50,14 @@ object Zone {
   def save = synchronized {
     Store.save("zones",zones)
   }
+
+  def aliasList = {
+    Game.header("zone list")
+    zones.toList.sortBy(_.name).foreach {z=>
+      Game.echo(f"${z.name}%-15s: ${z.long}%s\n")
+    }
+  }
+
 
 }
 

@@ -22,6 +22,7 @@ class AardScript extends ProfileEventListener {
       case q: GmcpQuest =>
         Game.header("quest info")
         Game.echo(s"$q\n")
+        Quest.onGmcp(q)
       case r: GmcpRoom =>
         Game.echo(s"<${r.num}> ")
         Room.setRoom(r)
