@@ -35,9 +35,30 @@ case class RunList(run: String ="", amt: Int = 0, last: String = "") {
 }
 
 object Path {
+  val recall = 32418
   def shortest(paths: Iterable[Path]) : Option[Path] = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
-  def to(zoneName: String) = Room.current.zonePather.pathTo(zoneName)
-  def to(target: Room) = Room.current.zonePather.pathTo(target)
+
+  def recallTo(zoneName : String) = {
+    Room(recall).flatMap{_.zonePather.pathTo(zoneName)}.map { p=> Path(Exit("recall",-1,-1,weight=10) :: p.exits)}
+  }
+
+  def recallTo(target: Room): Option[Path] = {
+    Room(recall).flatMap{_.zonePather.pathTo(target)}.map { p=> Path(Exit("recall",-1,-1,weight=10) :: p.exits)}
+  }
+
+  def to(zoneName: String) = {
+    shortest(
+      List(Room.current.zonePather.pathTo(zoneName),
+        recallTo(zoneName)).flatten
+    )
+  }
+
+  def to(target: Room) = {
+    shortest(
+      List(Room.current.zonePather.pathTo(target),
+        recallTo(target)).flatten
+    )
+  }
 }
 
 case class Path(val exits: List[Exit]) {
@@ -169,7 +190,7 @@ class ZonePather(val room: Room) {
     System.currentTimeMillis() - t
   }
 
-  Game.echo(s"zone pather created for room ${room.id} in $time ms\n")
+  if(time>1000) Game.echo(s"zone pather created for room ${room.id} in $time ms\n")
 
   def pathsTo(zoneName: String) : Iterable[Path] = links.filter{
     x => x._1.to.get.zoneName == zoneName && x._2.weight != InfinitePath.weight
@@ -237,7 +258,7 @@ class Pather(val room: Room, val rooms: Set[Room]) {
     System.currentTimeMillis() - t
   }
 
-  Game.echo(s"pather created for ${room.id} in $time ms\n")
+  if(time>1000) Game.echo(s"pather created for ${room.id} in $time ms\n")
 
   def pathTo(target: Room) : Option[Path] = paths.get(target).flatten
 }
@@ -254,7 +275,7 @@ case class RList(rooms: Array[Room]) {
           Game.echo(s"\nTrying to run to <${x(i).id}>\n")
           Path.to(x(i)) match {
             case Some(p) => p.runTo
-            case None => Game.echo(s"\nNo path to <${x(i).id}>\n")
+            case None => //Game.echo(s"\nNo path to <${x(i).id}>\n")
           }
         }
     }
@@ -272,22 +293,14 @@ case class RList(rooms: Array[Room]) {
 
 object Room {
 
-  val zones = Map(
-    "Gallows Hill" -> "gallows",
-    "Hotel Orlando" -> "orlando",
-    "The Grand City of Aylor" -> "aylor",
-    "The Aylorian Academy" -> "academy"
-  )
-
   val path = "room"
   val ext = ".room"
-
   val rooms = mutable.Map[Long,Room]()
   val roomsByName = mutable.Map[String,mutable.Set[Room]]()
 
   private var currentRoom : Room = null
-
   private var rlist : Option[RList] = None
+  private var specialExit = Option[SpecialExit](null)
 
   def apply(id: Long) = rooms.get(id)
 
@@ -307,6 +320,14 @@ object Room {
   }
 
   def setRoom(gmcp: GmcpRoom) : Unit = synchronized {
+    specialExit foreach {se=>
+      if(gmcp.num != se.from.id) {
+        val newexits = se.from.exits + ((se.name)->Exit(se.name,se.from.id,gmcp.num))
+        val nr = se.from.copy(exits = newexits)
+        save(nr)
+      }
+    }
+
     currentRoom = rooms.getOrElse(gmcp.num, {
       val r = fromGmcp(gmcp)
       save(r)
@@ -364,7 +385,9 @@ object Room {
     Alias.alias("r info ([0-9]*)",(m: Matcher) => aliasInfo(m.group(1).toLong))
     Alias.alias("r path ([0-9]*) ([0-9]*)",(m: Matcher) => aliasPath(m.group(1).toLong,m.group(2).toLong))
     Alias.alias("r list",(m: Matcher) => aliasList)
-    Alias.alias("r next", (m: Matcher) => aliasNextRoom)   // TODO
+    Alias.alias("rn", (m: Matcher) => aliasNextRoom)
+    Alias.alias("r exit (.*)", (m: Matcher) => aliasSpecialExit(m.group(1)))
+    Alias.alias("r cancelexit", (m: Matcher) => specialExit = None)
 
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
     Alias.alias("r zp", (m: Matcher) => aliasZonePather)
@@ -374,6 +397,17 @@ object Room {
     Alias.alias("g zone (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
     Alias.alias("g #([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
     Alias.alias("g ([0-9]*)", (m: Matcher) => aliasRListGoto(m.group(1).toInt))
+  }
+
+  def aliasSpecialExit(exitName: String): Unit = {
+    current.exits.get(exitName) match {
+      case Some(_) => Game.echo(s"\nExit $exitName is already defined\n")
+      case _ =>
+        Game.send(exitName)
+        specialExit= Some(SpecialExit(current,exitName))
+    }
+
+
   }
 
   def aliasPath(rid1: Long, rid2: Long) = {
@@ -476,6 +510,8 @@ object Room {
   }
 
 }
+
+case class SpecialExit(from: Room, name: String)
 
 case class Coords(y: Int, x: Int)
 
