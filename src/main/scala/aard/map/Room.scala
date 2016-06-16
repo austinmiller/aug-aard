@@ -36,6 +36,9 @@ case class RunList(run: String ="", amt: Int = 0, last: String = "") {
 
 object Path {
   val recall = 32418
+  val quest = 32458
+  val campaign = 32611
+
   def shortest(paths: Iterable[Path]) : Option[Path] = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
 
   def recallTo(zoneName : String) = {
@@ -157,29 +160,22 @@ class ZonePather(val room: Room) {
 
 
     while(!unvisited.isEmpty) {
-//      printLinks
       val e = nextToVisit
-//      Game.echo(s"Calculating ${e.from.get.zoneName}:${e.fromId}->${e.to.get.zoneName}:${e.toId}\n")
 
       links(e) match {
         case InfinitePath =>
         case basePath =>
-//          Game.echo(s"bp $basePath\n")
           val from = e.to.get
           val zls = Room.zoneLinks(from.zoneName)
 
           for(zl <- zls) {
-//            Game.echo(s"zl ${zl.from.get.zoneName}->${zl.to.get.zoneName}\n")
             val to = zl.from.get
             from.pather.pathTo(to) match {
-              case None => Game.echo(s"no path from <${from.id}> to <${to.id}> \n")
+              case None =>
               case pathToTarget =>
-                // if weight == 0 then to is unreachable unless from == to
                 if (pathToTarget.get.weight > 0 || to == from) {
-//                  Game.echo("here!")
                   val newPath = basePath + pathToTarget.get + zl // the path to the new zone goes through the zl
                   if (newPath.weight < links(zl).weight) {
-//                    Game.echo("and here!")
                     setPath(zl,newPath)
                   }
                 }
@@ -275,7 +271,7 @@ case class RList(rooms: Array[Room]) {
           Game.echo(s"\nTrying to run to <${x(i).id}>\n")
           Path.to(x(i)) match {
             case Some(p) => p.runTo
-            case None => //Game.echo(s"\nNo path to <${x(i).id}>\n")
+            case None =>
           }
         }
     }
@@ -284,7 +280,7 @@ case class RList(rooms: Array[Room]) {
 
   def print(begin: Int = 0, end: Int = 20) = {
     Game.header("room list")
-    for(i <- begin until end if i < rooms.size-1) {
+    for(i <- begin until end if i < rooms.size) {
       val r = rooms(i)
       Game.echo(f"$i%3d] [${r.zoneName}%15s] ${r.name}%s\n")
     }
@@ -296,7 +292,7 @@ object Room {
   val path = "room"
   val ext = ".room"
   val rooms = mutable.Map[Long,Room]()
-  val roomsByName = mutable.Map[String,mutable.Set[Room]]()
+  val roomsByName = mutable.Map[String,Iterable[Room]]()
 
   private var currentRoom : Room = null
   private var rlist : Option[RList] = None
@@ -346,10 +342,9 @@ object Room {
     zonePatherCache.invalidateAll()
     rooms(room.id) = room
 
-    roomsByName.get(room.name) match {
-      case Some(set) => set += room
-      case None => roomsByName(room.name) = mutable.Set(room)
-    }
+    val nm = rooms.values.groupBy(_.name)
+
+    roomsByName ++= rooms.values.groupBy(_.name)
 
     Zone.register(room.zoneName)
     Store.save(s"$path/${room.id}.room",room)
@@ -388,16 +383,59 @@ object Room {
     Alias.alias("rn", (m: Matcher) => aliasNextRoom)
     Alias.alias("r exit (.*)", (m: Matcher) => aliasSpecialExit(m.group(1)))
     Alias.alias("r cancelexit", (m: Matcher) => specialExit = None)
-
+    Alias.alias("r door (.*)", (m: Matcher) => aliasAddDoor(m.group(1)))
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
     Alias.alias("r zp", (m: Matcher) => aliasZonePather)
     Alias.alias("r zones", (m: Matcher) => aliasZones)
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
 
+    Alias.alias("g recall", (m: Matcher) => runTo(Path.recall))
+    Alias.alias("g quest", (m: Matcher) => aliasGotoQuest)
     Alias.alias("g zone (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
     Alias.alias("g #([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
     Alias.alias("g ([0-9]*)", (m: Matcher) => aliasRListGoto(m.group(1).toInt))
+
+    roomsByName ++= rooms.values.groupBy(_.name)
   }
+
+  def withRoom(id: Long, f: Room => Unit) = {
+    Room(id) match {
+      case None => Game.echo(s"\nCould not locate room <${id}>\n")
+      case Some(room) => f(room)
+    }
+  }
+
+  def runTo(id: Long) : Unit = {
+    withRoom(id,r=>runTo(r))
+  }
+
+  def runTo(r: Room) : Unit= {
+    Path.to(r) match {
+      case None => Game.echo(s"\nNo path to <${r.id}>\n")
+      case Some(p) => p.runTo
+    }
+  }
+
+  def runTo(zoneName: String) : Unit = {
+    Path.to(zoneName) match {
+      case None => Game.echo(s"\nNo path to <$zoneName>\n")
+      case Some(p) => p.runTo
+    }
+  }
+
+  def aliasAddDoor(exitName: String) = {
+    current.withExit(exitName) { e=>
+      val ne = e.copy(door = true)
+      val nm = current.exits + ((exitName)->ne)
+      val nr = current.copy(exits=nm)
+
+      Game.echo(s"\nAdded door to $ne\n")
+      currentRoom = nr
+      save(current)
+    }
+  }
+
+  def aliasGotoQuest = runTo(Path.quest)
 
   def aliasSpecialExit(exitName: String): Unit = {
     current.exits.get(exitName) match {
@@ -406,8 +444,6 @@ object Room {
         Game.send(exitName)
         specialExit= Some(SpecialExit(current,exitName))
     }
-
-
   }
 
   def aliasPath(rid1: Long, rid2: Long) = {
@@ -427,21 +463,12 @@ object Room {
 
   def aliasRListGoto(index: Int) = rlist map (_.runTo(index))
 
-
   def aliasFind(sub: String) = synchronized {
     rlist = Some(RList(rooms.values.filter(_.name.toLowerCase.contains(sub)).toArray))
     rlist map (_.print())
   }
 
-  def aliasGotoZone(zoneName: String): Unit = {
-    val shortestPath = zonePatherCache.get(currentRoom).pathTo(zoneName)
-    if(shortestPath.isEmpty) {
-      Game.echo(s"no path to $zoneName\n")
-    } else {
-      shortestPath.get.runTo
-    }
-  }
-
+  def aliasGotoZone(zoneName: String): Unit = runTo(zoneName)
 
   def aliasZones(): Unit = {
     Game.header("zone names")
@@ -537,6 +564,13 @@ case class Room(id: Long,
   def zonePather = Room.zonePatherCache.get(this)
   def unknownExits = exits.values.filter(_.to.isEmpty)
   def zone = Zone(zoneName).get // if this doesn't exist, we fucked up
+
+  def withExit(name: String)(f: Exit => Unit) = {
+    exits.get(name) match {
+      case None => Game.echo(s"\nExit $name not found on room <$id>\n")
+      case Some(exit) => f(exit)
+    }
+  }
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
