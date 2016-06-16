@@ -1,0 +1,1 @@
+{"id":25949,"terrain":"field","zoneName":"believer","exits":{"n":{"name":"n","fromId":25949,"toId":25950,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25949,"toId":25948,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Standing on Shore","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

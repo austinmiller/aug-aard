@@ -1,0 +1,1 @@
+{"id":25939,"terrain":"forest","zoneName":"believer","exits":{"n":{"name":"n","fromId":25939,"toId":25940,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":25939,"toId":25938,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Forest Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

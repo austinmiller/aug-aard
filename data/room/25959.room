@@ -1,0 +1,1 @@
+{"id":25959,"terrain":"smallroad_ew","zoneName":"believer","exits":{"n":{"name":"n","fromId":25959,"toId":25962,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25959,"toId":25958,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Aiden's Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

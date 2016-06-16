@@ -1,0 +1,1 @@
+{"id":25946,"terrain":"forest","zoneName":"believer","exits":{"e":{"name":"e","fromId":25946,"toId":25947,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25946,"toId":25945,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Muddy Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":25948,"terrain":"field","zoneName":"believer","exits":{"e":{"name":"e","fromId":25948,"toId":25949,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25948,"toId":25947,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Sun Dried Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":33040,"terrain":"field","zoneName":"callhero","exits":{"n":{"name":"n","fromId":33040,"toId":33038,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":33040,"toId":33043,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Behind Friendly Lines","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

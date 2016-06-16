@@ -1,0 +1,1 @@
+{"id":25941,"terrain":"field","zoneName":"believer","exits":{"e":{"name":"e","fromId":25941,"toId":25942,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25941,"toId":25940,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Stone Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

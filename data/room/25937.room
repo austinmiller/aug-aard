@@ -1,0 +1,1 @@
+{"id":25937,"terrain":"hills","zoneName":"believer","exits":{"n":{"name":"n","fromId":25937,"toId":25938,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25937,"toId":11705,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Beginning the Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}
