@@ -1,0 +1,1 @@
+{"id":709,"terrain":"field","zoneName":"childsplay","exits":{"n":{"name":"n","fromId":709,"toId":712,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":709,"toId":707,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Broad Meadow","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

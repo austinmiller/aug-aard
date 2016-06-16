@@ -1,0 +1,1 @@
+{"id":5865,"terrain":"city","zoneName":"dominion","exits":{"e":{"name":"e","fromId":5865,"toId":5863,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":5865,"toId":5867,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Supplies and Gear","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":995,"terrain":"field","zoneName":"petstore","exits":{"n":{"name":"n","fromId":995,"toId":5948,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":995,"toId":993,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Wide Path in the Petting Zoo","coords":{"y":37,"x":19},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":702,"terrain":"inside","zoneName":"childsplay","exits":{"n":{"name":"n","fromId":702,"toId":694,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Cluttered Shoppe","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":706,"terrain":"field","zoneName":"childsplay","exits":{"n":{"name":"n","fromId":706,"toId":707,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":706,"toId":699,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Meadow Path","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

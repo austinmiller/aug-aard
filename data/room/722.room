@@ -1,0 +1,1 @@
+{"id":722,"terrain":"inside","zoneName":"childsplay","exits":{"w":{"name":"w","fromId":722,"toId":719,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Dais","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

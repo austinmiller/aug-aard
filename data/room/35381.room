@@ -1,0 +1,1 @@
+{"id":35381,"terrain":"inside","zoneName":"academy","exits":{"w":{"name":"w","fromId":35381,"toId":35228,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Office of the Arch Mage","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

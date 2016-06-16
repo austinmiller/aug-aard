@@ -1,0 +1,1 @@
+{"id":700,"terrain":"city","zoneName":"childsplay","exits":{"e":{"name":"e","fromId":700,"toId":699,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":700,"toId":693,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Northern Path","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":32605,"terrain":"shop","zoneName":"aylor","exits":{"d":{"name":"d","fromId":32605,"toId":32602,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Ralverin's Apprentice Shop","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

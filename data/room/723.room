@@ -1,0 +1,1 @@
+{"id":723,"terrain":"inside","zoneName":"childsplay","exits":{"e":{"name":"e","fromId":723,"toId":721,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Kitchen","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":720,"terrain":"inside","zoneName":"childsplay","exits":{"s":{"name":"s","fromId":720,"toId":719,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Banquet Hall","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

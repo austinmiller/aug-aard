@@ -1,0 +1,1 @@
+{"id":32603,"terrain":"shop","zoneName":"aylor","exits":{"e":{"name":"e","fromId":32603,"toId":32602,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":32603,"toId":32598,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Aylorian Elemental Designs","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

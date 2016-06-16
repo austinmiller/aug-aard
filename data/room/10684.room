@@ -1,0 +1,1 @@
+{"id":10684,"terrain":"smallroad_ew","zoneName":"farm","exits":{"e":{"name":"e","fromId":10684,"toId":12548,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":10684,"toId":10675,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"An old dirt path","coords":{"y":32,"x":18},"recallable":true,"portalable":true}

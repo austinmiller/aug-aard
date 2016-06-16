@@ -1,0 +1,1 @@
+{"id":684,"terrain":"inside","zoneName":"childsplay","exits":{"s":{"name":"s","fromId":684,"toId":683,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":684,"toId":685,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Entrance to the Mines","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

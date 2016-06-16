@@ -1,0 +1,1 @@
+{"id":10683,"terrain":"field","zoneName":"farm","exits":{"e":{"name":"e","fromId":10683,"toId":10681,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":10683,"toId":10680,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The western fields","coords":{"y":32,"x":18},"recallable":true,"portalable":true}

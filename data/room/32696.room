@@ -1,0 +1,1 @@
+{"id":32696,"terrain":"city","zoneName":"aylor","exits":{"u":{"name":"u","fromId":32696,"toId":32611,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"BoXern's Boxes","coords":{"y":30,"x":20},"recallable":true,"portalable":true}
