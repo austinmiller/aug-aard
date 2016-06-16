@@ -1,0 +1,1 @@
+{"id":15504,"terrain":"hills","zoneName":"sennarre","exits":{"n":{"name":"n","fromId":15504,"toId":15505,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15504,"toId":15502,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Rock Outcropping","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

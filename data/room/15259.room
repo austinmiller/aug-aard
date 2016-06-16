@@ -1,0 +1,1 @@
+{"id":15259,"terrain":"air","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15259,"toId":15258,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15259,"toId":15260,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Among the Stars","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

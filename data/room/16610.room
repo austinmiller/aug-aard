@@ -1,0 +1,1 @@
+{"id":16610,"terrain":"inside","zoneName":"dortmund","exits":{"w":{"name":"w","fromId":16610,"toId":16596,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Darkon's house","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

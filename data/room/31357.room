@@ -1,0 +1,1 @@
+{"id":31357,"terrain":"inside","zoneName":"wizards","exits":{"e":{"name":"e","fromId":31357,"toId":31358,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":31357,"toId":31319,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Just inside the tower","coords":{"y":26,"x":22},"recallable":true,"portalable":true}

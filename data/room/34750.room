@@ -1,0 +1,1 @@
+{"id":34750,"terrain":"rocks","zoneName":"fireswamp","exits":{"n":{"name":"n","fromId":34750,"toId":34751,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":34750,"toId":15508,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Twin Peaks Valley","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

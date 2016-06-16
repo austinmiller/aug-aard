@@ -1,0 +1,1 @@
+{"id":34754,"terrain":"mountain","zoneName":"fireswamp","exits":{"e":{"name":"e","fromId":34754,"toId":34755,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":34754,"toId":34752,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Into the Swamp","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

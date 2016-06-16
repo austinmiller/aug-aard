@@ -1,0 +1,1 @@
+{"id":28947,"terrain":"bloodyroom","zoneName":"graveyard","exits":{"u":{"name":"u","fromId":28947,"toId":28946,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In an Unearthed Grave","coords":{"y":47,"x":22},"recallable":true,"portalable":true}

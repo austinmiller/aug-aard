@@ -1,0 +1,1 @@
+{"id":16603,"terrain":"forest","zoneName":"dortmund","exits":{"n":{"name":"n","fromId":16603,"toId":16600,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Heavily overgrown room","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

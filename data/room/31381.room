@@ -1,0 +1,1 @@
+{"id":31381,"terrain":"inside","zoneName":"wizards","exits":{"n":{"name":"n","fromId":31381,"toId":31380,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":31381,"toId":31382,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In the cellar","coords":{"y":26,"x":22},"recallable":true,"portalable":true}

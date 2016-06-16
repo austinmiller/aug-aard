@@ -1,0 +1,1 @@
+{"id":4720,"terrain":"field","zoneName":"camps","exits":{"n":{"name":"n","fromId":4720,"toId":4718,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A small glade","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

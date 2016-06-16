@@ -1,0 +1,1 @@
+{"id":34776,"terrain":"underwater","zoneName":"fireswamp","exits":{"u":{"name":"u","fromId":34776,"toId":34775,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Underwater","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":28959,"terrain":"crypt","zoneName":"graveyard","exits":{"e":{"name":"e","fromId":28959,"toId":28957,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In the Crypt of Souls","coords":{"y":47,"x":22},"recallable":true,"portalable":true}

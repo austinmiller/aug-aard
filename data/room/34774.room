@@ -1,0 +1,1 @@
+{"id":34774,"terrain":"river","zoneName":"fireswamp","exits":{"s":{"name":"s","fromId":34774,"toId":34765,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":34774,"toId":34773,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Coursing River","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

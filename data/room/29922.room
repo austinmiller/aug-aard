@@ -1,0 +1,1 @@
+{"id":29922,"terrain":"city","zoneName":"necro","exits":{"n":{"name":"n","fromId":29922,"toId":28957,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":29922,"toId":29923,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Before an old stone wall","coords":{"y":47,"x":22},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":15508,"terrain":"mountain","zoneName":"sennarre","exits":{"n":{"name":"n","fromId":15508,"toId":34750,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":15508,"toId":15507,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Between Two Cliffs","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

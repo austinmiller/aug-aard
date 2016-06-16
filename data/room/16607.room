@@ -1,0 +1,1 @@
+{"id":16607,"terrain":"inside","zoneName":"dortmund","exits":{"w":{"name":"w","fromId":16607,"toId":16593,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A log cabin","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

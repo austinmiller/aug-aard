@@ -1,0 +1,1 @@
+{"id":16583,"terrain":"forest","zoneName":"dortmund","exits":{"w":{"name":"w","fromId":16583,"toId":16584,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":16583,"toId":16582,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A forest path","coords":{"y":50,"x":20},"recallable":true,"portalable":true}
