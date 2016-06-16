@@ -37,7 +37,7 @@ case class RunList(run: String ="", amt: Int = 0, last: String = "") {
 object Path {
   val recall = 32418
   val quest = 32458
-  val campaign = 32611
+  val campaign = 32614
 
   def shortest(paths: Iterable[Path]) : Option[Path] = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
 
@@ -321,6 +321,7 @@ object Room {
         val newexits = se.from.exits + ((se.name)->Exit(se.name,se.from.id,gmcp.num))
         val nr = se.from.copy(exits = newexits)
         save(nr)
+        specialExit = None
       }
     }
 
@@ -383,6 +384,7 @@ object Room {
     Alias.alias("rn", (m: Matcher) => aliasNextRoom)
     Alias.alias("r exit (.*)", (m: Matcher) => aliasSpecialExit(m.group(1)))
     Alias.alias("r cancelexit", (m: Matcher) => specialExit = None)
+    Alias.alias("r delete (.*)", (m: Matcher) => aliasDeleteExit(m.group(1)))
     Alias.alias("r door (.*)", (m: Matcher) => aliasAddDoor(m.group(1)))
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
     Alias.alias("r zp", (m: Matcher) => aliasZonePather)
@@ -390,7 +392,8 @@ object Room {
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
 
     Alias.alias("g recall", (m: Matcher) => runTo(Path.recall))
-    Alias.alias("g quest", (m: Matcher) => aliasGotoQuest)
+    Alias.alias("g q", (m: Matcher) => aliasGotoQuest)
+    Alias.alias("g cp", (m: Matcher) => runTo(Path.campaign))
     Alias.alias("g zone (.*)", (m: Matcher) => aliasGotoZone(m.group(1)))
     Alias.alias("g #([0-9]*)", (m: Matcher) => aliasGoto(m.group(1).toLong))
     Alias.alias("g ([0-9]*)", (m: Matcher) => aliasRListGoto(m.group(1).toInt))
@@ -398,7 +401,7 @@ object Room {
     roomsByName ++= rooms.values.groupBy(_.name)
   }
 
-  def withRoom(id: Long, f: Room => Unit) = {
+  def withRoom(id: Long)(f: Room => Unit) = {
     Room(id) match {
       case None => Game.echo(s"\nCould not locate room <${id}>\n")
       case Some(room) => f(room)
@@ -406,7 +409,7 @@ object Room {
   }
 
   def runTo(id: Long) : Unit = {
-    withRoom(id,r=>runTo(r))
+    withRoom(id)(r=>runTo(r))
   }
 
   def runTo(r: Room) : Unit= {
@@ -420,6 +423,16 @@ object Room {
     Path.to(zoneName) match {
       case None => Game.echo(s"\nNo path to <$zoneName>\n")
       case Some(p) => p.runTo
+    }
+  }
+
+  def aliasDeleteExit(exitName: String) = {
+    current.withExit(exitName) { e =>
+      val nm = current.exits - exitName
+      val nr = current.copy(exits = nm)
+      currentRoom = nr
+      Game.echo(s"\nDeleted exit $exitName\n")
+      save(current)
     }
   }
 
@@ -496,17 +509,28 @@ object Room {
   }
 
   def aliasInfo(id: Long) = {
-    rooms.get(id) match {
-      case None => Game.echo(s"\nRoom <$id> was not found.\n")
-      case Some(room) =>
-        Game.header(s"room <${room.id}>")
-        val s = JsonUtil.prettyJson(room)
-        Game.echo(s"$s\n")
-        Game.header("exits")
-        room.exits.values.foreach {e=>
-          Game.echo(s"${e.name} - ${e.toId} - ${e.to.isDefined}\n")
-        }
+    withRoom(id) { room=>
+      Game.header(s"room <${room.id}>")
+      val s = JsonUtil.prettyJson(room)
+      Game.echo(s"$s\n")
 
+      Game.header("exits")
+      room.exits.values.foreach {e=>
+        Game.echo(s"${e.name} - ${e.toId} - ${e.to.isDefined}\n")
+      }
+
+      Game.header("external exits")
+      room.externalExits.foreach {e=>
+        Game.echo(s"${e.name} - ${e.toId} - ${e.to.isDefined}\n")
+      }
+
+      room.exits.values.foreach { e=>
+//        val dif = e.to.get.zoneName != room.zoneName
+        val exists = e.to.exists { to=>
+          to.zoneName != room.zoneName
+        }
+        Game.echo(s"${e.name} $exists \n")
+      }
     }
   }
 

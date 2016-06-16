@@ -76,7 +76,9 @@ case class Campaign(mobs: List[CampaignMob]) {
         if(Room.current.zone != zone) {
           Path.to(zone.name) match {
             case None => Game.echo(s"\nNo path to $zone\n")
-            case Some(path) => path.runTo
+            case Some(path) =>
+              path.runTo
+              Game.send(s"gt next target is $head")
           }
         } else {
           Game.echo(s"\nYou're in the zone for ${head.name}\n")
