@@ -1,0 +1,1 @@
+{"id":26310,"terrain":"beach","zoneName":"glimmerdim","exits":{"n":{"name":"n","fromId":26310,"toId":26309,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":26310,"toId":26311,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Lighthouse Road","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

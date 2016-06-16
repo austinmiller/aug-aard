@@ -1,0 +1,1 @@
+{"id":26266,"terrain":"alley","zoneName":"glimmerdim","exits":{"e":{"name":"e","fromId":26266,"toId":26271,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":26266,"toId":26288,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"First Ave","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

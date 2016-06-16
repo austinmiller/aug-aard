@@ -1,0 +1,1 @@
+{"id":26298,"terrain":"city","zoneName":"glimmerdim","exits":{"s":{"name":"s","fromId":26298,"toId":26297,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":26298,"toId":26277,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Brightcliff Way","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

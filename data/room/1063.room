@@ -1,0 +1,1 @@
+{"id":1063,"terrain":"inside","zoneName":"vale","exits":{"w":{"name":"w","fromId":1063,"toId":1062,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Partially Destroyed Kitchen","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

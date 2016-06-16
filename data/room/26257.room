@@ -1,0 +1,1 @@
+{"id":26257,"terrain":"city","zoneName":"glimmerdim","exits":{"e":{"name":"e","fromId":26257,"toId":26258,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":26257,"toId":26256,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Harbor Road","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

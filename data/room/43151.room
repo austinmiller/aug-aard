@@ -1,0 +1,1 @@
+{"id":43151,"terrain":"inside","zoneName":"ascent","exits":{"d":{"name":"d","fromId":43151,"toId":43150,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":43151,"toId":43152,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dark and forgotten","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

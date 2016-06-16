@@ -1,0 +1,1 @@
+{"id":26319,"terrain":"shop","zoneName":"glimmerdim","exits":{"e":{"name":"e","fromId":26319,"toId":26312,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Arms'A'Get'em","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

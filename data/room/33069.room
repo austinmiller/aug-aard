@@ -1,0 +1,1 @@
+{"id":33069,"terrain":"hills","zoneName":"callhero","exits":{"e":{"name":"e","fromId":33069,"toId":33070,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Dark Forest","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

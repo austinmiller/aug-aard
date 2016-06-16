@@ -1,0 +1,1 @@
+{"id":15497,"terrain":"forest","zoneName":"sennarre","exits":{"n":{"name":"n","fromId":15497,"toId":15496,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":15497,"toId":15494,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dense Wood","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

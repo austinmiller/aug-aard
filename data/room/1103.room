@@ -1,0 +1,1 @@
+{"id":1103,"terrain":"rocks","zoneName":"vale","exits":{"d":{"name":"d","fromId":1103,"toId":1080,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":1103,"toId":1065,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A steep crevasse","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

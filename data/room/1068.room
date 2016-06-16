@@ -1,0 +1,1 @@
+{"id":1068,"terrain":"inside","zoneName":"vale","exits":{"n":{"name":"n","fromId":1068,"toId":1066,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Burnt-Out Bedroom","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

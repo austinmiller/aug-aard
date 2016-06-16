@@ -1,0 +1,1 @@
+{"id":1041,"terrain":"dead_forest","zoneName":"vale","exits":{"n":{"name":"n","fromId":1041,"toId":1040,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1041,"toId":1042,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Smoking Forest","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

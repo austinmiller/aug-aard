@@ -1,0 +1,1 @@
+{"id":1084,"terrain":"rocks","zoneName":"vale","exits":{"s":{"name":"s","fromId":1084,"toId":1085,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":1084,"toId":1056,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A steep slope","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

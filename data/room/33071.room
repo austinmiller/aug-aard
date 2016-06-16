@@ -1,0 +1,1 @@
+{"id":33071,"terrain":"hills","zoneName":"callhero","exits":{"e":{"name":"e","fromId":33071,"toId":33072,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":33071,"toId":33070,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Beside the battle","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

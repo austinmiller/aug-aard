@@ -1,0 +1,1 @@
+{"id":35347,"terrain":"forest","zoneName":"academy","exits":{"s":{"name":"s","fromId":35347,"toId":35330,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":35347,"toId":35290,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Shaded area","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

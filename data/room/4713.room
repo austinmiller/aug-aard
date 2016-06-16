@@ -1,0 +1,1 @@
+{"id":4713,"terrain":"field","zoneName":"camps","exits":{"n":{"name":"n","fromId":4713,"toId":4714,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4713,"toId":12965,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A small bridge over the river","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

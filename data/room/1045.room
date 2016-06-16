@@ -1,0 +1,1 @@
+{"id":1045,"terrain":"dead_forest","zoneName":"vale","exits":{"n":{"name":"n","fromId":1045,"toId":1042,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":1045,"toId":1046,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dying Orchard","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

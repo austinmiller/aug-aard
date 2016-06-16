@@ -1,0 +1,1 @@
+{"id":28034,"terrain":"air","zoneName":"lidnesh","exits":{"d":{"name":"d","fromId":28034,"toId":28033,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Natural Platform","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

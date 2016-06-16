@@ -1,0 +1,1 @@
+{"id":26291,"terrain":"city","zoneName":"glimmerdim","exits":{"n":{"name":"n","fromId":26291,"toId":26315,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":26291,"toId":26278,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Palace Road","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

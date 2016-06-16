@@ -1,0 +1,1 @@
+{"id":28000,"terrain":"forest","zoneName":"lidnesh","exits":{"d":{"name":"d","fromId":28000,"toId":27999,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Amidst the Treetops","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

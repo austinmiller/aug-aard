@@ -1,0 +1,1 @@
+{"id":1060,"terrain":"inside","zoneName":"vale","exits":{"n":{"name":"n","fromId":1060,"toId":1058,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":1060,"toId":1065,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Half Destroyed Bedroom","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

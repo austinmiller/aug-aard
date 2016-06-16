@@ -1,0 +1,1 @@
+{"id":20050,"terrain":"forest","zoneName":"beer","exits":{"e":{"name":"e","fromId":20050,"toId":20049,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":20050,"toId":20051,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Northern Woods","coords":{"y":7,"x":19},"recallable":true,"portalable":true}

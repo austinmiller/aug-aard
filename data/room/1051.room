@@ -1,0 +1,1 @@
+{"id":1051,"terrain":"bridge","zoneName":"vale","exits":{"e":{"name":"e","fromId":1051,"toId":1047,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1051,"toId":1046,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"South Rope Bridge","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

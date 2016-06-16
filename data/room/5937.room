@@ -1,0 +1,1 @@
+{"id":5937,"terrain":"air","zoneName":"zoo","exits":{"n":{"name":"n","fromId":5937,"toId":5938,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":5937,"toId":5932,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In the Aviary","coords":{"y":37,"x":19},"recallable":true,"portalable":true}

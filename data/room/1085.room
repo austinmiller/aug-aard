@@ -1,0 +1,1 @@
+{"id":1085,"terrain":"rocks","zoneName":"vale","exits":{"n":{"name":"n","fromId":1085,"toId":1084,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1085,"toId":1086,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A tight squeeze","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":1055,"terrain":"road","zoneName":"vale","exits":{"e":{"name":"e","fromId":1055,"toId":1057,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1055,"toId":1054,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Approaching the Ruined Village","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

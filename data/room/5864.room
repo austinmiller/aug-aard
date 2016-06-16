@@ -1,0 +1,1 @@
+{"id":5864,"terrain":"inside","zoneName":"dominion","exits":{"n":{"name":"n","fromId":5864,"toId":5863,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Infirmary","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":20094,"terrain":"forest","zoneName":"beer","exits":{"n":{"name":"n","fromId":20094,"toId":20095,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":20094,"toId":20064,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Wooded Path","coords":{"y":7,"x":19},"recallable":true,"portalable":true}
