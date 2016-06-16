@@ -1,0 +1,1 @@
+{"id":15214,"terrain":"waterswim","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15214,"toId":15208,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15214,"toId":15215,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fantasy Creek","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":28666,"terrain":"field2","zoneName":"carnivale","exits":{"s":{"name":"s","fromId":28666,"toId":28651,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Archery Range","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

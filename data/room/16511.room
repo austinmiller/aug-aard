@@ -1,0 +1,1 @@
+{"id":16511,"terrain":"field","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16511,"toId":16512,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16511,"toId":16510,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A City on the Edge","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

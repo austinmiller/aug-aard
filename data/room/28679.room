@@ -1,0 +1,1 @@
+{"id":28679,"terrain":"hut","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28679,"toId":28672,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Tent of the Acrobats","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

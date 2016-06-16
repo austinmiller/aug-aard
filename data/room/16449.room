@@ -1,0 +1,1 @@
+{"id":16449,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16449,"toId":16409,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16449,"toId":16513,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Star Gate","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

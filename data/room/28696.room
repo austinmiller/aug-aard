@@ -1,0 +1,1 @@
+{"id":28696,"terrain":"hallway","zoneName":"lab","exits":{"e":{"name":"e","fromId":28696,"toId":28697,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28696,"toId":28690,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Gloomy Corridor","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

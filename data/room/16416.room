@@ -1,0 +1,1 @@
+{"id":16416,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16416,"toId":16384,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Bob's Armory and Tackle","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

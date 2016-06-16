@@ -1,0 +1,1 @@
+{"id":30599,"terrain":"ocean","zoneName":"verume","exits":{"e":{"name":"e","fromId":30599,"toId":30697,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":30599,"toId":3754,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Western Ocean","coords":{"y":3,"x":42},"recallable":true,"portalable":true}

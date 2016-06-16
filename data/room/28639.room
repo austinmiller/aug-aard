@@ -1,0 +1,1 @@
+{"id":28639,"terrain":"field3","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28639,"toId":28640,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":28639,"toId":28638,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fairway","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

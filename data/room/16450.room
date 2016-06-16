@@ -1,0 +1,1 @@
+{"id":16450,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16450,"toId":16405,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16450,"toId":16508,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Moon Gate","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

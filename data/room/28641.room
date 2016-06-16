@@ -1,0 +1,1 @@
+{"id":28641,"terrain":"hut","zoneName":"carnivale","exits":{"e":{"name":"e","fromId":28641,"toId":28642,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28641,"toId":28640,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Joust a Plaisir","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

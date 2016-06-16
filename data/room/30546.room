@@ -1,0 +1,1 @@
+{"id":30546,"terrain":"inside","zoneName":"bard","exits":{"e":{"name":"e","fromId":30546,"toId":30538,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":30546,"toId":30520,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The lobby","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

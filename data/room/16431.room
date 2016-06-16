@@ -1,0 +1,1 @@
+{"id":16431,"terrain":"inside","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16431,"toId":16428,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Courtroom","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

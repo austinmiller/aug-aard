@@ -1,0 +1,1 @@
+{"id":4729,"terrain":"city","zoneName":"camps","exits":{"u":{"name":"u","fromId":4729,"toId":4728,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":4729,"toId":1122,"maze":false,"door":true,"locked":false,"pathable":true,"weight":1}},"name":"On a fortress tower","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

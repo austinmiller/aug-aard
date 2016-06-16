@@ -1,0 +1,1 @@
+{"id":4724,"terrain":"city","zoneName":"camps","exits":{"n":{"name":"n","fromId":4724,"toId":4737,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":4724,"toId":4721,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A stone path to the fortress","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

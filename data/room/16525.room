@@ -1,0 +1,1 @@
+{"id":16525,"terrain":"inside","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16525,"toId":16393,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Farmer's Stand","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

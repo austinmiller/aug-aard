@@ -1,0 +1,1 @@
+{"id":28711,"terrain":"inside","zoneName":"lab","exits":{"n":{"name":"n","fromId":28711,"toId":28712,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":28711,"toId":28710,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Cellar Landing","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

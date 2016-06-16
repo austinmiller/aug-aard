@@ -1,0 +1,1 @@
+{"id":16520,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16520,"toId":16403,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fleecem and Son","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

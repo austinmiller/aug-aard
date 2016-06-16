@@ -1,0 +1,1 @@
+{"id":28728,"terrain":"smallroad","zoneName":"lab","exits":{"e":{"name":"e","fromId":28728,"toId":28729,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28728,"toId":28727,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Path","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

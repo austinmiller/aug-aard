@@ -1,0 +1,1 @@
+{"id":16380,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16380,"toId":16392,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Red Card","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":28661,"terrain":"hut","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28661,"toId":28647,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Ye Olde Pub","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

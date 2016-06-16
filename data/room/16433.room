@@ -1,0 +1,1 @@
+{"id":16433,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16433,"toId":16432,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Inner Chamber","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

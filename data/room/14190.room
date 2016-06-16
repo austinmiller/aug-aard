@@ -1,0 +1,1 @@
+{"id":14190,"terrain":"inside","zoneName":"melody","exits":{"e":{"name":"e","fromId":14190,"toId":14195,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Theatre Studio","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

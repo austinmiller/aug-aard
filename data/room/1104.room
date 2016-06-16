@@ -1,0 +1,1 @@
+{"id":1104,"terrain":"rocks","zoneName":"vale","exits":{"d":{"name":"d","fromId":1104,"toId":1073,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":1104,"toId":1057,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Steep Fissure","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

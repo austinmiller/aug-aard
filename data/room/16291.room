@@ -1,0 +1,1 @@
+{"id":16291,"terrain":"inside","zoneName":"sirens","exits":{"e":{"name":"e","fromId":16291,"toId":16292,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16291,"toId":16284,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"B-Row Seats 21-30","coords":{"y":26,"x":13},"recallable":true,"portalable":true}

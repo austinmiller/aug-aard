@@ -1,0 +1,1 @@
+{"id":16281,"terrain":"inside","zoneName":"sirens","exits":{"w":{"name":"w","fromId":16281,"toId":16282,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Front Row Judge Seats","coords":{"y":26,"x":13},"recallable":true,"portalable":true}

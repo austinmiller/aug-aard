@@ -1,0 +1,1 @@
+{"id":28704,"terrain":"hellinside","zoneName":"lab","exits":{"n":{"name":"n","fromId":28704,"toId":28703,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Cyclopian Pitbull's Cage","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

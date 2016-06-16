@@ -1,0 +1,1 @@
+{"id":16472,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16472,"toId":16471,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Bedroom","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

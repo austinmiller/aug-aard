@@ -1,0 +1,1 @@
+{"id":28708,"terrain":"hellinside","zoneName":"lab","exits":{"n":{"name":"n","fromId":28708,"toId":28707,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Arachno-netter Cage","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

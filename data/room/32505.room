@@ -1,0 +1,1 @@
+{"id":32505,"terrain":"waterswim","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32505,"toId":32495,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":32505,"toId":32504,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"On Pristine Lake","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

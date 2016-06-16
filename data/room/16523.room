@@ -1,0 +1,1 @@
+{"id":16523,"terrain":"graveyard","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16523,"toId":16522,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16523,"toId":16524,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Graveyard","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

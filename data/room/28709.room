@@ -1,0 +1,1 @@
+{"id":28709,"terrain":"hallway","zoneName":"lab","exits":{"e":{"name":"e","fromId":28709,"toId":28710,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28709,"toId":28703,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Dirt Encrusted Corridor","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":5867,"terrain":"inside","zoneName":"dominion","exits":{"e":{"name":"e","fromId":5867,"toId":5865,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The shrine of remembrance","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

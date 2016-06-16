@@ -1,0 +1,1 @@
+{"id":28707,"terrain":"hallway","zoneName":"lab","exits":{"e":{"name":"e","fromId":28707,"toId":28705,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":28707,"toId":28708,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Corridor Ends","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":16509,"terrain":"field","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16509,"toId":16510,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":16509,"toId":16514,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dirt Road","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

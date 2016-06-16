@@ -1,0 +1,1 @@
+{"id":5947,"terrain":"field","zoneName":"zoo","exits":{"n":{"name":"n","fromId":5947,"toId":5944,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":5947,"toId":5948,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Petting Zoo","coords":{"y":37,"x":19},"recallable":true,"portalable":true}

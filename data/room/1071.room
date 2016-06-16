@@ -1,0 +1,1 @@
+{"id":1071,"terrain":"waterswim","zoneName":"vale","exits":{"w":{"name":"w","fromId":1071,"toId":1072,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Waterfall","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":16373,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16373,"toId":16374,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":16373,"toId":16375,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"MouseRider's Temple","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

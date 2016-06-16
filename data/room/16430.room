@@ -1,0 +1,1 @@
+{"id":16430,"terrain":"inside","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16430,"toId":16429,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Mayor Kell's Office","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":28697,"terrain":"hallway","zoneName":"lab","exits":{"w":{"name":"w","fromId":28697,"toId":28696,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":28697,"toId":28698,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Stairwell","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":14194,"terrain":"inside","zoneName":"melody","exits":{"w":{"name":"w","fromId":14194,"toId":14195,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Recital Studio","coords":{"y":30,"x":20},"recallable":true,"portalable":true}
