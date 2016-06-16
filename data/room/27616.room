@@ -1,0 +1,1 @@
+{"id":27616,"terrain":"inside","zoneName":"kingsholm","exits":{"e":{"name":"e","fromId":27616,"toId":27615,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Mess Hall","coords":{"y":45,"x":3},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":16176,"terrain":"forest","zoneName":"infest","exits":{"e":{"name":"e","fromId":16176,"toId":16177,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16176,"toId":16168,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Forest of Illusions","coords":{"y":31,"x":14},"recallable":true,"portalable":true}

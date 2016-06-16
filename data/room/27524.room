@@ -1,0 +1,1 @@
+{"id":27524,"terrain":"city","zoneName":"kingsholm","exits":{"n":{"name":"n","fromId":27524,"toId":27523,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":27524,"toId":27525,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"King's Street","coords":{"y":45,"x":3},"recallable":true,"portalable":true}

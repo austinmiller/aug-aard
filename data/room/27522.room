@@ -1,0 +1,1 @@
+{"id":27522,"terrain":"city","zoneName":"kingsholm","exits":{"n":{"name":"n","fromId":27522,"toId":11600,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":27522,"toId":27523,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Gates of Kingsholm","coords":{"y":45,"x":3},"recallable":true,"portalable":true}

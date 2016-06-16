@@ -1,0 +1,1 @@
+{"id":29287,"terrain":"inside","zoneName":"amusement","exits":{"n":{"name":"n","fromId":29287,"toId":29285,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Women's Bathroom","coords":{"y":8,"x":12},"recallable":true,"portalable":true}
