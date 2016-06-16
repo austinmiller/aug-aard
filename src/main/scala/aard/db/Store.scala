@@ -26,6 +26,11 @@ object Store {
     load[A](new File(dataDir,path))
   }
 
+  def loadOrElse[A](path: String,default: => A)(implicit m: Manifest[A]) : A = {
+    val file = new File(dataDir,path)
+    if(file.exists()) load[A](file) else default
+  }
+
   def save(path: String, obj: Any) = {
     val file = new File(dataDir,path)
     FileUtils.writeStringToFile(file,JsonUtil.toJson(obj),charset)

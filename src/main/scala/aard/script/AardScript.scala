@@ -2,7 +2,7 @@ package aard.script
 
 import aard.adventure.{Campaign, Quest, Targeter}
 import aard.map.{Room, Zone}
-import aard.player.Prompt
+import aard.player.{Player, Prompt}
 import aug.profile.{ProfileEvent, ProfileEventListener, ScriptInit, TelnetGMCP}
 import aug.script.Game
 
@@ -26,6 +26,7 @@ class AardScript extends ProfileEventListener {
       case r: GmcpRoom =>
         Game.echo(s"<${r.num}> ")
         Room.setRoom(r)
+      case p: GmcpChar => Player.onGmcp(p)
       case _ =>
     }
   }
@@ -39,5 +40,6 @@ class AardScript extends ProfileEventListener {
     Campaign.load
     Prompt.load
     Targeter.load
+    Player.load
   }
 }
