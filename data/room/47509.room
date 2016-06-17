@@ -1,0 +1,1 @@
+{"id":47509,"terrain":"trail_ew","zoneName":"aardington","exits":{"n":{"name":"n","fromId":47509,"toId":47510,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":47509,"toId":13033,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Aardington Estate","coords":{"y":38,"x":25},"recallable":true,"portalable":true}

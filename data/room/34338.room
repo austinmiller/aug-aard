@@ -1,0 +1,1 @@
+{"id":34338,"terrain":"office","zoneName":"gnomalin","exits":{"e":{"name":"e","fromId":34338,"toId":34337,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Narib's Office","coords":{"y":38,"x":37},"recallable":true,"portalable":true}

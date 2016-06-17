@@ -1,0 +1,1 @@
+{"id":20,"terrain":"inside","zoneName":"thieves","exits":{"w":{"name":"w","fromId":20,"toId":19,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"sleep bed":{"name":"sleep bed","fromId":20,"toId":21,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Thief Hideout","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

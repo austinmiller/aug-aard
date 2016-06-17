@@ -1,0 +1,1 @@
+{"id":18,"terrain":"inside","zoneName":"thieves","exits":{"n":{"name":"n","fromId":18,"toId":17,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":18,"toId":13424,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dragon Road Toll Booth","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

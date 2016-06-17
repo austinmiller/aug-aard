@@ -1,0 +1,1 @@
+{"id":1,"terrain":"inside","zoneName":"thieves","exits":{"e":{"name":"e","fromId":1,"toId":2,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1,"toId":13363,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Marsh Road Toll Booth","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

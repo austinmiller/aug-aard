@@ -1,0 +1,1 @@
+{"id":26,"terrain":"inside","zoneName":"thieves","exits":{"n":{"name":"n","fromId":26,"toId":27,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":26,"toId":23,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dragon Road Bloodbath","coords":{"y":9,"x":32},"recallable":true,"portalable":true}
