@@ -4,9 +4,9 @@ import java.util.regex.Pattern
 
 import aard.db.Store
 import aard.map.Room
-import aard.script.GmcpChar
+import aard.script.{AardUtil, GmcpChar}
 import aug.script.{Alias, Game, Trigger}
-import aug.util.{JsonUtil, Util}
+import aug.util.{JsonUtil}
 
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
@@ -52,7 +52,12 @@ object Player {
   def onGmcp(gmcp: GmcpChar) = {
     current.filter(_.name == gmcp.name  ) match {
       case None =>
-        current = Some(Store.loadOrElse[Player](s"$dir/${gmcp.name}$ext",newPlayer(gmcp)))
+        val p = Store.loadOrElse[Player](s"$dir/${gmcp.name}$ext",newPlayer(gmcp))
+        current = Some(p)
+        if (p.portals == null) {
+          current = Some(p.copy(portals = Set.empty))
+          save(p)
+        }
       case _ =>
     }
   }
@@ -103,9 +108,8 @@ object Player {
     Alias.alias("i worn",m=>{
       withPlayer(){p=>
         Game.header(s"worn items")
-        p.items.filter(_.wearLoc != Unworn).toList.sortBy(_.wearLoc.name).foreach {i=>
-          val name = Util.removeColors(i.name)
-          Game.echo(s"${i.wearLoc} :: $name\n")
+        p.items.filter(_.worn).toList.sortBy(_.wearLoc.name).foreach {i=>
+          Game.echo(s"${i.wearLoc} :: ${i.noColors}\n")
         }
       }
     })
@@ -131,6 +135,26 @@ object Player {
     Alias.alias("i best",m=> {
       withPlayer() {_.wearBest()}
     })
+
+    Alias.alias("i dest (\\d+)",m=>{
+      val id = m.group(1).toLong
+      withPlayer() { p=>
+        p.withPortal(id) { (portal,item) =>
+          val np = portal.copy(toId = Room.current.id)
+          val nps = p.portals.filter(_.id != id) + np
+          current = Some(p.copy(portals = nps))
+          save(current.get)
+        }
+      }
+    })
+
+    // really for testing purposes
+    Alias.alias("use portal (\\d+)",m=>
+      withPlayer() { p=>
+        val pid = m.group(1).toLong
+        p.usePortal(pid)
+      }
+    )
 
     Game.sendGmcp("request char")
   }
@@ -228,6 +252,7 @@ object Player {
           }
         case Worn =>
           p.withItem(id) {i=>
+            Game.echo(s"wearing $i at ${Item.idToWearLoc(wearLocId)}\n")
             addItem(i.copy(containerId = containerId,wearLocId = wearLocId))
           }
         case _ =>
@@ -237,6 +262,12 @@ object Player {
 
       }
     }
+    withPlayer() {p=>
+      p.withItem(id){i=>
+        Game.echo(s"$i ${i.wearLoc}\n")
+      }
+    }
+
 
   })
 
@@ -250,13 +281,11 @@ object Player {
   def addItem(item: Item) = {
     withPlayer() { p=>
 
-      if(item.itemType == Portal) {
-        if(p.portals.find(_.id == item.id).isEmpty) {
-          current = Some(p.copy(portals = p.portals + Portal(item.id)))
-        }
-      }
+      val portals = if(item.itemType == Portal && p.portals.find(_.id == item.id).isEmpty) {
+        p.portals + Portal(item.id)
+      } else p.portals
 
-      current = Some(p.copy(items = p.items.filter(_.id != item.id) + item))
+      current = Some(p.copy(items = p.items.filter(_.id != item.id) + item, portals = portals))
       save(p)
     }
   }
@@ -441,6 +470,12 @@ object Item {
 
 case class Portal(id: Long, toId: Long = -1, pathable: Boolean = true) {
   def to = Room(toId)
+
+  override def toString = {
+    val dest = to.map(r=> s"[${r.zoneName}]: ${r.name}").getOrElse("unknown")
+    val name = Player.current.flatMap(_.item(id)).map(_.noColors).getOrElse("item not found")
+    s"id: $id dest: $dest pathable: $pathable item: $name"
+  }
 }
 
 case class Item(id: Long, flags: String = "", name: String = "", level: Int = 0, itemTypeId: Int = Light.id,
@@ -450,11 +485,10 @@ case class Item(id: Long, flags: String = "", name: String = "", level: Int = 0,
   def wearLoc = Item.idToWearLoc(wearLocId)
   def kept : Boolean = flags.contains("K")
   def worn : Boolean = wearLoc != Unworn
-
   def contained : Boolean = containerId != -1
-
   def getFromContainer = if(contained) Game.send(s"get ${id} ${containerId}")
   def remove = if(worn) Game.send(s"remove ${id}")
+  def noColors = AardUtil.removeColors(name)
 }
 
 
@@ -465,6 +499,17 @@ case class Player(name: String, items: Set[Item] = Set.empty, portals : Set[Port
     item(id) match {
       case None => Game.echo(s"\nitem <${id}> not found.\n")
       case Some(item) => f(item)
+    }
+  }
+
+  def portal(id: Long) = portals.find(_.id == id)
+
+  def withPortal(id: Long)(f: (Portal,Item)=>Unit) = {
+    withItem(id) { i =>
+      portal(id) match {
+        case None => Game.echo(s"\nportal <${id}> not found.\n")
+        case Some(portal) => f(portal,i)
+      }
     }
   }
 
@@ -520,10 +565,26 @@ case class Player(name: String, items: Set[Item] = Set.empty, portals : Set[Port
       best("shield").foreach { i=>wear(i,WearShield) }
       best("held").foreach { i=>wear(i,WearHold) }
     }
-
   }
 
+  def usePortal(id: Long): Unit = {
+    withPortal(id) { (p,i) =>
+      i.getFromContainer
+      if(!i.worn) {
+        val replace: Option[(Item, WearLoc)] = if (wornItem(WearSecond).isDefined) {
+          Some(wornItem(WearSecond).get, WearSecond)
+        } else if (wornItem(WearHold).isDefined) {
+          Some((wornItem(WearHold).get, WearHold))
+        } else None
 
+        wear(i,WearHold)
+        Game.send("enter")
+        replace.foreach{x=>
+          Game.send(s"wear ${x._1.id} ${x._2.name}")
+        }
+      } else Game.send("enter")
+    }
+  }
 
   def wear(item: Item, wearLoc: WearLoc) : Unit = {
     if(!item.worn) {

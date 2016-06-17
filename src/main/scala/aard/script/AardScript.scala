@@ -44,3 +44,27 @@ class AardScript extends ProfileEventListener {
     Player.load
   }
 }
+
+
+object AardUtil {
+
+  trait ColorState
+  case object Stream extends ColorState
+  case object ExpectColor extends ColorState
+
+  def removeColors(line : String) : String = {
+
+    val b = List.newBuilder[Char]
+    var s : ColorState = Stream
+    for(ch<-line) {
+      s match {
+        case Stream => if(ch=='@') s = ExpectColor else b+=ch
+        case ExpectColor =>
+          s = Stream
+          if(ch=='@') b += ch
+      }
+    }
+
+    b.result().mkString("")
+  }
+}
