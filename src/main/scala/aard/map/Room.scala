@@ -355,7 +355,7 @@ object Room {
   val ext = ".zone"
   val rooms = mutable.Map[Long,Room]()
   val roomsByName = mutable.Map[String,Iterable[Room]]()
-  private var current : Option[Room] = null
+  private var current : Option[Room] = None
   private var rlist : Option[RList] = None
   private var specialExit = Option[SpecialExit](null)
   private var mazeExit = Option[Exit](null)
