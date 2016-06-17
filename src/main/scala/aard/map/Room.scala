@@ -352,7 +352,7 @@ case class RList(rooms: Array[Room]) {
 object Room {
 
   val path = "room"
-  val ext = ".room"
+  val ext = ".zone"
   val rooms = mutable.Map[Long,Room]()
   val roomsByName = mutable.Map[String,Iterable[Room]]()
   private var current : Option[Room] = null
@@ -378,7 +378,7 @@ object Room {
 
 
   private def loadAll = {
-    Store.loadAll[Room](path,ext).foreach(r=>rooms(r.id)=r)
+    Store.loadAll[List[Room]](path,ext).flatten.foreach(r=>rooms(r.id)=r)
   }
 
   def onRepop(): Unit = {
@@ -417,11 +417,13 @@ object Room {
       }
     }
 
-    current = Some(rooms.getOrElse(gmcp.num, {
-      val r = fromGmcp(gmcp)
-      save(r)
-      r
-    }))
+    rooms.get(gmcp.num) match {
+      case Some(room) => current = Some(room)
+      case None =>
+        val r = fromGmcp(gmcp)
+        current = Some(r)
+        save(r)
+    }
 
     if(List[Option[Boolean]](
       addMazeExit("n",gmcp.exits.n),
@@ -468,16 +470,22 @@ object Room {
       return
     }
 
-    zoneRooms(room.zoneName).foreach {r=>patherCache.invalidate(room)}
-    zonePatherCache.invalidateAll()
     rooms(room.id) = room
 
-    val nm = rooms.values.groupBy(_.name)
+    val zn = room.zoneName
+    val roomsToSave = zoneRooms(zn)
+
+    zoneRooms.foreach {r=>patherCache.invalidate(room)}
+    zonePatherCache.invalidateAll()
 
     roomsByName ++= rooms.values.groupBy(_.name)
 
     Zone.register(room.zoneName)
-    Store.save(s"$path/${room.id}.room",room)
+    Store.save(s"$path/$zn.zone",roomsToSave)
+  }
+
+  def saveAll = {
+    rooms.values.groupBy(_.zoneName).map(x=> x._2.head).foreach(save(_))
   }
 
   def fromGmcp(gmcp: GmcpRoom) : Room = {
@@ -522,6 +530,7 @@ object Room {
     Alias.alias("r zp", (m: Matcher) => aliasZonePather)
     Alias.alias("r zones", (m: Matcher) => aliasZones)
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
+    Alias.alias("r save all", m=> saveAll)
 
     Alias.alias("maze",m=>aliasMaze)
     Alias.alias("maze clear",m=>deleteMazeExits())
