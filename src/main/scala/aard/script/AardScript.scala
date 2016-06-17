@@ -27,6 +27,7 @@ class AardScript extends ProfileEventListener {
         Game.echo(s"<${r.num}> ")
         Room.setRoom(r)
       case p: GmcpChar => Player.onGmcp(p)
+      case GmcpTick => Game.send("q")
       case _ =>
     }
   }

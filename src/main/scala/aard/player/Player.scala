@@ -6,7 +6,7 @@ import aard.db.Store
 import aard.map.Room
 import aard.script.GmcpChar
 import aug.script.{Alias, Game, Trigger}
-import aug.util.JsonUtil
+import aug.util.{JsonUtil, Util}
 
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
@@ -103,8 +103,9 @@ object Player {
     Alias.alias("i worn",m=>{
       withPlayer(){p=>
         Game.header(s"worn items")
-        p.items.filter(_.wearLoc != Unworn).foreach {i=>
-          Game.echo(s"$i\n")
+        p.items.filter(_.wearLoc != Unworn).toList.sortBy(_.wearLoc.name).foreach {i=>
+          val name = Util.removeColors(i.name)
+          Game.echo(s"${i.wearLoc} :: $name\n")
         }
       }
     })
@@ -116,6 +117,19 @@ object Player {
           Game.echo(s"$i\n")
         }
       }
+    })
+
+    Alias.alias("i portals",m=>{
+      withPlayer(){p=>
+        Game.header(s"portals")
+        p.portals.foreach {portal=>
+          Game.echo(s"$portal\n")
+        }
+      }
+    })
+
+    Alias.alias("i best",m=> {
+      withPlayer() {_.wearBest()}
     })
 
     Game.sendGmcp("request char")
@@ -208,9 +222,17 @@ object Player {
       action match {
         case Dropped | Consumed =>
           removeItem(id)
-        case _ =>
+        case Removed =>
+          p.withItem(id) {i=>
+            addItem(i.copy(containerId = containerId,wearLocId = Unworn.id))
+          }
+        case Worn =>
           p.withItem(id) {i=>
             addItem(i.copy(containerId = containerId,wearLocId = wearLocId))
+          }
+        case _ =>
+          p.withItem(id) {i=>
+            addItem(i.copy(containerId = containerId))
           }
 
       }
@@ -227,6 +249,13 @@ object Player {
 
   def addItem(item: Item) = {
     withPlayer() { p=>
+
+      if(item.itemType == Portal) {
+        if(p.portals.find(_.id == item.id).isEmpty) {
+          current = Some(p.copy(portals = p.portals + Portal(item.id)))
+        }
+      }
+
       current = Some(p.copy(items = p.items.filter(_.id != item.id) + item))
       save(p)
     }
@@ -419,6 +448,13 @@ case class Item(id: Long, flags: String = "", name: String = "", level: Int = 0,
                 containerId: Long = -1, wornAt: String = "", weight: Int = 1) {
   def itemType = Item.idToItemType(itemTypeId)
   def wearLoc = Item.idToWearLoc(wearLocId)
+  def kept : Boolean = flags.contains("K")
+  def worn : Boolean = wearLoc != Unworn
+
+  def contained : Boolean = containerId != -1
+
+  def getFromContainer = if(contained) Game.send(s"get ${id} ${containerId}")
+  def remove = if(worn) Game.send(s"remove ${id}")
 }
 
 
@@ -432,11 +468,70 @@ case class Player(name: String, items: Set[Item] = Set.empty, portals : Set[Port
     }
   }
 
+  def dualWield : Boolean = false
+
   def availablePortals = {
     val keys = items.map(_.id)
     portals.filter(p=> keys.contains(p.id) && p.pathable && p.to.isDefined)
   }
 
+  def wornItem(wearLoc: WearLoc) : Option[Item] = items.find(_.wearLoc == wearLoc)
+
+  def best(wornAt: String, num: Int=1) : List[Item] = items.filter(i=>i.wornAt == wornAt && i.kept).toList
+    .sortBy(_.score).take(num)
+
+  def wearBestPair(wearAt: String, wearLoc1: WearLoc, wearLoc2: WearLoc) = {
+    best(wearAt,2) match {
+      case Nil =>Game.echo("nil!\n")
+      case List(a) =>
+        Game.echo("one!\n")
+        wear(a,wearLoc1)
+      case List(a,b) =>
+        Game.echo(s"$a\n$b\n")
+        wear(a,wearLoc1)
+        wear(b,wearLoc2)
+      case _ => Game.echo("ruh roh!\n")
+    }
+  }
+
+  def wearBest(): Unit = {
+    best("light").foreach { i=>wear(i,WearLight) }
+    best("head").foreach { i=>wear(i,WearHead) }
+    best("eyes").foreach { i=>wear(i,WearEyes) }
+    best("back").foreach { i=>wear(i,WearBack) }
+    best("torso").foreach { i=>wear(i,WearTorso) }
+    best("body").foreach { i=>wear(i,WearBody) }
+    best("waist").foreach { i=>wear(i,WearWaist) }
+    best("arms").foreach { i=>wear(i,WearArms) }
+    best("hands").foreach { i=>wear(i,WearHands) }
+    best("legs").foreach { i=>wear(i,WearLegs) }
+    best("feet").foreach { i=>wear(i,WearFeet) }
+    best("float").foreach { i=>wear(i,WearFloat) }
+    best("above").foreach { i=>wear(i,WearAbove) }
+
+    wearBestPair("ear",WearLEar,WearREar)
+    wearBestPair("neck",WearNeck1,WearNeck2)
+    wearBestPair("wrist",WearLWrist,WearRWrist)
+    wearBestPair("finger",WearLFinger,WearRFinger)
+
+    if(dualWield) {
+      ???
+    } else {
+      best("shield").foreach { i=>wear(i,WearShield) }
+      best("held").foreach { i=>wear(i,WearHold) }
+    }
+
+  }
+
+
+
+  def wear(item: Item, wearLoc: WearLoc) : Unit = {
+    if(!item.worn) {
+      item.getFromContainer
+      item.remove
+      Game.send(s"wear ${item.id} ${wearLoc.name}")
+    }
+  }
 }
 
 
