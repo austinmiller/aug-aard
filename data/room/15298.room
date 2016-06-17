@@ -1,0 +1,1 @@
+{"id":15298,"terrain":"inside","zoneName":"fantasy","exits":{"s":{"name":"s","fromId":15298,"toId":15281,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15298,"toId":15299,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Crypt","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

@@ -3,12 +3,13 @@ package aard.map
 import java.util.regex.Matcher
 
 import aard.db.Store
+import aard.player.{Player, Portal}
 import aard.script.GmcpRoom
-import aug.script.{Alias, Game}
+import aug.script.{Alias, Game, Trigger}
 import aug.util.JsonUtil
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
 
-import scala.collection.{Set, mutable}
+import scala.collection.mutable
 
 case class RunList(run: String ="", amt: Int = 0, last: String = "") {
   def +(exit: Exit): RunList = {
@@ -39,35 +40,59 @@ object Path {
   val quest = 32458
   val campaign = 32614
 
+  val recallExit = Exit("recall",-1,-1,weight=500)
+
   def shortest(paths: Iterable[Path]) : Option[Path] = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
 
   def recallTo(zoneName : String) = {
-    Room(recall).flatMap{_.zonePather.pathTo(zoneName)}.map { p=> Path(Exit("recall",-1,-1,weight=10) :: p.exits)}
+    Room(recall).flatMap{_.zonePather.pathTo(zoneName)}.map { p=> Path(recallExit :: p.exits)}
   }
 
   def recallTo(target: Room): Option[Path] = {
-    Room(recall).flatMap{_.zonePather.pathTo(target)}.map { p=> Path(Exit("recall",-1,-1,weight=10) :: p.exits)}
+    Room(recall).flatMap{_.zonePather.pathTo(target)}.map { p=> Path(recallExit :: p.exits)}
   }
 
-  def to(zoneName: String) = {
-    shortest(
-      List(Room.current.zonePather.pathTo(zoneName),
-        recallTo(zoneName)).flatten
-    )
+  def portalTo(target: Room): Option[Path] = {
+    Player.current.flatMap { player=>
+      shortest(player.availablePortals.map { p=>
+        p.to.get.zonePather.pathTo(target).map(path=>Path(path.exits,Some(p)))
+      }.toList.flatten)
+    }
   }
 
-  def to(target: Room) = {
-    shortest(
-      List(Room.current.zonePather.pathTo(target),
-        recallTo(target)).flatten
-    )
+  def portalTo(zoneName: String): Option[Path] = {
+    Player.current.flatMap { player=>
+      shortest(player.availablePortals.map { p=>
+        p.to.get.zonePather.pathTo(zoneName).map(path=>Path(path.exits,Some(p)))
+      }.toList.flatten)
+    }
+  }
+
+  def to(zoneName: String) : Option[Path] = {
+    Room.withRoom() { r =>
+      shortest(
+        List(r.zonePather.pathTo(zoneName),
+          recallTo(zoneName),
+          portalTo(zoneName)).flatten
+      )
+    }.flatten
+  }
+
+  def to(target: Room) : Option[Path] = {
+    Room.withRoom() { r =>
+      shortest(
+        List(r.zonePather.pathTo(target),
+          recallTo(target),
+          portalTo(target)).flatten
+      )
+    }.flatten
   }
 }
 
-case class Path(val exits: List[Exit]) {
-  val weight = exits.map {_.weight}.sum
-  def + (exit: Exit) : Path = Path(exits :+ exit)
-  def + (path: Path) : Path = Path(exits ::: path.exits)
+case class Path(val exits: List[Exit], portal: Option[Portal]=None) {
+  val weight = exits.map {_.weight}.sum + portal.map(p=>5).getOrElse(0)
+  def + (exit: Exit) : Path = Path(exits :+ exit,portal)
+  def + (path: Path) : Path = Path(exits ::: path.exits,portal)
 
   def runTo = {
     val cmds = List.newBuilder[String]
@@ -95,6 +120,11 @@ case class Path(val exits: List[Exit]) {
     }
 
     addRunTo
+
+    portal foreach { portal=>
+      Player.withPlayer(){_.usePortal(portal.id) }
+    }
+
     cmds.result.foreach { cmd => Game.send(cmd) }
   }
 
@@ -110,7 +140,7 @@ object InfinitePath extends Path(List[Exit]()) {
 
 class ZonePather(val room: Room) {
 
-  val links = mutable.Map[Exit,Path]()
+  val paths = mutable.Map[Exit,Path]()
 
   private def setPath(exit: Exit,path: Path) = {
     path.exits match {
@@ -118,13 +148,13 @@ class ZonePather(val room: Room) {
       case l =>
         val fromId = l.head.fromId
         if(fromId != room.id) throw new Exception(s"$fromId != ${room.id}")
-        links(exit) = path
+        paths(exit) = path
     }
   }
 
   private def printLinks = {
     Game.header("links")
-    links.foreach {x=>
+    paths.foreach { x=>
       val zfrom =x._1.from.get.zoneName
       val zto =x._1.to.get.zoneName
       val p = x._2
@@ -139,7 +169,7 @@ class ZonePather(val room: Room) {
 
     def nextToVisit: Exit = {
       val e : Exit = unvisited.reduceLeft { (a, b) =>
-        if (links(a).weight < links(b).weight) a else b
+        if (paths(a).weight < paths(b).weight) a else b
       }
       unvisited.remove(e)
       e
@@ -148,7 +178,7 @@ class ZonePather(val room: Room) {
     def addToUnvisited(exit: Exit): Unit = {
       if(unvisited.contains(exit)) return
       unvisited.add(exit)
-      links(exit) = InfinitePath
+      paths(exit) = InfinitePath
       Room.zoneLinks(exit.to.get.zoneName).foreach {e=>addToUnvisited(e) }
     }
 
@@ -162,7 +192,7 @@ class ZonePather(val room: Room) {
     while(!unvisited.isEmpty) {
       val e = nextToVisit
 
-      links(e) match {
+      paths(e) match {
         case InfinitePath =>
         case basePath =>
           val from = e.to.get
@@ -175,7 +205,7 @@ class ZonePather(val room: Room) {
               case pathToTarget =>
                 if (pathToTarget.get.weight > 0 || to == from) {
                   val newPath = basePath + pathToTarget.get + zl // the path to the new zone goes through the zl
-                  if (newPath.weight < links(zl).weight) {
+                  if (newPath.weight < paths(zl).weight) {
                     setPath(zl,newPath)
                   }
                 }
@@ -188,7 +218,7 @@ class ZonePather(val room: Room) {
 
   if(time>1000) Game.echo(s"zone pather created for room ${room.id} in $time ms\n")
 
-  def pathsTo(zoneName: String) : Iterable[Path] = links.filter{
+  def pathsTo(zoneName: String) : Iterable[Path] = paths.filter{
     x => x._1.to.get.zoneName == zoneName && x._2.weight != InfinitePath.weight
   }.values
 
@@ -307,14 +337,11 @@ object Room {
   val ext = ".room"
   val rooms = mutable.Map[Long,Room]()
   val roomsByName = mutable.Map[String,Iterable[Room]]()
-
-  private var currentRoom : Room = null
+  private var current : Option[Room] = null
   private var rlist : Option[RList] = None
   private var specialExit = Option[SpecialExit](null)
 
   def apply(id: Long) = rooms.get(id)
-
-  def current : Room = synchronized { currentRoom }
 
   val patherCache: LoadingCache[Room, Pather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,Pather]() {
     override def load(key: Room): Pather = new Pather(key,zoneRooms(key.zoneName).toSet)
@@ -322,6 +349,12 @@ object Room {
 
   val zonePatherCache: LoadingCache[Room, ZonePather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,ZonePather]() {
     override def load(key: Room): ZonePather = new ZonePather(key)
+  })
+
+  val portalBlockTrigger = Trigger.trigger("Magic walls bounce you back.",m=> {
+    withRoom() { r =>
+      current = Some(r.copy(portalable=false))
+    }
   })
 
 
@@ -339,11 +372,11 @@ object Room {
       }
     }
 
-    currentRoom = rooms.getOrElse(gmcp.num, {
+    current = Some(rooms.getOrElse(gmcp.num, {
       val r = fromGmcp(gmcp)
       save(r)
       r
-    })
+    }))
   }
 
   def withRList()(f: RList => Unit) = {
@@ -401,13 +434,15 @@ object Room {
     )
   }
 
-  def zoneRooms(zoneName: String = currentRoom.zoneName): Iterable[Room] = rooms.values.filter {_.zoneName == zoneName}
-  def zoneLinks(zoneName: String = currentRoom.zoneName): Iterable[Exit] = zoneRooms(zoneName).flatMap { _.externalExits }
+  def zoneRooms(): List[Room] = withRoom() { r=>zoneRooms(r.zoneName)}.getOrElse(List[Room]())
+  def zoneRooms(zoneName: String): List[Room] = rooms.values.filter {_.zoneName == zoneName}.toList
+  def zoneLinks() : List[Exit] = withRoom() {r=>zoneLinks(r.zoneName)}.getOrElse(List[Exit]())
+  def zoneLinks(zoneName: String): List[Exit] = zoneRooms(zoneName).flatMap { _.externalExits }
 
   def load = {
     loadAll
-    Alias.alias("r info",(m: Matcher) => aliasInfo(currentRoom.id))
-    Alias.alias("r info ([0-9]*)",(m: Matcher) => aliasInfo(m.group(1).toLong))
+    Alias.alias("r info",(m: Matcher) => aliasInfo(None))
+    Alias.alias("r info ([0-9]*)",(m: Matcher) => aliasInfo(Some(m.group(1).toLong)))
     Alias.alias("r path ([0-9]*) ([0-9]*)",(m: Matcher) => aliasPath(m.group(1).toLong,m.group(2).toLong))
     Alias.alias("r list",(m: Matcher) => aliasList)
     Alias.alias("rn", (m: Matcher) => aliasNextRoom)
@@ -430,15 +465,24 @@ object Room {
     roomsByName ++= rooms.values.groupBy(_.name)
   }
 
-  def withRoom(id: Long)(f: Room => Unit) = {
-    Room(id) match {
+  def forRoom(id: Option[Long] = None)(f: Room => Unit) : Unit = {
+    id.map(rid=>rooms.get(rid)).getOrElse(current) match {
       case None => Game.echo(s"\nCould not locate room <${id}>\n")
       case Some(room) => f(room)
     }
   }
 
+  def withRoom[A](id: Option[Long] = None)(f: Room => A) : Option[A] = {
+    id.map(rid=>rooms.get(rid)).getOrElse(current) match {
+      case None =>
+        Game.echo(s"\nCould not locate room <${id}>\n")
+        None
+      case Some(room) => Some(f(room))
+    }
+  }
+
   def runTo(id: Long) : Unit = {
-    withRoom(id)(r=>runTo(r))
+    withRoom(Some(id))(r=>runTo(r))
   }
 
   def runTo(r: Room) : Unit= {
@@ -456,35 +500,41 @@ object Room {
   }
 
   def aliasDeleteExit(exitName: String) = {
-    current.withExit(exitName) { e =>
-      val nm = current.exits - exitName
-      val nr = current.copy(exits = nm)
-      currentRoom = nr
-      Game.echo(s"\nDeleted exit $exitName\n")
-      save(current)
+    forRoom() { cur =>
+      cur.withExit(exitName) { e =>
+        val nm = cur.exits - exitName
+        val nr = cur.copy(exits = nm)
+        current = Some(nr)
+        Game.echo(s"\nDeleted exit $exitName\n")
+        save(nr)
+      }
     }
   }
 
   def aliasAddDoor(exitName: String) = {
-    current.withExit(exitName) { e=>
-      val ne = e.copy(door = true)
-      val nm = current.exits + ((exitName)->ne)
-      val nr = current.copy(exits=nm)
+    forRoom() { cur =>
+      cur.withExit(exitName) { e =>
+        val ne = e.copy(door = true)
+        val nm = cur.exits + ((exitName) -> ne)
+        val nr = cur.copy(exits = nm)
 
-      Game.echo(s"\nAdded door to $ne\n")
-      currentRoom = nr
-      save(current)
+        Game.echo(s"\nAdded door to $ne\n")
+        current = Some(nr)
+        save(nr)
+      }
     }
   }
 
   def aliasGotoQuest = runTo(Path.quest)
 
   def aliasSpecialExit(exitName: String): Unit = {
-    current.exits.get(exitName) match {
-      case Some(_) => Game.echo(s"\nExit $exitName is already defined\n")
-      case _ =>
-        Game.send(exitName)
-        specialExit= Some(SpecialExit(current,exitName))
+    forRoom() { cur =>
+      cur.exits.get(exitName) match {
+        case Some(_) => Game.echo(s"\nExit $exitName is already defined\n")
+        case _ =>
+          Game.send(exitName)
+          specialExit = Some(SpecialExit(cur, exitName))
+      }
     }
   }
 
@@ -520,9 +570,11 @@ object Room {
   }
 
   def aliasZonePather(): Unit = {
-    Game.header(s"zone pather cache from room ${current.id}")
-    zonePatherCache.get(currentRoom).links.foreach { x =>
-      Game.echo(s"${x._1.to.get.zoneName} -> ${x._2}\n")
+    forRoom() { cur =>
+      Game.header(s"zone pather cache from room ${cur.id}")
+      cur.zonePather.paths.foreach { x =>
+        Game.echo(s"${x._1.to.get.zoneName} -> ${x._2}\n")
+      }
     }
   }
 
@@ -537,7 +589,7 @@ object Room {
     }
   }
 
-  def aliasInfo(id: Long) = {
+  def aliasInfo(id: Option[Long]) = {
     withRoom(id) { room=>
       Game.header(s"room <${room.id}>")
       val s = JsonUtil.prettyJson(room)
@@ -556,22 +608,25 @@ object Room {
   }
 
   def aliasList = {
-    zoneRooms(currentRoom.zoneName).foreach { r=> Game.echo(s"$r\n") }
+    forRoom() {r=> zoneRooms(r.zoneName).foreach { r=> Game.echo(s"$r\n") } }
   }
 
   def aliasNextRoom = {
-    val pather = patherCache.get(current)
+    forRoom() { cur=>
+      val pather = cur.pather
 
-    pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }}.toSeq match {
-      case Seq() => Game.echo("There are no rooms with undiscovered exits.\n")
-      case rooms =>
-        Some(rooms.flatMap(pather.pathTo(_))).filter(_.nonEmpty).map(_.minBy(_.weight)) match {
-          case Some(p) =>
-            val path = p + p.exits.last.to.get.unknownExits.head
-            path.runTo
-          case None => Game.echo(s"No path found to any rooms with undiscovered exits.\n")
-        }
+      pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }}.toSeq match {
+        case Seq() => Game.echo("There are no rooms with undiscovered exits.\n")
+        case rooms =>
+          Some(rooms.flatMap(pather.pathTo(_))).filter(_.nonEmpty).map(_.minBy(_.weight)) match {
+            case Some(p) =>
+              val path = p + p.exits.last.to.get.unknownExits.head
+              path.runTo
+            case None => Game.echo(s"No path found to any rooms with undiscovered exits.\n")
+          }
+      }
     }
+
   }
 
   def aliasZoneLinks = {

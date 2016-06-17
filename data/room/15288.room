@@ -1,0 +1,1 @@
+{"id":15288,"terrain":"underground","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15288,"toId":15285,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Darkest Depth of Hell","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":15280,"terrain":"underground","zoneName":"fantasy","exits":{"d":{"name":"d","fromId":15280,"toId":15281,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":15280,"toId":15279,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Buried Alive","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

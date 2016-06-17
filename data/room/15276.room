@@ -1,0 +1,1 @@
+{"id":15276,"terrain":"forest","zoneName":"fantasy","exits":{"e":{"name":"e","fromId":15276,"toId":15275,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":15276,"toId":15277,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Creepy, Crawly Things","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

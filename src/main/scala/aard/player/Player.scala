@@ -140,10 +140,12 @@ object Player {
       val id = m.group(1).toLong
       withPlayer() { p=>
         p.withPortal(id) { (portal,item) =>
-          val np = portal.copy(toId = Room.current.id)
-          val nps = p.portals.filter(_.id != id) + np
-          current = Some(p.copy(portals = nps))
-          save(current.get)
+          Room.withRoom() { r =>
+            val np = portal.copy(toId = r.id)
+            val nps = p.portals.filter(_.id != id) + np
+            current = Some(p.copy(portals = nps))
+            save(current.get)
+          }
         }
       }
     })

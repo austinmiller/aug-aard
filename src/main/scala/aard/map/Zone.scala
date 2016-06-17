@@ -13,12 +13,14 @@ object Zone {
 
   val whereTriggerPattern = "You are in area : (.*)"
   val whereTrigger = Trigger.trigger(whereTriggerPattern,(m: Matcher) => {
-    val long = m.group(1)
-    val cur = Room.current.zoneName
-    val nz = Zone(cur,long)
-    if(!(zones.contains(nz))) {
-      zones = zones.filter(_.name != cur) + nz
-      save
+    Room.forRoom() { r =>
+      val long = m.group(1)
+      val cur = r.zoneName
+      val nz = Zone(cur, long)
+      if (!(zones.contains(nz))) {
+        zones = zones.filter(_.name != cur) + nz
+        save
+      }
     }
   })
 

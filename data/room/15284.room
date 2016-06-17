@@ -1,0 +1,1 @@
+{"id":15284,"terrain":"underground","zoneName":"fantasy","exits":{"e":{"name":"e","fromId":15284,"toId":15282,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15284,"toId":15296,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Suffocation","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

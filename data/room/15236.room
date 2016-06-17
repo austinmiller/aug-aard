@@ -1,0 +1,1 @@
+{"id":15236,"terrain":"field","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15236,"toId":15235,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15236,"toId":15237,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dysphoria","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+{"id":15244,"terrain":"inside","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15244,"toId":15245,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":15244,"toId":15237,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"House of Horrors","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

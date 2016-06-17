@@ -1,0 +1,1 @@
+{"id":15295,"terrain":"desert","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15295,"toId":15296,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15295,"toId":15292,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Unbearable Heat","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

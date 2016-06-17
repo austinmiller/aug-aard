@@ -17,13 +17,17 @@ object Targeter {
   },false, TriggerOptions(disableAtPrompt = true))
   val wherePromptCallback = PromptCallback(() => whereOnPrompt)
   def whereOnPrompt : Unit = {
+
     Prompt.unregister(wherePromptCallback)
 
-    val map: Map[String, Iterable[Room]] = Room.zoneRooms(Room.current.zoneName).groupBy(_.name)
-    val rooms = whereRooms.result.flatMap(rn=>map.get(rn)).flatten
-    whereRooms.clear
-    Room.setRList(rooms)
-    Room.printRList()
+    Room.forRoom() {r=>
+      val map: Map[String, Iterable[Room]] = Room.zoneRooms(r.zoneName).groupBy(_.name)
+      val rooms = whereRooms.result.flatMap(rn=>map.get(rn)).flatten
+      whereRooms.clear
+      Room.setRList(rooms)
+      Room.printRList()
+    }
+
   }
 
   def kill = target map (t=>Game.send(s"kill $t"))

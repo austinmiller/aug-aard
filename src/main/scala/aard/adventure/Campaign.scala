@@ -73,16 +73,19 @@ case class Campaign(mobs: List[CampaignMob]) {
       case Nil =>
       case head :: xs =>
         val zone = Zone.byLong(head.hint).get
-        if(Room.current.zone != zone) {
-          Path.to(zone.name) match {
-            case None => Game.echo(s"\nNo path to $zone\n")
-            case Some(path) =>
-              path.runTo
-              Game.send(s"gt next target is $head")
+        Room.forRoom() {r=>
+          if(r.zone != zone) {
+            Path.to(zone.name) match {
+              case None => Game.echo(s"\nNo path to $zone\n")
+              case Some(path) =>
+                path.runTo
+                Game.send(s"gt next target is $head")
+            }
+          } else {
+            Game.echo(s"\nYou're in the zone for ${head.name}\n")
           }
-        } else {
-          Game.echo(s"\nYou're in the zone for ${head.name}\n")
         }
+
     }
   }
 
