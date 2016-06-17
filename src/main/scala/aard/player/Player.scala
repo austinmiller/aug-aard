@@ -72,7 +72,7 @@ object Player {
     p
   }
 
-  def withPlayer()(f: Player => Unit) : Unit = {
+  def forPlayer()(f: Player => Unit) : Unit = {
     current match {
       case None => Game.echo("\nplayer is not currently loaded.\n")
       case Some(player) => f(player)
@@ -82,7 +82,7 @@ object Player {
   def load = {
     Alias.alias("p gmcp",m=> Game.sendGmcp("request char"))
     Alias.alias("p info",m=> {
-      withPlayer() { p =>
+      forPlayer() { p =>
         Game.header("player info")
         val s = JsonUtil.prettyJson(p)
         Game.echo(s"$s\n")
@@ -97,7 +97,7 @@ object Player {
     })
 
     Alias.alias("i list",m=>{
-      withPlayer(){p=>
+      forPlayer(){ p=>
         Game.header(s"inventory [${p.items.size}]")
         p.items.foreach {i=>
           Game.echo(s"$i\n")
@@ -106,7 +106,7 @@ object Player {
     })
 
     Alias.alias("i worn",m=>{
-      withPlayer(){p=>
+      forPlayer(){ p=>
         Game.header(s"worn items")
         p.items.filter(_.worn).toList.sortBy(_.wearLoc.name).foreach {i=>
           Game.echo(s"${i.wearLoc} :: ${i.noColors}\n")
@@ -115,7 +115,7 @@ object Player {
     })
 
     Alias.alias("i contained",m=>{
-      withPlayer(){p=>
+      forPlayer(){ p=>
         Game.header(s"items in containers")
         p.items.filter(_.containerId != -1).foreach {i=>
           Game.echo(s"$i\n")
@@ -124,7 +124,7 @@ object Player {
     })
 
     Alias.alias("i portals",m=>{
-      withPlayer(){p=>
+      forPlayer(){ p=>
         Game.header(s"portals")
         p.portals.foreach {portal=>
           Game.echo(s"$portal\n")
@@ -133,12 +133,12 @@ object Player {
     })
 
     Alias.alias("i best",m=> {
-      withPlayer() {_.wearBest()}
+      forPlayer() {_.wearBest()}
     })
 
     Alias.alias("i dest (\\d+)",m=>{
       val id = m.group(1).toLong
-      withPlayer() { p=>
+      forPlayer() { p=>
         p.withPortal(id) { (portal,item) =>
           Room.withRoom() { r =>
             val np = portal.copy(toId = r.id)
@@ -152,7 +152,7 @@ object Player {
 
     // really for testing purposes
     Alias.alias("use portal (\\d+)",m=>
-      withPlayer() { p=>
+      forPlayer() { p=>
         val pid = m.group(1).toLong
         p.usePortal(pid)
       }
@@ -210,7 +210,7 @@ object Player {
     import InvHeader._
     val tokens = m.group(1).split(Pattern.quote("|"))
     val id = tokens(ObjectId).toLong
-    withPlayer() {p=>
+    forPlayer() { p=>
       p.withItem(id) { item=>
         addItem(item.copy(
           score = tokens(ItemScore).toInt,
@@ -244,7 +244,7 @@ object Player {
     val containerId = tokens(2).toLong
     val wearLocId = tokens(3).toInt
 
-    withPlayer() { p =>
+    forPlayer() { p =>
       action match {
         case Dropped | Consumed =>
           removeItem(id)
@@ -264,7 +264,7 @@ object Player {
 
       }
     }
-    withPlayer() {p=>
+    forPlayer() { p=>
       p.withItem(id){i=>
         Game.echo(s"$i ${i.wearLoc}\n")
       }
@@ -274,14 +274,14 @@ object Player {
   })
 
   def removeItem(id: Long) = {
-    withPlayer() { p=>
+    forPlayer() { p=>
       current = Some(p.copy(items = p.items.filter(_.id != id)))
       save(p)
     }
   }
 
   def addItem(item: Item) = {
-    withPlayer() { p=>
+    forPlayer() { p=>
 
       val portals = if(item.itemType == Portal && p.portals.find(_.id == item.id).isEmpty) {
         p.portals + Portal(item.id)
@@ -293,7 +293,7 @@ object Player {
   }
 
   def setItems(items: Set[Item]) = {
-    withPlayer() { p=>
+    forPlayer() { p=>
       current = Some(p.copy(items=items))
       save(p)
     }

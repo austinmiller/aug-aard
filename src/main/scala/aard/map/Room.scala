@@ -53,10 +53,13 @@ object Path {
   }
 
   def portalTo(target: Room): Option[Path] = {
-    Player.current.flatMap { player=>
-      shortest(player.availablePortals.map { p=>
-        p.to.get.zonePather.pathTo(target).map(path=>Path(path.exits,Some(p)))
-      }.toList.flatten)
+    toPortalable.flatMap { bp=>
+      val addPath = Player.current.flatMap { player=>
+        shortest(player.availablePortals.map { p=>
+          p.to.get.zonePather.pathTo(target).map(path=>Path(path.exits,Some(p)))
+        }.toList.flatten)
+      }
+      addPath.map(ap=> ap.copy(prepath=bp.exits))
     }
   }
 
@@ -87,16 +90,27 @@ object Path {
       )
     }.flatten
   }
+
+  def toPortalable : Option[Path] = {
+    Room.withRoom[Option[Path]]() {cur=>
+      val rv: Option[Path] = shortest(cur.pather.paths.filter{ x=>
+        x._1.portalable
+      }.values.toList.flatten)
+      rv
+    }.flatten
+  }
 }
 
-case class Path(val exits: List[Exit], portal: Option[Portal]=None) {
-  val weight = exits.map {_.weight}.sum + portal.map(p=>5).getOrElse(0)
+case class Path(val exits: List[Exit], portal: Option[Portal]=None, prepath: List[Exit] = List.empty) {
+  val weight = prepath.map{_.weight}.sum + exits.map {_.weight}.sum + portal.map(p=>5).getOrElse(0)
   def + (exit: Exit) : Path = Path(exits :+ exit,portal)
   def + (path: Path) : Path = Path(exits ::: path.exits,portal)
 
-  def runTo = {
+  private def mapCmds(exits: List[Exit]) : List[String] = {
     val cmds = List.newBuilder[String]
     var run = RunList()
+
+
 
     def addRunTo = {
       if(!run.isEmpty) {
@@ -118,14 +132,18 @@ case class Path(val exits: List[Exit], portal: Option[Portal]=None) {
         run += exit
       }
     }
-
     addRunTo
+    cmds.result
+  }
+
+  def runTo = {
+    mapCmds(prepath).foreach(Game.send(_))
 
     portal foreach { portal=>
-      Player.withPlayer(){_.usePortal(portal.id) }
+      Player.forPlayer(){_.usePortal(portal.id) }
     }
 
-    cmds.result.foreach { cmd => Game.send(cmd) }
+    mapCmds(exits).foreach(Game.send(_))
   }
 
   override def toString: String = {
@@ -233,7 +251,7 @@ class ZonePather(val room: Room) {
 }
 
 class Pather(val room: Room, val rooms: Set[Room]) {
-  private val paths = mutable.Map[Room,Option[Path]]()
+  val paths = mutable.Map[Room,Option[Path]]()
 
   private def printPaths = {
     Game.header("links")
@@ -340,6 +358,7 @@ object Room {
   private var current : Option[Room] = null
   private var rlist : Option[RList] = None
   private var specialExit = Option[SpecialExit](null)
+  private var mazeExit = Option[Exit](null)
 
   def apply(id: Long) = rooms.get(id)
 
@@ -362,6 +381,23 @@ object Room {
     Store.loadAll[Room](path,ext).foreach(r=>rooms(r.id)=r)
   }
 
+  def onRepop(): Unit = {
+    deleteMazeExits()
+  }
+
+  def deleteMazeExits(): Unit = {
+    zoneRooms().foreach {r=>
+      if(r.hasMazeExits) {
+        Game.header("maze exits")
+        r.deleteMazeExits().exits.foreach{e=>
+          Game.echo(s"$e\n")
+        }
+
+        save(r.deleteMazeExits())
+      }
+    }
+  }
+
   def setRoom(gmcp: GmcpRoom) : Unit = synchronized {
     specialExit foreach {se=>
       if(gmcp.num != se.from.id) {
@@ -372,11 +408,42 @@ object Room {
       }
     }
 
+    mazeExit foreach {me=>
+      if(gmcp.num != me.fromId) {
+        forRoom(Some(me.fromId)) {r=>
+          r.addExit(me.copy(toId = gmcp.num))
+          save(r)
+        }
+      }
+    }
+
     current = Some(rooms.getOrElse(gmcp.num, {
       val r = fromGmcp(gmcp)
       save(r)
       r
     }))
+
+    if(List[Option[Boolean]](
+      addMazeExit("n",gmcp.exits.n),
+      addMazeExit("e",gmcp.exits.e),
+      addMazeExit("s",gmcp.exits.s),
+      addMazeExit("w",gmcp.exits.w),
+      addMazeExit("u",gmcp.exits.u),
+      addMazeExit("d",gmcp.exits.d)
+    ).exists(_ == Some(true))) {
+      save(current.get)
+    }
+  }
+
+  def addMazeExit(name: String, id: Long): Option[Boolean] = {
+    withRoom() {r=>
+      if(!r.hasExit(name) && id == -1) {
+        current = Some(r.addExit(Exit(name,id,-1,maze=true)))
+        true
+      } else {
+        false
+      }
+    }
   }
 
   def withRList()(f: RList => Unit) = {
@@ -422,6 +489,7 @@ object Room {
     if(ex.w > 0) exits += Exit("w",gmcp.num,ex.w)
     if(ex.d > 0) exits += Exit("d",gmcp.num,ex.d)
     if(ex.u > 0) exits += Exit("u",gmcp.num,ex.u)
+
     val exitMap : Map[String,Exit] = exits.result.map { e => e.name -> e }.toMap
 
     Room(
@@ -454,6 +522,9 @@ object Room {
     Alias.alias("r zp", (m: Matcher) => aliasZonePather)
     Alias.alias("r zones", (m: Matcher) => aliasZones)
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
+
+    Alias.alias("maze",m=>aliasMaze)
+    Alias.alias("maze clear",m=>deleteMazeExits())
 
     Alias.alias("g recall", (m: Matcher) => runTo(Path.recall))
     Alias.alias("g q", (m: Matcher) => aliasGotoQuest)
@@ -497,6 +568,23 @@ object Room {
       case None => Game.echo(s"\nNo path to <$zoneName>\n")
       case Some(p) => p.runTo
     }
+  }
+
+  def aliasMaze : Unit = {
+    withRoom() { r=>
+      if(r.hasMazeExits) {
+        val me = r.mazeExits.head
+        Game.send(me.name)
+        mazeExit = Some(me)
+      } else {
+        val mazeRooms: List[Path] = r.pather.paths.filter(_._1.hasMazeExits).values.flatten.toList
+        mazeRooms match {
+          case Nil => Game.echo("\nNo maze rooms are pathable from this room\n")
+          case list => Path.shortest(mazeRooms).foreach {_.runTo}
+        }
+      }
+    }
+
   }
 
   def aliasDeleteExit(exitName: String) = {
@@ -651,6 +739,8 @@ case class Room(id: Long,
                 recallable: Boolean = true,
                 portalable: Boolean = true
                ) {
+  def hasMazeExits: Boolean = exits.exists(_._2.maze)
+  def mazeExits: List[Exit] = exits.values.filter(_.maze).toList
 
   def externalExits: Iterable[Exit] = {
     exits.values.filter { e=>
@@ -671,6 +761,11 @@ case class Room(id: Long,
       case Some(exit) => f(exit)
     }
   }
+
+  def removeExit(name: String) = copy(exits = exits.filter(_._2.name == name))
+  def addExit(exit: Exit) = copy(exits = exits + (exit.name->exit))
+  def hasExit(name: String) = exits.get(name).isDefined
+  def deleteMazeExits() = copy(exits=exits.filter(_._2.maze == false))
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
