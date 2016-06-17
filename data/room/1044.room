@@ -1,1 +1,0 @@
-{"id":1044,"terrain":"dead_forest","zoneName":"vale","exits":{"e":{"name":"e","fromId":1044,"toId":1049,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":1044,"toId":1048,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Swaths of Ruin","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

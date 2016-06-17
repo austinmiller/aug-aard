@@ -1,1 +1,0 @@
-{"id":1050,"terrain":"bridge","zoneName":"vale","exits":{"n":{"name":"n","fromId":1050,"toId":1039,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":1050,"toId":1049,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"East Rope Bridge","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

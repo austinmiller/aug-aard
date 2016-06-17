@@ -1,1 +1,0 @@
-{"id":4347,"terrain":"inside","zoneName":"gallows","exits":{"e":{"name":"e","fromId":4347,"toId":4346,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Inside the wall of the barn","coords":{"y":32,"x":34},"recallable":true,"portalable":true}

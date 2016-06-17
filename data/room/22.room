@@ -1,1 +1,0 @@
-{"id":22,"terrain":"inside","zoneName":"thieves","exits":{"n":{"name":"n","fromId":22,"toId":23,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":22,"toId":21,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Cave Filled With Demons","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

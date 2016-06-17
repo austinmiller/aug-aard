@@ -1,1 +1,0 @@
-{"id":1072,"terrain":"river","zoneName":"vale","exits":{"e":{"name":"e","fromId":1072,"toId":1071,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1072,"toId":1073,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"East River","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

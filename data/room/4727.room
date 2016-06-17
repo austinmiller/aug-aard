@@ -1,1 +1,0 @@
-{"id":4727,"terrain":"air","zoneName":"camps","exits":{"n":{"name":"n","fromId":4727,"toId":4728,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":4727,"toId":4726,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"High above the village","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

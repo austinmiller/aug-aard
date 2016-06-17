@@ -1,1 +1,0 @@
-{"id":33067,"terrain":"inside","zoneName":"callhero","exits":{"e":{"name":"e","fromId":33067,"toId":33065,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":33067,"toId":33068,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Crack in the Wall","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

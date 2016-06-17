@@ -1,1 +1,0 @@
-{"id":31526,"terrain":"cave","zoneName":"jotun","exits":{"w":{"name":"w","fromId":31526,"toId":31518,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Thrivaldi's Cave","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

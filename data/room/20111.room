@@ -1,1 +1,0 @@
-{"id":20111,"terrain":"inside","zoneName":"beer","exits":{"e":{"name":"e","fromId":20111,"toId":20110,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Kitchen","coords":{"y":7,"x":19},"recallable":true,"portalable":true}

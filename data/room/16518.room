@@ -1,1 +1,0 @@
-{"id":16518,"terrain":"hills","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16518,"toId":16517,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":16518,"toId":16519,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Mountain Pass","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":28706,"terrain":"hellinside","zoneName":"lab","exits":{"n":{"name":"n","fromId":28706,"toId":28705,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Helmet-headed Warg Cage","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":25951,"terrain":"river","zoneName":"believer","exits":{"n":{"name":"n","fromId":25951,"toId":25952,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":25951,"toId":25950,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In the Rapids","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

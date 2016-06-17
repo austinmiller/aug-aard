@@ -1,1 +1,0 @@
-{"id":16424,"terrain":"inside","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16424,"toId":16422,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Leonna's Office","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

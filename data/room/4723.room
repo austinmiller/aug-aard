@@ -1,1 +1,0 @@
-{"id":4723,"terrain":"forest","zoneName":"camps","exits":{"e":{"name":"e","fromId":4723,"toId":4747,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4723,"toId":4721,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A small bridge","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

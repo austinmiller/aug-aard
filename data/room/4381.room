@@ -1,1 +1,0 @@
-{"id":4381,"terrain":"field","zoneName":"gallows","exits":{"s":{"name":"s","fromId":4381,"toId":4370,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4381,"toId":4382,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"At the edge of the woods","coords":{"y":32,"x":34},"recallable":true,"portalable":true}

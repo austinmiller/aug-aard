@@ -1,1 +1,0 @@
-{"id":31654,"terrain":"bloodyroom","zoneName":"gauntlet","exits":{"s":{"name":"s","fromId":31654,"toId":31652,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"ROCKSLIDE! ROCKSLIDE!","coords":{"y":41,"x":4},"recallable":true,"portalable":true}

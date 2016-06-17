@@ -1,1 +1,0 @@
-{"id":16434,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16434,"toId":16435,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":16434,"toId":16428,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Jailor's Room","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

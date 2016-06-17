@@ -1,1 +1,0 @@
-{"id":1117,"terrain":"hut","zoneName":"camps","exits":{"n":{"name":"n","fromId":1117,"toId":4719,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Smithy","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

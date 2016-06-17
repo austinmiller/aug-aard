@@ -1,1 +1,0 @@
-{"id":16314,"terrain":"inside","zoneName":"sirens","exits":{"e":{"name":"e","fromId":16314,"toId":16298,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16314,"toId":16300,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Road Leading to Beach","coords":{"y":26,"x":13},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":4726,"terrain":"air","zoneName":"camps","exits":{"n":{"name":"n","fromId":4726,"toId":4727,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":4726,"toId":4721,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Flying over the central square","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

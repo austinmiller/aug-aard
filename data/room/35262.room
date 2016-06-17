@@ -1,1 +1,0 @@
-{"id":35262,"terrain":"city_underground","zoneName":"academy","exits":{"w":{"name":"w","fromId":35262,"toId":35265,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Warm Basement Alcove","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

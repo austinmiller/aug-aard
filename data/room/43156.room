@@ -1,1 +1,0 @@
-{"id":43156,"terrain":"inside","zoneName":"ascent","exits":{"u":{"name":"u","fromId":43156,"toId":43157,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Another huge reduction gear","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

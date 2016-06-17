@@ -1,1 +1,0 @@
-{"id":32687,"terrain":"palace_room","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32687,"toId":32688,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":32687,"toId":32677,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Ivar's Lounge","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":16585,"terrain":"hills","zoneName":"dortmund","exits":{"n":{"name":"n","fromId":16585,"toId":16602,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":16585,"toId":16584,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Top of the hill","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

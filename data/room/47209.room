@@ -1,1 +1,0 @@
-{"id":47209,"terrain":"inside","zoneName":"bootcamp","exits":{"s":{"name":"s","fromId":47209,"toId":47206,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Medical lounge","coords":{"y":-1,"x":-1},"recallable":true,"portalable":true}

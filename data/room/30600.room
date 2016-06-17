@@ -1,1 +1,0 @@
-{"id":30600,"terrain":"ocean","zoneName":"verume","exits":{"n":{"name":"n","fromId":30600,"toId":30601,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":30600,"toId":30609,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Off the Coast of Verume","coords":{"y":3,"x":42},"recallable":true,"portalable":true}

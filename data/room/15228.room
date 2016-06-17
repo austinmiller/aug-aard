@@ -1,1 +1,0 @@
-{"id":15228,"terrain":"field","zoneName":"fantasy","exits":{"e":{"name":"e","fromId":15228,"toId":15227,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":15228,"toId":15230,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fantasy Fields","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

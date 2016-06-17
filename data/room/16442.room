@@ -1,1 +1,0 @@
-{"id":16442,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16442,"toId":16411,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16442,"toId":16443,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Temple of Mota","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":16438,"terrain":"inside","zoneName":"kerofk","exits":{"w":{"name":"w","fromId":16438,"toId":16436,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Kell's Tavern","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

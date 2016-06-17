@@ -1,1 +1,0 @@
-{"id":28915,"terrain":"trail_ew","zoneName":"graveyard","exits":{"n":{"name":"n","fromId":28915,"toId":28914,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":28915,"toId":28916,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"On a Gravel Path","coords":{"y":47,"x":22},"recallable":true,"portalable":true}

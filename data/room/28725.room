@@ -1,1 +1,0 @@
-{"id":28725,"terrain":"inside","zoneName":"lab","exits":{"e":{"name":"e","fromId":28725,"toId":28726,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":28725,"toId":28723,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Main Laboratory","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

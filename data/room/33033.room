@@ -1,1 +1,0 @@
-{"id":33033,"terrain":"hills","zoneName":"callhero","exits":{"e":{"name":"e","fromId":33033,"toId":33032,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Small Rise","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

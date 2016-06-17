@@ -1,1 +1,0 @@
-{"id":4743,"terrain":"field2","zoneName":"camps","exits":{"n":{"name":"n","fromId":4743,"toId":4742,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4743,"toId":4744,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The fields","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

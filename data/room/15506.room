@@ -1,1 +1,0 @@
-{"id":15506,"terrain":"field","zoneName":"sennarre","exits":{"e":{"name":"e","fromId":15506,"toId":15507,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15506,"toId":15505,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Grassy Clearing","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

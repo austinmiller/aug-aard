@@ -1,1 +1,0 @@
-{"id":15279,"terrain":"inside","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15279,"toId":15278,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":15279,"toId":15280,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Slippery, Slimy Things","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":15490,"terrain":"inside","zoneName":"sennarre","exits":{"s":{"name":"s","fromId":15490,"toId":15489,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15490,"toId":15516,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Small Hut","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

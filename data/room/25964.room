@@ -1,1 +1,0 @@
-{"id":25964,"terrain":"road","zoneName":"believer","exits":{"n":{"name":"n","fromId":25964,"toId":25966,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":25964,"toId":25963,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Marble Path","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

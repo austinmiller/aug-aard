@@ -1,1 +1,0 @@
-{"id":26320,"terrain":"shop","zoneName":"glimmerdim","exits":{"s":{"name":"s","fromId":26320,"toId":26312,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Wepo Man","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

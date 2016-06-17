@@ -1,1 +1,0 @@
-{"id":31332,"terrain":"inside","zoneName":"wizards","exits":{"e":{"name":"e","fromId":31332,"toId":31331,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A destroyed hallway","coords":{"y":26,"x":22},"recallable":true,"portalable":true}

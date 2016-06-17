@@ -1,1 +1,0 @@
-{"id":5916,"terrain":"inside","zoneName":"zoo","exits":{"n":{"name":"n","fromId":5916,"toId":5922,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Beachcomber Cafe","coords":{"y":37,"x":19},"recallable":true,"portalable":true}

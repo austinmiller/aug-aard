@@ -1,1 +1,0 @@
-{"id":4376,"terrain":"forest","zoneName":"gallows","exits":{"n":{"name":"n","fromId":4376,"toId":4377,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4376,"toId":4374,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Inside the dense forest","coords":{"y":32,"x":34},"recallable":true,"portalable":true}

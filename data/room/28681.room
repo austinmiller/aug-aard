@@ -1,1 +1,0 @@
-{"id":28681,"terrain":"hut","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28681,"toId":28643,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28681,"toId":28680,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Royalty Box","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

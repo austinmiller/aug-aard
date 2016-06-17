@@ -1,1 +1,0 @@
-{"id":31319,"terrain":"field","zoneName":"wizards","exits":{"e":{"name":"e","fromId":31319,"toId":31357,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":31319,"toId":31318,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Before the tower","coords":{"y":26,"x":22},"recallable":true,"portalable":true}

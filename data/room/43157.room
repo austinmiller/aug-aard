@@ -1,1 +1,0 @@
-{"id":43157,"terrain":"inside","zoneName":"ascent","exits":{"e":{"name":"e","fromId":43157,"toId":43161,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"d":{"name":"d","fromId":43157,"toId":43152,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The shaft","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

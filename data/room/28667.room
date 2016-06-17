@@ -1,1 +1,0 @@
-{"id":28667,"terrain":"field","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28667,"toId":28652,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Pugilist Arena","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

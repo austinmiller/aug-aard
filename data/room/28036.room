@@ -1,1 +1,0 @@
-{"id":28036,"terrain":"underground","zoneName":"lidnesh","exits":{"u":{"name":"u","fromId":28036,"toId":28035,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Inside a Fox Den","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

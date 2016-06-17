@@ -1,1 +1,0 @@
-{"id":28648,"terrain":"field3","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28648,"toId":28660,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28648,"toId":28647,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Food Court","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

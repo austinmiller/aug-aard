@@ -1,1 +1,0 @@
-{"id":20112,"terrain":"inside","zoneName":"beer","exits":{"d":{"name":"d","fromId":20112,"toId":20110,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Bedroom","coords":{"y":7,"x":19},"recallable":true,"portalable":true}

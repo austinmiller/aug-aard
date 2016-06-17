@@ -1,1 +1,0 @@
-{"id":16374,"terrain":"inside","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16374,"toId":16373,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"MouseRider's Bedroom","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

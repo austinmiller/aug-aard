@@ -1,1 +1,0 @@
-{"id":43189,"terrain":"inside","zoneName":"ascent","exits":{"e":{"name":"e","fromId":43189,"toId":43167,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":43189,"toId":43160,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A bridge to the catwalk","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

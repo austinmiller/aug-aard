@@ -1,1 +1,0 @@
-{"id":25973,"terrain":"inside","zoneName":"believer","exits":{"e":{"name":"e","fromId":25973,"toId":25971,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Temple of Doom","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":35211,"terrain":"inside","zoneName":"academy","exits":{"e":{"name":"e","fromId":35211,"toId":35383,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Armory","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

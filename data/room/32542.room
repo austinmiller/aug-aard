@@ -1,1 +1,0 @@
-{"id":32542,"terrain":"temple","zoneName":"aylor","exits":{"e":{"name":"e","fromId":32542,"toId":32541,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":32542,"toId":32543,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Before a Black Ebony Door","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

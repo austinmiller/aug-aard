@@ -1,1 +1,0 @@
-{"id":34787,"terrain":"hell4","zoneName":"fireswamp","exits":{"n":{"name":"n","fromId":34787,"toId":34778,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fire Dragon's Lair","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

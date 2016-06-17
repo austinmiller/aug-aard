@@ -1,1 +1,0 @@
-{"id":16456,"terrain":"inside","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16456,"toId":16455,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16456,"toId":16457,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fountain Area","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

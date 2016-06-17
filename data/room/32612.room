@@ -1,1 +1,0 @@
-{"id":32612,"terrain":"shop","zoneName":"aylor","exits":{"s":{"name":"s","fromId":32612,"toId":32607,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":32612,"toId":32611,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Hyntrie's Herbal Offerings","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

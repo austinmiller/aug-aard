@@ -1,1 +1,0 @@
-{"id":28749,"terrain":"field","zoneName":"lab","exits":{"n":{"name":"n","fromId":28749,"toId":28750,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28749,"toId":28748,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Paddock","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

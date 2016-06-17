@@ -1,1 +1,0 @@
-{"id":34799,"terrain":"cave","zoneName":"fireswamp","exits":{"e":{"name":"e","fromId":34799,"toId":34778,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":34799,"toId":34798,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fire Dragon's Lair","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":16466,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16466,"toId":16464,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":16466,"toId":16467,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Hallway","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

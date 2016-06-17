@@ -1,1 +1,0 @@
-{"id":31521,"terrain":"cave","zoneName":"jotun","exits":{"e":{"name":"e","fromId":31521,"toId":31516,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Utgaror's Lair","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

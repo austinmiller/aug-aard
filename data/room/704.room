@@ -1,1 +1,0 @@
-{"id":704,"terrain":"inside","zoneName":"childsplay","exits":{"n":{"name":"n","fromId":704,"toId":696,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Village Doctor's Office","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

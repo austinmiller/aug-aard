@@ -1,1 +1,0 @@
-{"id":16448,"terrain":"city","zoneName":"kerofk","exits":{"s":{"name":"s","fromId":16448,"toId":16395,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":16448,"toId":29636,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Shrine to the Emperor","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

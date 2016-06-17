@@ -1,1 +1,0 @@
-{"id":16299,"terrain":"inside","zoneName":"sirens","exits":{"e":{"name":"e","fromId":16299,"toId":12242,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16299,"toId":16298,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Resort Entrance","coords":{"y":26,"x":13},"recallable":true,"portalable":true}

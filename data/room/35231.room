@@ -1,1 +1,0 @@
-{"id":35231,"terrain":"city","zoneName":"academy","exits":{"n":{"name":"n","fromId":35231,"toId":35235,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":35231,"toId":35229,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Academy Courtyard","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

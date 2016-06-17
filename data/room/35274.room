@@ -1,1 +1,0 @@
-{"id":35274,"terrain":"hell3","zoneName":"academy","exits":{"e":{"name":"e","fromId":35274,"toId":35273,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":35274,"toId":35275,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Basement Furnace","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

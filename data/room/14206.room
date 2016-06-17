@@ -1,1 +1,0 @@
-{"id":14206,"terrain":"inside","zoneName":"melody","exits":{"d":{"name":"d","fromId":14206,"toId":14200,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":14206,"toId":14207,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Stairs to the Storeroom","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

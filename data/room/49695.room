@@ -1,1 +1,0 @@
-{"id":49695,"terrain":"palace_room","zoneName":"aylor","exits":{"e":{"name":"e","fromId":49695,"toId":32688,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Ivar's Hawt Club Scene","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":33048,"terrain":"field","zoneName":"callhero","exits":{"n":{"name":"n","fromId":33048,"toId":33047,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":33048,"toId":33053,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Front Lines","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":14170,"terrain":"inside","zoneName":"melody","exits":{"n":{"name":"n","fromId":14170,"toId":14171,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":14170,"toId":32418,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Esplanade","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

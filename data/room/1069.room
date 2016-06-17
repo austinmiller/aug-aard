@@ -1,1 +1,0 @@
-{"id":1069,"terrain":"dead_forest","zoneName":"vale","exits":{"n":{"name":"n","fromId":1069,"toId":1061,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":1069,"toId":1067,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Path Between Homes","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

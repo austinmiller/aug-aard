@@ -1,1 +1,0 @@
-{"id":32439,"terrain":"road_eastwest","zoneName":"aylor","exits":{"e":{"name":"e","fromId":32439,"toId":32440,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":32439,"toId":32438,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fairdeal Alley","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

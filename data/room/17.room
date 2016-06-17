@@ -1,1 +1,0 @@
-{"id":17,"terrain":"inside","zoneName":"thieves","exits":{"n":{"name":"n","fromId":17,"toId":16,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":17,"toId":18,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dragon Road Tunnel","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":16427,"terrain":"inside","zoneName":"kerofk","exits":{"w":{"name":"w","fromId":16427,"toId":16396,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Herbalist's Shoppe","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

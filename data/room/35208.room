@@ -1,1 +1,0 @@
-{"id":35208,"terrain":"inside","zoneName":"academy","exits":{"e":{"name":"e","fromId":35208,"toId":35207,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Combat Training Room","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

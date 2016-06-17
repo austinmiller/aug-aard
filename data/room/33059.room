@@ -1,1 +1,0 @@
-{"id":33059,"terrain":"field","zoneName":"callhero","exits":{"s":{"name":"s","fromId":33059,"toId":33060,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":33059,"toId":33057,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Cover of Trees","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

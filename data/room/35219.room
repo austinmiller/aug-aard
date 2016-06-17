@@ -1,1 +1,0 @@
-{"id":35219,"terrain":"fountain","zoneName":"academy","exits":{"e":{"name":"e","fromId":35219,"toId":35218,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Social Studies Classroom","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

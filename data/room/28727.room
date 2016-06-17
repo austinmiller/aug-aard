@@ -1,1 +1,0 @@
-{"id":28727,"terrain":"inside","zoneName":"lab","exits":{"e":{"name":"e","fromId":28727,"toId":28728,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28727,"toId":28724,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Verandah","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

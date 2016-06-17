@@ -1,1 +1,0 @@
-{"id":34753,"terrain":"cave","zoneName":"fireswamp","exits":{"s":{"name":"s","fromId":34753,"toId":34752,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Bandit Cave","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":35212,"terrain":"inside","zoneName":"academy","exits":{"w":{"name":"w","fromId":35212,"toId":35383,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Academy Treasury","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

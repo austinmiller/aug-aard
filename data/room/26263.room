@@ -1,1 +1,0 @@
-{"id":26263,"terrain":"inside","zoneName":"glimmerdim","exits":{"w":{"name":"w","fromId":26263,"toId":26290,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Leather me or Leave me","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

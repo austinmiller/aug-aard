@@ -1,1 +1,0 @@
-{"id":35210,"terrain":"temple","zoneName":"academy","exits":{"s":{"name":"s","fromId":35210,"toId":35209,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Academy Clinic Recovery Room","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

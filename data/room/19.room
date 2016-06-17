@@ -1,1 +1,0 @@
-{"id":19,"terrain":"inside","zoneName":"thieves","exits":{"n":{"name":"n","fromId":19,"toId":14,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":19,"toId":20,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Secret Cave","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

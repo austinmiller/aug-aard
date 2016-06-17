@@ -1,1 +1,0 @@
-{"id":34757,"terrain":"rocks","zoneName":"fireswamp","exits":{"e":{"name":"e","fromId":34757,"toId":34756,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Large Animal Den","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

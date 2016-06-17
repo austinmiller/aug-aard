@@ -1,1 +1,0 @@
-{"id":1040,"terrain":"dead_forest","zoneName":"vale","exits":{"e":{"name":"e","fromId":1040,"toId":1038,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":1040,"toId":1041,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Charcoal Forest","coords":{"y":30,"x":33},"recallable":true,"portalable":true}

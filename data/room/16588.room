@@ -1,1 +1,0 @@
-{"id":16588,"terrain":"inside","zoneName":"dortmund","exits":{"n":{"name":"n","fromId":16588,"toId":16589,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16588,"toId":16586,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Finished goods","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

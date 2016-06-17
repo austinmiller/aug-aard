@@ -1,1 +1,0 @@
-{"id":33063,"terrain":"inside","zoneName":"callhero","exits":{"s":{"name":"s","fromId":33063,"toId":33062,"maze":false,"door":true,"locked":false,"pathable":true,"weight":1}},"name":"Nifear's Tent","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

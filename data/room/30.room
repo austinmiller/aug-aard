@@ -1,1 +1,0 @@
-{"id":30,"terrain":"inside","zoneName":"thieves","exits":{"e":{"name":"e","fromId":30,"toId":28,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":30,"toId":31,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Marsh Road Bloodbath","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

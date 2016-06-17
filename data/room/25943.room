@@ -1,1 +1,0 @@
-{"id":25943,"terrain":"field","zoneName":"believer","exits":{"e":{"name":"e","fromId":25943,"toId":25944,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":25943,"toId":25942,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Muddy Trail","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

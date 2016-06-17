@@ -1,1 +1,0 @@
-{"id":26262,"terrain":"inside","zoneName":"glimmerdim","exits":{"e":{"name":"e","fromId":26262,"toId":26289,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"House of Amber","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

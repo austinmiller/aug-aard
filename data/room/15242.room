@@ -1,1 +1,0 @@
-{"id":15242,"terrain":"inside","zoneName":"fantasy","exits":{"e":{"name":"e","fromId":15242,"toId":15245,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Dark Closet","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

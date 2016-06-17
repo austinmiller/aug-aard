@@ -1,1 +1,0 @@
-{"id":10687,"terrain":"inside","zoneName":"farm","exits":{"e":{"name":"e","fromId":10687,"toId":10686,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Kimr's Bedroom","coords":{"y":32,"x":18},"recallable":true,"portalable":true}

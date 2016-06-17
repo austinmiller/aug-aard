@@ -1,1 +1,0 @@
-{"id":28022,"terrain":"forest","zoneName":"lidnesh","exits":{"d":{"name":"d","fromId":28022,"toId":28021,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In a Very Large Tree","coords":{"y":35,"x":10},"recallable":true,"portalable":true}

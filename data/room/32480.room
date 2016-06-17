@@ -1,1 +1,0 @@
-{"id":32480,"terrain":"trail_ew","zoneName":"aylor","exits":{"e":{"name":"e","fromId":32480,"toId":32479,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":32480,"toId":32481,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Darksoil Path","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

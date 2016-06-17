@@ -1,1 +1,0 @@
-{"id":20054,"terrain":"forest","zoneName":"beer","exits":{"s":{"name":"s","fromId":20054,"toId":20055,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":20054,"toId":20053,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Western Woods","coords":{"y":7,"x":19},"recallable":true,"portalable":true}

@@ -1,0 +1,1 @@
+[{"id":26188,"terrain":"city","zoneName":"immhomes","exits":{"n":{"name":"n","fromId":26188,"toId":32877,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Contest Entry Room","coords":{"y":-1,"x":-1},"recallable":true,"portalable":true}]

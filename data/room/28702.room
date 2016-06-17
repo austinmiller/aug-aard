@@ -1,1 +1,0 @@
-{"id":28702,"terrain":"hallway","zoneName":"lab","exits":{"n":{"name":"n","fromId":28702,"toId":28688,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":28702,"toId":28703,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The South Wing","coords":{"y":52,"x":11},"recallable":true,"portalable":true}

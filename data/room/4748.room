@@ -1,1 +1,0 @@
-{"id":4748,"terrain":"field","zoneName":"camps","exits":{"s":{"name":"s","fromId":4748,"toId":4749,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4748,"toId":4747,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A small path around the forest","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

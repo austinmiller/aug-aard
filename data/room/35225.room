@@ -1,1 +1,0 @@
-{"id":35225,"terrain":"inside","zoneName":"academy","exits":{"n":{"name":"n","fromId":35225,"toId":35222,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":35225,"toId":35226,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A long hallway","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

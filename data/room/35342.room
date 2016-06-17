@@ -1,1 +1,0 @@
-{"id":35342,"terrain":"forest","zoneName":"academy","exits":{"n":{"name":"n","fromId":35342,"toId":35341,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":35342,"toId":35343,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Damp undergrowth","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

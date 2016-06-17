@@ -1,1 +1,0 @@
-{"id":26268,"terrain":"inside","zoneName":"glimmerdim","exits":{"e":{"name":"e","fromId":26268,"toId":26290,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Home","coords":{"y":58,"x":37},"recallable":true,"portalable":true}

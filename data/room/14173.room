@@ -1,1 +1,0 @@
-{"id":14173,"terrain":"inside","zoneName":"melody","exits":{"e":{"name":"e","fromId":14173,"toId":14172,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":14173,"toId":14174,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Huge Corridor","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

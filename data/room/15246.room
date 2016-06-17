@@ -1,1 +1,0 @@
-{"id":15246,"terrain":"underwater","zoneName":"fantasy","exits":{"w":{"name":"w","fromId":15246,"toId":15247,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":15246,"toId":15220,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Swallowing Water","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

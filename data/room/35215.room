@@ -1,1 +1,0 @@
-{"id":35215,"terrain":"office","zoneName":"academy","exits":{"e":{"name":"e","fromId":35215,"toId":35214,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Communications Room","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

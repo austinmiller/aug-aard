@@ -1,1 +1,0 @@
-{"id":32879,"terrain":"inside","zoneName":"badtrip","exits":{"w":{"name":"w","fromId":32879,"toId":32877,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A deserted corner of the practice hall","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

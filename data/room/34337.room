@@ -1,1 +1,0 @@
-{"id":34337,"terrain":"hallway","zoneName":"gnomalin","exits":{"e":{"name":"e","fromId":34337,"toId":34330,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":34337,"toId":34338,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Hallway","coords":{"y":38,"x":37},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":31525,"terrain":"cave","zoneName":"jotun","exits":{"s":{"name":"s","fromId":31525,"toId":31523,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":31525,"toId":31522,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Jarnvior's Passage","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

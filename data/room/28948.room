@@ -1,1 +1,0 @@
-{"id":28948,"terrain":"dead_forest","zoneName":"graveyard","exits":{"e":{"name":"e","fromId":28948,"toId":28949,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":28948,"toId":28940,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"On a Wooded Path","coords":{"y":47,"x":22},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":35348,"terrain":"field","zoneName":"academy","exits":{"e":{"name":"e","fromId":35348,"toId":35297,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":35348,"toId":35317,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Academy Gardens","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

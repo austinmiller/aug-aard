@@ -1,1 +1,0 @@
-{"id":32537,"terrain":"city","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32537,"toId":32536,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":32537,"toId":32538,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Whitewind Avenue","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

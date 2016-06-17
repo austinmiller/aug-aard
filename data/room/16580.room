@@ -1,1 +1,0 @@
-{"id":16580,"terrain":"inside","zoneName":"dortmund","exits":{"e":{"name":"e","fromId":16580,"toId":16579,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Samuel's home","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

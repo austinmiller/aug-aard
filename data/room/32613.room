@@ -1,1 +1,0 @@
-{"id":32613,"terrain":"shop","zoneName":"aylor","exits":{"s":{"name":"s","fromId":32613,"toId":32611,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Gno-Go Express","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

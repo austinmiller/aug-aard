@@ -1,1 +1,0 @@
-{"id":16414,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16414,"toId":16382,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16414,"toId":16415,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Edge of Luck","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

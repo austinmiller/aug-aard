@@ -1,1 +1,0 @@
-{"id":34784,"terrain":"rocks","zoneName":"fireswamp","exits":{"n":{"name":"n","fromId":34784,"toId":34790,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dark Animal Den","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

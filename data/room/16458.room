@@ -1,1 +1,0 @@
-{"id":16458,"terrain":"inside","zoneName":"kerofk","exits":{"n":{"name":"n","fromId":16458,"toId":16457,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":16458,"toId":16455,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"In the Garden","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

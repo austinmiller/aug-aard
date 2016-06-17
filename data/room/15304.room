@@ -1,1 +1,0 @@
-{"id":15304,"terrain":"inside","zoneName":"fantasy","exits":{"d":{"name":"d","fromId":15304,"toId":15205,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Facing Reality","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

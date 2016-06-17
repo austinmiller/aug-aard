@@ -1,1 +1,0 @@
-{"id":32435,"terrain":"city","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32435,"toId":32424,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":32435,"toId":32436,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fairdeal Alley","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

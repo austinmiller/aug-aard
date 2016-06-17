@@ -1,1 +1,0 @@
-{"id":35223,"terrain":"hellinside","zoneName":"academy","exits":{"e":{"name":"e","fromId":35223,"toId":35222,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Personal Development","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

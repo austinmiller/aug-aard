@@ -1,1 +1,0 @@
-{"id":35253,"terrain":"underground","zoneName":"academy","exits":{"e":{"name":"e","fromId":35253,"toId":35259,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":35253,"toId":35241,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Basement Hallway","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

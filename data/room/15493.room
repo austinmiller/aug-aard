@@ -1,1 +1,0 @@
-{"id":15493,"terrain":"mountain","zoneName":"sennarre","exits":{"e":{"name":"e","fromId":15493,"toId":15492,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15493,"toId":15494,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Rocky Cliff","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

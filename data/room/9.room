@@ -1,1 +1,0 @@
-{"id":9,"terrain":"inside","zoneName":"thieves","exits":{"w":{"name":"w","fromId":9,"toId":8,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Head Thief's Office","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

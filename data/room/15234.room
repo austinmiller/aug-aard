@@ -1,1 +1,0 @@
-{"id":15234,"terrain":"field","zoneName":"fantasy","exits":{"e":{"name":"e","fromId":15234,"toId":15235,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":15234,"toId":15233,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Anger and Violence","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

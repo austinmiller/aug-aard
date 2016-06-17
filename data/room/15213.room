@@ -1,1 +1,0 @@
-{"id":15213,"terrain":"rainbow","zoneName":"fantasy","exits":{"n":{"name":"n","fromId":15213,"toId":15211,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":15213,"toId":15207,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"End of the Rainbow","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

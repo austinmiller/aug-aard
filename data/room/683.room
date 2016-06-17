@@ -1,1 +1,0 @@
-{"id":683,"terrain":"field","zoneName":"childsplay","exits":{"n":{"name":"n","fromId":683,"toId":684,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":683,"toId":682,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The Trail to the Mines","coords":{"y":29,"x":10},"recallable":true,"portalable":true}

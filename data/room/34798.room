@@ -1,1 +1,0 @@
-{"id":34798,"terrain":"hell3","zoneName":"fireswamp","exits":{"n":{"name":"n","fromId":34798,"toId":34785,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":34798,"toId":34799,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fire Swamp","coords":{"y":23,"x":10},"recallable":true,"portalable":true}

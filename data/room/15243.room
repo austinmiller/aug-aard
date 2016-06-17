@@ -1,1 +1,0 @@
-{"id":15243,"terrain":"inside","zoneName":"fantasy","exits":{"u":{"name":"u","fromId":15243,"toId":15245,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Under the Bed","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

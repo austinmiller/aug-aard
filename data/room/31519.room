@@ -1,1 +1,0 @@
-{"id":31519,"terrain":"chaos_sea","zoneName":"jotun","exits":{"u":{"name":"u","fromId":31519,"toId":31528,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Staring into the Abyss","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

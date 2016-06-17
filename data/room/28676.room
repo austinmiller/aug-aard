@@ -1,1 +1,0 @@
-{"id":28676,"terrain":"hut","zoneName":"carnivale","exits":{"s":{"name":"s","fromId":28676,"toId":28675,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Ye Olde Witch Hunt","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

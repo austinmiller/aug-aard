@@ -1,1 +1,0 @@
-{"id":20038,"terrain":"forest","zoneName":"beer","exits":{"n":{"name":"n","fromId":20038,"toId":20039,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":20038,"toId":20037,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Woods East of Inn","coords":{"y":7,"x":19},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":31659,"terrain":"waterswim","zoneName":"gauntlet","exits":{"e":{"name":"e","fromId":31659,"toId":31659,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":31659,"toId":31657,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Swimming Downriver","coords":{"y":41,"x":4},"recallable":true,"portalable":true}

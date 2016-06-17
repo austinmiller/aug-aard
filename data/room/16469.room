@@ -1,1 +1,0 @@
-{"id":16469,"terrain":"inside","zoneName":"kerofk","exits":{"w":{"name":"w","fromId":16469,"toId":16468,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":16469,"toId":16471,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Guest Bedroom","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":29290,"terrain":"city","zoneName":"amusement","exits":{"e":{"name":"e","fromId":29290,"toId":29289,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Line to the Ferris Wheel","coords":{"y":8,"x":12},"recallable":true,"portalable":true}

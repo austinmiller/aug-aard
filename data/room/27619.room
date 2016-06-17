@@ -1,1 +1,0 @@
-{"id":27619,"terrain":"hallway","zoneName":"kingsholm","exits":{"e":{"name":"e","fromId":27619,"toId":27620,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":27619,"toId":27626,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Shiny Hallway","coords":{"y":45,"x":3},"recallable":true,"portalable":true}

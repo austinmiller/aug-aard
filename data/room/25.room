@@ -1,1 +1,0 @@
-{"id":25,"terrain":"inside","zoneName":"thieves","exits":{"n":{"name":"n","fromId":25,"toId":24,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Dragon Road Blocked","coords":{"y":9,"x":32},"recallable":true,"portalable":true}

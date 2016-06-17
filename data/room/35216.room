@@ -1,1 +1,0 @@
-{"id":35216,"terrain":"forest","zoneName":"academy","exits":{"w":{"name":"w","fromId":35216,"toId":35214,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Geography Training","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":16617,"terrain":"inside","zoneName":"dortmund","exits":{"n":{"name":"n","fromId":16617,"toId":16616,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Inside the barn","coords":{"y":50,"x":20},"recallable":true,"portalable":true}

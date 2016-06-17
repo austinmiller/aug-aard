@@ -1,1 +1,0 @@
-{"id":25950,"terrain":"river","zoneName":"believer","exits":{"n":{"name":"n","fromId":25950,"toId":25951,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":25950,"toId":25949,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Following the Stream","coords":{"y":31,"x":4},"recallable":true,"portalable":true}

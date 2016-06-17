@@ -1,1 +1,0 @@
-{"id":10686,"terrain":"inside","zoneName":"farm","exits":{"e":{"name":"e","fromId":10686,"toId":10674,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":10686,"toId":10687,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Kimr's Home","coords":{"y":32,"x":18},"recallable":true,"portalable":true}

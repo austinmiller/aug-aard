@@ -1,1 +1,0 @@
-{"id":4348,"terrain":"forest","zoneName":"gallows","exits":{"n":{"name":"n","fromId":4348,"toId":4349,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4348,"toId":4344,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A bend in the path","coords":{"y":32,"x":34},"recallable":true,"portalable":true}

@@ -1,1 +1,0 @@
-{"id":32536,"terrain":"city","zoneName":"aylor","exits":{"n":{"name":"n","fromId":32536,"toId":32533,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":32536,"toId":32537,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Continuing on Whitewind","coords":{"y":30,"x":20},"recallable":true,"portalable":true}

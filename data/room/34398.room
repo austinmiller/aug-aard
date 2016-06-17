@@ -1,1 +1,0 @@
-{"id":34398,"terrain":"field","zoneName":"gnomalin","exits":{"e":{"name":"e","fromId":34398,"toId":34395,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":34398,"toId":34397,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Fields","coords":{"y":38,"x":37},"recallable":true,"portalable":true}

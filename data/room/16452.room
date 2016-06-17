@@ -1,1 +1,0 @@
-{"id":16452,"terrain":"inside","zoneName":"kerofk","exits":{"e":{"name":"e","fromId":16452,"toId":16451,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":16452,"toId":16453,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Foyer","coords":{"y":47,"x":5},"recallable":true,"portalable":true}

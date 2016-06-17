@@ -1,1 +1,0 @@
-{"id":28663,"terrain":"field","zoneName":"carnivale","exits":{"n":{"name":"n","fromId":28663,"toId":28665,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"e":{"name":"e","fromId":28663,"toId":28652,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Arena of the Dragon","coords":{"y":31,"x":22},"recallable":true,"portalable":true}

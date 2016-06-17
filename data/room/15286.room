@@ -1,1 +1,0 @@
-{"id":15286,"terrain":"underground","zoneName":"fantasy","exits":{"e":{"name":"e","fromId":15286,"toId":15285,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Pit of Hell","coords":{"y":36,"x":16},"recallable":true,"portalable":true}

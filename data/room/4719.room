@@ -1,1 +1,0 @@
-{"id":4719,"terrain":"hut","zoneName":"camps","exits":{"s":{"name":"s","fromId":4719,"toId":1117,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"w":{"name":"w","fromId":4719,"toId":4717,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A huge tent","coords":{"y":31,"x":25},"recallable":true,"portalable":true}

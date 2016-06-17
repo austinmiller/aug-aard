@@ -1,1 +1,0 @@
-{"id":4740,"terrain":"inside","zoneName":"camps","exits":{"u":{"name":"u","fromId":4740,"toId":4738,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"The servant quarters","coords":{"y":31,"x":25},"recallable":true,"portalable":true}
