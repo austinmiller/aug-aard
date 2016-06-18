@@ -388,11 +388,6 @@ object Room {
   def deleteMazeExits(): Unit = {
     zoneRooms().foreach {r=>
       if(r.hasMazeExits) {
-        Game.header("maze exits")
-        r.deleteMazeExits().exits.foreach{e=>
-          Game.echo(s"$e\n")
-        }
-
         save(r.deleteMazeExits())
       }
     }
@@ -411,9 +406,9 @@ object Room {
     mazeExit foreach {me=>
       if(gmcp.num != me.fromId) {
         forRoom(Some(me.fromId)) {r=>
-          r.addExit(me.copy(toId = gmcp.num))
-          save(r)
+          save(r.addExit(me.copy(toId = gmcp.num)))
         }
+        mazeExit = None
       }
     }
 
@@ -440,7 +435,7 @@ object Room {
   def addMazeExit(name: String, id: Long): Option[Boolean] = {
     withRoom() {r=>
       if(!r.hasExit(name) && id == -1) {
-        current = Some(r.addExit(Exit(name,id,-1,maze=true)))
+        current = Some(r.addExit(Exit(name,r.id,-1,maze=true)))
         true
       } else {
         false
@@ -581,12 +576,12 @@ object Room {
 
   def aliasMaze : Unit = {
     withRoom() { r=>
-      if(r.hasMazeExits) {
-        val me = r.mazeExits.head
+      if(r.hasUnknownMazeExits) {
+        val me = r.unknownMazeExits.head
         Game.send(me.name)
         mazeExit = Some(me)
       } else {
-        val mazeRooms: List[Path] = r.pather.paths.filter(_._1.hasMazeExits).values.flatten.toList
+        val mazeRooms: List[Path] = r.pather.paths.filter(_._1.hasUnknownMazeExits).values.flatten.toList
         mazeRooms match {
           case Nil => Game.echo("\nNo maze rooms are pathable from this room\n")
           case list => Path.shortest(mazeRooms).foreach {_.runTo}
@@ -749,7 +744,9 @@ case class Room(id: Long,
                 portalable: Boolean = true
                ) {
   def hasMazeExits: Boolean = exits.exists(_._2.maze)
+  def hasUnknownMazeExits: Boolean = exits.exists(x=>x._2.maze && x._2.toId == -1)
   def mazeExits: List[Exit] = exits.values.filter(_.maze).toList
+  def unknownMazeExits: List[Exit] = exits.values.filter(e=>e.maze && e.toId == -1).toList
 
   def externalExits: Iterable[Exit] = {
     exits.values.filter { e=>
@@ -772,7 +769,7 @@ case class Room(id: Long,
   }
 
   def removeExit(name: String) = copy(exits = exits.filter(_._2.name == name))
-  def addExit(exit: Exit) = copy(exits = exits + (exit.name->exit))
+  def addExit(exit: Exit) = copy(exits = exits.filter(_._1 != name) + (exit.name->exit))
   def hasExit(name: String) = exits.get(name).isDefined
   def deleteMazeExits() = copy(exits=exits.filter(_._2.maze == false))
 }
