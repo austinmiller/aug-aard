@@ -510,6 +510,8 @@ object Room {
   def zoneLinks() : List[Exit] = withRoom() {r=>zoneLinks(r.zoneName)}.getOrElse(List[Exit]())
   def zoneLinks(zoneName: String): List[Exit] = zoneRooms(zoneName).flatMap { _.externalExits }
 
+
+
   def load = {
     loadAll
     Alias.alias("r info",(m: Matcher) => aliasInfo(None))
@@ -526,6 +528,7 @@ object Room {
     Alias.alias("r zones", (m: Matcher) => aliasZones)
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
     Alias.alias("r save all", m=> saveAll)
+    Alias.alias("r nopath (.*)", m=> aliasNoPath(m.group(1)))
 
     Alias.alias("maze",m=>aliasMaze)
     Alias.alias("maze clear",m=>deleteMazeExits())
@@ -574,6 +577,17 @@ object Room {
     }
   }
 
+  def aliasNoPath(s: String): Unit = {
+    forRoom() {r=>
+      r.withExit(s){ e=>
+        val nr = r.addExit(e.copy(pathable = false))
+        current = Some(nr)
+        save(nr)
+        Game.echo(s"\nSet exit <$s> to unpathable.\n")
+      }
+    }
+  }
+
   def aliasMaze : Unit = {
     withRoom() { r=>
       if(r.hasUnknownMazeExits) {
@@ -586,6 +600,20 @@ object Room {
           case Nil => Game.echo("\nNo maze rooms are pathable from this room\n")
           case list => Path.shortest(mazeRooms).foreach {_.runTo}
         }
+      }
+    }
+
+  }
+
+  def aliasNextRoom = {
+    forRoom() { cur=>
+      cur.unknownExits match {
+        case head :: xs => head.take
+        case Nil =>
+          cur.pather.paths.filter(_._1.hasUnknownExits).values.flatten.toList match {
+            case Nil => Game.echo("\nNo paths found to rooms with unknown exists in this zone.\n")
+            case list => Path.shortest(list).foreach {_.runTo}
+          }
       }
     }
 
@@ -703,23 +731,7 @@ object Room {
     forRoom() {r=> zoneRooms(r.zoneName).foreach { r=> Game.echo(s"$r\n") } }
   }
 
-  def aliasNextRoom = {
-    forRoom() { cur=>
-      val pather = cur.pather
 
-      pather.rooms.filter { r=> r.exits.values.exists { e=> e.to.isEmpty }}.toSeq match {
-        case Seq() => Game.echo("There are no rooms with undiscovered exits.\n")
-        case rooms =>
-          Some(rooms.flatMap(pather.pathTo(_))).filter(_.nonEmpty).map(_.minBy(_.weight)) match {
-            case Some(p) =>
-              val path = p + p.exits.last.to.get.unknownExits.head
-              path.runTo
-            case None => Game.echo(s"No path found to any rooms with undiscovered exits.\n")
-          }
-      }
-    }
-
-  }
 
   def aliasZoneLinks = {
     Game.header("zone links")
@@ -743,6 +755,9 @@ case class Room(id: Long,
                 recallable: Boolean = true,
                 portalable: Boolean = true
                ) {
+  def hasUnknownExits: Boolean = exits.values.exists(e=>e.to.isEmpty && e.pathable)
+  def unknownExits: List[Exit] = exits.values.filter(e=>e.to.isEmpty && e.pathable).toList
+
   def hasMazeExits: Boolean = exits.exists(_._2.maze)
   def hasUnknownMazeExits: Boolean = exits.exists(x=>x._2.maze && x._2.toId == -1)
   def mazeExits: List[Exit] = exits.values.filter(_.maze).toList
@@ -758,7 +773,6 @@ case class Room(id: Long,
 
   def pather = Room.patherCache.get(this)
   def zonePather = Room.zonePatherCache.get(this)
-  def unknownExits = exits.values.filter(_.to.isEmpty)
   def zone = Zone(zoneName).get // if this doesn't exist, we fucked up
 
   def withExit(name: String)(f: Exit => Unit) = {
@@ -778,4 +792,9 @@ case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, d
                 locked: Boolean = false, pathable: Boolean = true, weight: Int = 1) {
   def from = Room(fromId)
   def to = Room(toId)
+
+  def take = {
+    if(door) Game.send(s"open $name")
+    Game.send(name)
+  }
 }
