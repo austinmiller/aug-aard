@@ -1,0 +1,1 @@
+[{"id":11383,"terrain":"field","zoneName":"wooble","exits":{"n":{"name":"n","fromId":11383,"toId":11384,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"s":{"name":"s","fromId":11383,"toId":11587,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"A Quiet Meadow","coords":{"y":32,"x":1},"recallable":true,"portalable":true}]

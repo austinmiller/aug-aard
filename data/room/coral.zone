@@ -1,0 +1,1 @@
+[{"id":4563,"terrain":"underwater","zoneName":"coral","exits":{"d":{"name":"d","fromId":4563,"toId":4564,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1},"u":{"name":"u","fromId":4563,"toId":5051,"maze":false,"door":false,"locked":false,"pathable":true,"weight":1}},"name":"Under the Waves","coords":{"y":8,"x":3},"recallable":true,"portalable":true}]
