@@ -128,7 +128,11 @@ case class Path(val exits: List[Exit], portal: Option[Portal]=None, prepath: Lis
     }
 
     exits.foreach {exit=>
-      if(exit.door) {
+      if(exit.hidden != null && exit.hidden.length > 0) {
+        addRunTo
+        cmds += s"open ${exit.hidden}"
+        run += exit
+      } else if(exit.door) {
         addRunTo
         if(exit.locked) cmds += s"unlock ${exit.name}"
         cmds += s"open ${exit.name}"
@@ -310,7 +314,8 @@ class Pather(val room: Room, val rooms: Set[Room]) {
     System.currentTimeMillis() - t
   }
 
-  if(time>1000) Game.echo(s"pather created for ${room.id} in $time ms\n")
+//  if(time>1000)
+    println(s"pather created for ${room.id} in $time ms")
 
   def pathTo(target: Room) : Option[Path] = paths.get(target).flatten
 }

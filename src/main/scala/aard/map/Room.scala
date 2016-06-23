@@ -1,5 +1,6 @@
 package aard.map
 
+import java.awt.Color
 import java.util.regex.Matcher
 
 import aard.db.Store
@@ -61,7 +62,7 @@ object Room {
   val roomsByName = mutable.Map[String,Iterable[Room]]()
   private var current : Option[Room] = None
   private var rlist : Option[RList] = None
-  private var specialExit = Option[SpecialExit](null)
+  private var specialExit = Option[Exit](null)
   private var mazeExit = Option[Exit](null)
 
   def apply(id: Long) = rooms.get(id)
@@ -89,22 +90,32 @@ object Room {
     deleteMazeExits()
   }
 
+  def clearCaches() = {
+    zonePatherCache.invalidateAll()
+    patherCache.invalidateAll()
+    Game.echo("\ncaches cleared\n",Some(Color.RED))
+  }
+
   def deleteMazeExits(): Unit = {
     zoneRooms().foreach {r=>
       if(r.hasMazeExits) {
         save(r.deleteMazeExits())
       }
     }
+    patherCache.invalidateAll()
   }
 
   def setRoom(gmcp: GmcpRoom) : Unit = synchronized {
     specialExit foreach {se=>
-      if(gmcp.num != se.from.id) {
-        val newexits = se.from.exits + ((se.name)->Exit(se.name,se.from.id,gmcp.num))
-        val nr = se.from.copy(exits = newexits)
-        save(nr)
-        specialExit = None
+      se.from.foreach { from=>
+        if(gmcp.num != from.id) {
+          val ne = se.copy(toId = gmcp.num)
+          val nr = from.addExit(ne)
+          save(nr)
+          specialExit = None
+        }
       }
+
     }
 
     mazeExit foreach {me=>
@@ -264,6 +275,9 @@ object Room {
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
     Alias.alias("r save all", m=> saveAll)
     Alias.alias("r nopath (.*)", m=> aliasNoPath(m.group(1)))
+    Alias.alias("r hidden (w|n|e|s|u|d) (.*)",m=>aliasHiddenExit(m.group(1),m.group(2)))
+
+    Alias.alias("cache clear",m=> clearCaches())
 
     Alias.alias("maze",m=>aliasMaze)
     Alias.alias("maze clear",m=>deleteMazeExits())
@@ -305,6 +319,19 @@ object Room {
     })
 
     roomsByName ++= rooms.values.groupBy(_.name)
+  }
+
+  def aliasHiddenExit(name: String, hidden: String) = {
+    forRoom() {r=>
+      r.exits.get(name) match {
+        case Some(_) => Game.echo(s"\nAlready has a '${name}' exit.\n")
+        case None =>
+          Game.send(s"open $hidden")
+          Game.send(name)
+          specialExit = Some(Exit(name, r.id,-1, hidden = hidden))
+      }
+
+    }
   }
 
   def aliasGameRunTo(arg: String) {
@@ -387,7 +414,7 @@ object Room {
         case Some(_) => Game.echo(s"\nExit $exitName is already defined\n")
         case _ =>
           Game.send(exitName)
-          specialExit = Some(SpecialExit(cur, exitName))
+          specialExit = Some(Exit(exitName, cur.id,-1))
       }
     }
   }
@@ -476,8 +503,6 @@ object Room {
 
 }
 
-case class SpecialExit(from: Room, name: String)
-
 case class Coords(y: Int, x: Int)
 
 case class Room(id: Long,
@@ -523,12 +548,19 @@ case class Room(id: Long,
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
-                locked: Boolean = false, pathable: Boolean = true, weight: Int = 1) {
+                locked: Boolean = false, pathable: Boolean = true, weight: Int = 1, hidden: String = "") {
   def from = Room(fromId)
   def to = Room(toId)
 
+  def commands : List[String] = {
+    val xs = List.newBuilder[String]
+    if(hidden != "") xs += "open hidden"
+    if(door) xs += s"open $name"
+    xs += name
+    xs.result()
+  }
+
   def take = {
-    if(door) Game.send(s"open $name")
-    Game.send(name)
+    commands.foreach(Game.send)
   }
 }

@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets
 import aug.util.JsonUtil
 import org.apache.commons.io.FileUtils
 
+import scala.util.Try
+
 object Store {
 
   val dataDir = new File("aug-aard/data")
@@ -34,5 +36,9 @@ object Store {
   def save(path: String, obj: Any) = {
     val file = new File(dataDir,path)
     FileUtils.writeStringToFile(file,JsonUtil.toJson(obj),charset)
+  }
+
+  def delete(path: String) = {
+    FileUtils.deleteQuietly(new File(dataDir,path))
   }
 }
