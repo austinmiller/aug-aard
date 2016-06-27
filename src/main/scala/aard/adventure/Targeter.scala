@@ -5,6 +5,7 @@ import java.util.regex.Matcher
 import aard.map.Room
 import aard.player.{Prompt, PromptCallback}
 import aug.script.{Alias, Game, Trigger, TriggerOptions}
+import aard.script.Shortcuts._
 
 object Targeter {
 
@@ -24,7 +25,7 @@ object Targeter {
       val map: Map[String, Iterable[Room]] = Room.zoneRooms(r.zoneName).groupBy(_.name)
       val rooms = whereRooms.result.flatMap(rn=>map.get(rn)).flatten
       whereRooms.clear
-      Room.setRList(rooms)
+      Room.setRList(rooms.sortBy(_.id))
       Room.printRList()
     }
 
@@ -42,7 +43,7 @@ object Targeter {
 
     Alias.alias("x",(m: Matcher) => {
       target match {
-        case None => Game.echo("\nNo target loaded, used 'x=<target>'\n")
+        case None => error("No target loaded, use 'x <target>'")
         case Some(t) => Game.send(s"kill $t")
       }
     })
@@ -50,10 +51,10 @@ object Targeter {
     Alias.alias("xn",m=> {
       Room.withRList() { rl=>
         if(rl.exhausted) {
-          Game.echo("\nNo more rooms to cycle.\n")
+          info("No more rooms to cycle")
         } else {
           rl.pathToNext match {
-            case None => Game.echo("\nNo path to next room.\n")
+            case None => error("No path to next room")
             case Some(p) =>
               p.runTo
               kill

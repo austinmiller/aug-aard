@@ -90,7 +90,7 @@ object Player {
     })
 
     Alias.alias("i invdata",m=>{
-      containerId = -1
+      containerId = None
       setItems(Set[Item]())
       Game.send("invdata")
       Game.send("eqdata")
@@ -165,14 +165,14 @@ object Player {
   val invDataStartTrigger = Trigger.trigger(invDataStartTriggerPattern,m=>{
     invDataLineTrigger.enabled = true
     invDataStopTrigger.enabled = true
-    containerId = -1
+    containerId = None
   })
 
   val invDataContainerStartTriggerPattern = "\\{invdata (\\d+)\\}"
   val invDataContainerStartTrigger = Trigger.trigger(invDataContainerStartTriggerPattern,m=>{
     invDataLineTrigger.enabled = true
     invDataStopTrigger.enabled = true
-    containerId = m.group(1).toLong
+    containerId = Some(m.group(1).toLong)
   })
 
   val invDataLineTriggerPattern = "(\\d+,.*,.*,.*,.*,.*)"
@@ -180,11 +180,15 @@ object Player {
 
   def invItem(s: String) : Unit = {
     Item.from(s,containerId).map{item=>
-      if(containerId != -1) {
-        Game.send(s"get ${item.id} $containerId")
-        Game.send(s"invdetails ${item.id}")
-        Game.send(s"put ${item.id} $containerId")
-      } else Game.send(s"invdetails ${item.id}")
+      if((item.itemType == Armor || item.itemType == Weapon) && item.kept) {
+        containerId match {
+          case None => Game.send(s"invdetails ${item.id}")
+          case Some(cid) =>
+            Game.send(s"get ${item.id} $cid")
+            Game.send(s"invdetails ${item.id}")
+            Game.send(s"put ${item.id} $cid")
+        }
+      }
       addItem(item)
 
       if(item.itemType == Container) Game.send(s"invdata ${item.id}")
@@ -227,12 +231,13 @@ object Player {
   def stopCollectingInvDetails() : Unit = {
     invDetailsHeaderTrigger.enabled = false
     invDetailsStopTrigger.enabled = false
+    containerId = None
   }
 
   val invItemTriggerPattern = Pattern.quote("{invitem}") + "(.*)"
   val invItemTrigger = Trigger.trigger(invItemTriggerPattern,m=>invItem(m.group(1)))
 
-  var containerId : Long = -1
+  var containerId : Option[Long] = None
 
   val invMonTriggerPattern = Pattern.quote("{invmon}") + "(.*)"
   val invMonTrigger = Trigger.trigger(invMonTriggerPattern,m=>{
@@ -255,6 +260,9 @@ object Player {
         case Worn =>
           p.withItem(id) {i=>
             Game.echo(s"wearing $i at ${Item.idToWearLoc(wearLocId)}\n")
+            p.wornItem(Item.idToWearLoc(wearLocId)).foreach{i=>
+              addItem(i.copy(containerId=containerId,wearLocId=Unworn.id))
+            }
             addItem(i.copy(containerId = containerId,wearLocId = wearLocId))
           }
         case _ =>
@@ -446,7 +454,7 @@ object Item {
 
   val nameToWearLoc: Map[String, WearLoc] = idToWearLoc.map(x=>(x._2.name,x._2))
 
-  def from(line: String, containerId: Long) : Option[Item] = {
+  def from(line: String, containerId: Option[Long]) : Option[Item] = {
     Try {
       val tokens = line.split(",")
       require(tokens.size == 8)
@@ -459,7 +467,8 @@ object Item {
       val unique = if(tokens(5).toInt == 1) true else false
       val wearLocId = tokens(6).toInt
       val timer = tokens(7).toInt
-      Item(objectId,flags,name,level,itemType,unique,wearLocId,timer,containerId=containerId)
+      val cid : Long = containerId.getOrElse(-1)
+      Item(objectId,flags,name,level,itemType,unique,wearLocId,timer,containerId=cid)
     } match {
       case Failure(e) =>
         Game.handleException(e)

@@ -7,6 +7,8 @@ import aug.script.{Alias, Game, Trigger}
 
 import scala.util.{Failure, Try}
 
+import aard.script.Shortcuts._
+
 object Zone {
 
   var zones = Set[Zone]()
@@ -60,6 +62,15 @@ object Zone {
     }
   }
 
+  def forSubstring(s: String)(f: Zone => Unit): Unit = {
+    zones.filter(_.long.toLowerCase.contains(s)).toList match {
+      case Nil => error("no zones are matching")
+      case List(a) => f(a)
+      case list =>
+        Game.header("matching zones")
+        list.foreach(z=>echo(z.toString))
+    }
+  }
 
 }
 

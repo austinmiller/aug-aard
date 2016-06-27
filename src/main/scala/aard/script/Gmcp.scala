@@ -6,7 +6,7 @@ sealed trait GmcpMessage
 
 case class GmcpRoom(num: Long, name: String, zone: String, terrain: String, details: String, exits: GmcpRoomExits, coord: GmcpRoomCoords) extends GmcpMessage
 case class GmcpRoomExits(n: Long, s: Long, u: Long, d: Long, e: Long, w: Long) extends GmcpMessage
-case class GmcpRoomCoords(id: Long, x: Int, y: Int, cont: Int) extends GmcpMessage
+case class GmcpRoomCoords(id: Int, x: Int, y: Int, cont: Int) extends GmcpMessage
 case object GmcpTick extends GmcpMessage
 case class GmcpVitals(hp: Int, mana: Int, moves: Int) extends GmcpMessage
 case class GmcpChannel(chan: String, msg: String, player: String) extends GmcpMessage

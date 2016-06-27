@@ -65,14 +65,16 @@ object Room {
   private var specialExit = Option[Exit](null)
   private var mazeExit = Option[Exit](null)
 
+  val coordHeuristic = (s:Room,e:Room)=> math.abs(s.coords.x - e.coords.x) + math.abs(s.coords.y - e.coords.y)
+
   def apply(id: Long) = rooms.get(id)
 
   val patherCache: LoadingCache[Room, Pather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,Pather]() {
     override def load(key: Room): Pather = new Pather(key,zoneRooms(key.zoneName).toSet)
   })
 
-  val zonePatherCache: LoadingCache[Room, ZonePather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,ZonePather]() {
-    override def load(key: Room): ZonePather = new ZonePather(key)
+  val coordPatherCache: LoadingCache[(Room,Room), Option[Path]] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[(Room,Room),Option[Path]]() {
+    override def load(key: (Room,Room)): Option[Path] = new AStarPather(key._1,coordHeuristic).to(key._2)
   })
 
   val portalBlockTrigger = Trigger.trigger("Magic walls bounce you back.",m=> {
@@ -80,7 +82,6 @@ object Room {
       current = Some(r.copy(portalable=false))
     }
   })
-
 
   private def loadAll = {
     Store.loadAll[List[Room]](path,ext).flatten.foreach(r=>rooms(r.id)=r)
@@ -91,7 +92,6 @@ object Room {
   }
 
   def clearCaches() = {
-    zonePatherCache.invalidateAll()
     patherCache.invalidateAll()
     Game.echo("\ncaches cleared\n",Some(Color.RED))
   }
@@ -99,7 +99,7 @@ object Room {
   def deleteMazeExits(): Unit = {
     zoneRooms().foreach {r=>
       if(r.hasMazeExits) {
-        save(r.deleteMazeExits())
+        addRoom(r.deleteMazeExits())
       }
     }
     patherCache.invalidateAll()
@@ -111,7 +111,7 @@ object Room {
         if(gmcp.num != from.id) {
           val ne = se.copy(toId = gmcp.num)
           val nr = from.addExit(ne)
-          save(nr)
+          addRoom(nr)
           specialExit = None
         }
       }
@@ -120,7 +120,7 @@ object Room {
 
     mazeExit foreach {me=>
       forRoom(Some(me.fromId)) {r=>
-        save(r.addExit(me.copy(toId = gmcp.num)))
+        addRoom(r.addExit(me.copy(toId = gmcp.num)))
       }
       mazeExit = None
     }
@@ -130,7 +130,7 @@ object Room {
       case None =>
         val r = fromGmcp(gmcp)
         current = Some(r)
-        save(r)
+        addRoom(r)
     }
 
     if(List[Option[Boolean]](
@@ -141,7 +141,7 @@ object Room {
       addMazeExit("u",gmcp.exits.u),
       addMazeExit("d",gmcp.exits.d)
     ).exists(_ == Some(true))) {
-      save(current.get)
+      addRoom(current.get)
     }
   }
 
@@ -171,7 +171,7 @@ object Room {
 
   def printRList(begin: Int = 0, end: Int = 20) = rlist map (_.print(begin,end))
 
-  def save(room: Room) : Unit = synchronized {
+  def addRoom(room: Room) : Unit = synchronized {
 
     if(room.id < 0) {
       Game.echo("\nrefusing to save, room.id is negative\n")
@@ -184,7 +184,6 @@ object Room {
     val roomsToSave = zoneRooms(zn)
 
     zoneRooms.foreach {r=>patherCache.invalidate(room)}
-    zonePatherCache.invalidateAll()
 
     roomsByName ++= rooms.values.groupBy(_.name)
 
@@ -193,7 +192,7 @@ object Room {
   }
 
   def saveAll = {
-    rooms.values.groupBy(_.zoneName).map(x=> x._2.head).foreach(save(_))
+    rooms.values.groupBy(_.zoneName).map(x=> x._2.head).foreach(addRoom(_))
   }
 
   def fromGmcp(gmcp: GmcpRoom) : Room = {
@@ -214,7 +213,7 @@ object Room {
       gmcp.zone,
       exitMap,
       gmcp.name,
-      Coords(gmcp.coord.x,gmcp.coord.y)
+      Coords(gmcp.coord.id,gmcp.coord.x,gmcp.coord.y,if(gmcp.coord.cont==1) true else false)
     )
   }
 
@@ -270,7 +269,6 @@ object Room {
     Alias.alias("r delete (.*)", (m: Matcher) => aliasDeleteExit(m.group(1)))
     Alias.alias("r door (.*)", (m: Matcher) => aliasAddDoor(m.group(1)))
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
-    Alias.alias("r zp", (m: Matcher) => aliasZonePather)
     Alias.alias("r zones", (m: Matcher) => aliasZones)
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
     Alias.alias("r save all", m=> saveAll)
@@ -343,7 +341,7 @@ object Room {
       r.withExit(s){ e=>
         val nr = r.addExit(e.copy(pathable = false))
         current = Some(nr)
-        save(nr)
+        addRoom(nr)
         Game.echo(s"\nSet exit <$s> to unpathable.\n")
       }
     }
@@ -387,7 +385,7 @@ object Room {
         val nr = cur.copy(exits = nm)
         current = Some(nr)
         Game.echo(s"\nDeleted exit $exitName\n")
-        save(nr)
+        addRoom(nr)
       }
     }
   }
@@ -401,7 +399,7 @@ object Room {
 
         Game.echo(s"\nAdded door to $ne\n")
         current = Some(nr)
-        save(nr)
+        addRoom(nr)
       }
     }
   }
@@ -426,7 +424,7 @@ object Room {
         rooms.get(rid2) match {
           case None => Game.echo(s"\nDidn't find room <$rid2>.\n")
           case Some(r2) =>
-            r1.zonePather.pathTo(r2) match {
+            Path.path(r1,r2) match {
               case None => Game.echo("\nno path found.\n")
               case Some(path) => Game.echo(s"\npath is $path\n")
             }
@@ -441,21 +439,20 @@ object Room {
     rlist map (_.print())
   }
 
-  def aliasGotoZone(zoneName: String): Unit = runTo(zoneName)
+  def aliasGotoZone(zoneName: String): Unit = {
+    Path.to(zoneName) match {
+      case Some(p) => p.runTo
+      case None =>
+        Zone.forSubstring(zoneName) { z=>
+          runTo(z.name)
+        }
+    }
+  }
 
   def aliasZones(): Unit = {
     Game.header("zone names")
     rooms.values.map{_.zoneName}.toSet[String].foreach { s=>
       Game.echo(s"$s\n")
-    }
-  }
-
-  def aliasZonePather(): Unit = {
-    forRoom() { cur =>
-      Game.header(s"zone pather cache from room ${cur.id}")
-      cur.zonePather.paths.foreach { x =>
-        Game.echo(s"${x._1.to.get.zoneName} -> ${x._2}\n")
-      }
     }
   }
 
@@ -501,9 +498,34 @@ object Room {
     }
   }
 
+  def main(args: Array[String]) = {
+    loadAll
+
+    val newRooms = for(r<-rooms.values) yield {
+
+      val (id,cont) = r.zoneName match {
+        case "mesolar" => (0,true)
+        case "southern" => (1,true)
+        case "gelidus" => (2,true)
+        case "abend" => (3,true)
+        case "alagh" => (4,true)
+        case "uncharted" => (5,true)
+        case "vidblain" => (6,true)
+        case _ => (0,false)
+      }
+      r.copy(coords = r.coords.copy(id=id,cont=cont))
+    }
+
+    newRooms.groupBy(_.zoneName).foreach { x =>
+      val (zn,roomsToSave) = x
+      Store.save(s"$path/$zn.zone",roomsToSave)
+    }
+  }
 }
 
-case class Coords(y: Int, x: Int)
+
+
+case class Coords(id: Int, y: Int, x: Int, cont: Boolean)
 
 case class Room(id: Long,
                 terrain: String,
@@ -514,8 +536,10 @@ case class Room(id: Long,
                 recallable: Boolean = true,
                 portalable: Boolean = true
                ) {
-  def hasUnknownExits: Boolean = exits.values.exists(e=>e.to.isEmpty && e.pathable && !e.maze)
-  def unknownExits: List[Exit] = exits.values.filter(e=>e.to.isEmpty && e.pathable && !e.maze).toList
+  def hasUnknownExits: Boolean = exits.values.exists(e=>e.to.isEmpty && e.pathable &&
+    !e.maze && math.abs(e.toId - e.fromId) < 300)
+  def unknownExits: List[Exit] = exits.values.filter(e=>e.to.isEmpty && e.pathable &&
+    !e.maze && math.abs(e.toId - e.fromId) < 300).toList
 
   def hasMazeExits: Boolean = exits.exists(_._2.maze)
   def hasUnknownMazeExits: Boolean = exits.exists(x=>x._2.maze && x._2.toId == -1)
@@ -530,8 +554,7 @@ case class Room(id: Long,
     }
   }
 
-  def pather = Room.patherCache.get(this)
-  def zonePather = Room.zonePatherCache.get(this)
+  private def pather = Room.patherCache.get(this)
   def zone = Zone(zoneName).get // if this doesn't exist, we fucked up
 
   def withExit(name: String)(f: Exit => Unit) = {
@@ -545,6 +568,21 @@ case class Room(id: Long,
   def addExit(exit: Exit) = copy(exits = exits.filter(_._1 != name) + (exit.name->exit))
   def hasExit(name: String) = exits.get(name).isDefined
   def deleteMazeExits() = copy(exits=exits.filter(_._2.maze == false))
+  def paths = pather.paths
+
+  def to(target: Room): Option[Path] = {
+    exits.values.filter{e=>
+      e.toId == target.id &&
+        e.pathable
+    }.toList.sortBy{e=>e.weight + (if(e.door) 200 else 0)} match {
+      case head :: xs => Some(Path(List(head)))
+      case Nil =>
+        coords.cont match {
+          case false => pather.pathTo(target)
+          case true => Room.coordPatherCache.get((this,target))
+        }
+    }
+  }
 }
 
 case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, door: Boolean = false,
@@ -563,4 +601,6 @@ case class Exit(name: String, fromId: Long, toId: Long, maze: Boolean = false, d
   def take = {
     commands.foreach(Game.send)
   }
+
+  def toPath = Path(List(this))
 }
