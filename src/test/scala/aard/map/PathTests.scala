@@ -137,6 +137,14 @@ class MockZonePathTests extends FunSuite with BeforeAndAfterEach {
     assert(zp.paths("z1","z3").size == 1)
   }
 
+  test("ddEnd works correctly") {
+    mockRoom(1,"z1",Exit("s",1,2),Exit("n",1,2))
+    mockRoom(2,"z2",Exit("n",2,1),Exit("w",2,3),Exit("q",2,5))
+    mockRoom(5,"z3")
+    assert(ZonePaths.ddEnd(Path(List(Exit("s",1,2),Exit("s",1,2))).exits))
+    assert(ZonePaths.ddEnd(Path(List(Exit("s",1,2),Exit("s",2,5))).exits)==false)
+  }
+
 }
 
 class ZonePathTests extends FunSuite {

@@ -5,8 +5,7 @@ import java.util.regex.Matcher
 import aard.db.Store
 import aug.script.{Alias, Game, Trigger}
 
-import scala.util.{Failure, Try}
-
+import scala.util.{Failure, Success, Try}
 import aard.script.Shortcuts._
 
 object Zone {
@@ -28,7 +27,10 @@ object Zone {
 
   def load = {
     Try {
-      zones = Store.load[Set[Zone]]("zones")
+      zones = Store.load[Set[Zone]]("zones") match {
+        case Success(xs) => xs
+        case Failure(e) => Set.empty[Zone]
+      }
     } match {
       case Failure(e) => Game.handleException(e)
       case _ =>

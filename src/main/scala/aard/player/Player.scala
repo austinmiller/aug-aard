@@ -3,10 +3,10 @@ package aard.player
 import java.util.regex.Pattern
 
 import aard.db.Store
-import aard.map.Room
+import aard.map.{Path, Room}
 import aard.script.{AardUtil, GmcpChar}
 import aug.script.{Alias, Game, Trigger}
-import aug.util.{JsonUtil}
+import aug.util.JsonUtil
 
 import scala.collection.mutable
 import scala.util.{Failure, Success, Try}
@@ -158,6 +158,18 @@ object Player {
       }
     )
 
+    Alias.alias("bb (.*)",m=>{
+      val item = m.group(1)
+      Game.send(s"buy 20 $item")
+      Game.send(s"put all.$item bag")
+    })
+
+    Alias.alias("amu",m=>{
+      forPlayer() {p=>
+        p.usePortal(1678776451)
+      }
+    })
+
     Game.sendGmcp("request char")
   }
 
@@ -178,7 +190,7 @@ object Player {
   val invDataLineTriggerPattern = "(\\d+,.*,.*,.*,.*,.*)"
   val invDataLineTrigger = Trigger.trigger(invDataLineTriggerPattern,m=>invItem(m.group()),false)
 
-  def invItem(s: String) : Unit = {
+  def invItem(s: String, inspectContainers: Boolean = true) : Unit = {
     Item.from(s,containerId).map{item=>
       if((item.itemType == Armor || item.itemType == Weapon) && item.kept) {
         containerId match {
@@ -191,7 +203,7 @@ object Player {
       }
       addItem(item)
 
-      if(item.itemType == Container) Game.send(s"invdata ${item.id}")
+      if(item.itemType == Container && inspectContainers) Game.send(s"invdata ${item.id}")
     }
   }
 
@@ -235,7 +247,7 @@ object Player {
   }
 
   val invItemTriggerPattern = Pattern.quote("{invitem}") + "(.*)"
-  val invItemTrigger = Trigger.trigger(invItemTriggerPattern,m=>invItem(m.group(1)))
+  val invItemTrigger = Trigger.trigger(invItemTriggerPattern,m=>invItem(m.group(1),false))
 
   var containerId : Option[Long] = None
 

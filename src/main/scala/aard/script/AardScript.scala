@@ -3,16 +3,20 @@ package aard.script
 import java.awt.Color
 
 import aard.adventure.{Campaign, Quest, Targeter}
-import aard.map.{Room, Zone}
+import aard.map.{Path, Room, Zone}
 import aard.player.{Player, Prompt}
-import aug.profile.{ProfileEvent, ProfileEventListener, ScriptInit, TelnetGMCP}
+import aug.profile.{ProfileEvent, ProfileEventListener, ScriptClose, ScriptInit, TelnetGMCP}
 import aug.script.{Alias, Game}
 
+import scala.util.{Random, Try}
+
 class AardScript extends ProfileEventListener {
+
   override def event(event: ProfileEvent, data: Option[String]): Unit = {
     event match {
       case ScriptInit => init
       case TelnetGMCP => data map(handleGmcp(_))
+      case ScriptClose => close
       case _ =>
     }
   }
@@ -40,6 +44,7 @@ class AardScript extends ProfileEventListener {
     Game.info("loaded aard script")
     Room.load
     Zone.load
+    Path.load
     Game.info(s"loaded ${Room.rooms.size}")
     Quest.load
     Campaign.load
@@ -48,13 +53,26 @@ class AardScript extends ProfileEventListener {
     Player.load
     Discover.load
   }
+
+  def close: Unit = {
+    Path.close
+    Discover.close
+  }
+
 }
 
 object Shortcuts {
+  private val random = new Random()
+  def rand[A](items: Iterable[A])(implicit manifest: Manifest[A]) : Option[A] = {
+    if(items.isEmpty) None else {
+      val sz = items.size
+      val arr = items.toArray
+      Some(arr(random.nextInt(sz)))
+    }
+  }
   def error(s: String) = Game.echo(s"\nERROR: $s\n",Some(Color.RED))
   def info(s: String) = Game.echo(s"\nINFO: $s\n",Some(Color.YELLOW))
   def echo(s: String) = Game.echo(s"$s\n",Some(Color.YELLOW))
-
 
   def bench[A](op: String="operation", report: String => Unit = println)(f: =>A) : A = {
     val time = System.currentTimeMillis()
@@ -91,18 +109,37 @@ object AardUtil {
 
 object Discover {
   import Shortcuts._
-  val thread = new Thread(new Runnable {
-    override def run(): Unit = {
-       for(i<-1 to 1000) {
-         Room.aliasNextRoom
-         Thread.sleep(500)
-       }
-      info("discover over")
-    }})
+  private var thread = Option[Thread](null)
+
+  def start = {
+    thread foreach (_.interrupt)
+    thread = Some(new Thread(new Runnable {
+      override def run(): Unit = {
+        for(i<-1 to 1000) {
+          if(Thread.interrupted()) return
+          Room.aliasNextRoom
+          info(s"discover step: $i")
+          Try {
+            Thread.sleep(500)
+          }
+        }
+        info("discover over")
+      }}))
+    thread.foreach(_.start)
+  }
+
+  def close = {
+    thread.foreach(_.interrupt)
+    thread = None
+  }
 
   def load = {
     Alias.alias("discover",m=>{
-      thread.start
+      start
+    })
+
+    Alias.alias("discover stop",m=>{
+      close
     })
   }
 }

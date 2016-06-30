@@ -1,11 +1,17 @@
 package aard.map
 
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.atomic.{AtomicBoolean, AtomicReference}
+
 import aard.db.Store
 import aard.player.{Player, Portal}
 import aug.script.Game
 
 import scala.collection.mutable
 import aard.script.Shortcuts._
+
+import scala.annotation.tailrec
+import scala.util.{Failure, Success, Try}
 
 
 case class RunList(run: String ="", amt: Int = 0, last: String = "") {
@@ -33,18 +39,66 @@ case class RunList(run: String ="", amt: Int = 0, last: String = "") {
 }
 
 object Path {
+
+
   val recall = 32418
   val quest = 32458
   val campaign = 32614
   val sendhia = 20286
   val vidblain = 11910
+  val amulet = 29364
 
   val recallExit = Exit("recall",-1,-1,weight=500)
 
   val empty = Path(Nil)
 
   @volatile
-  var zonePaths = ZonePaths.load()
+  private[map] var zonePaths = new ZonePaths(List.empty)
+  @volatile
+  private var version = 0
+  private var running = new AtomicBoolean(true)
+  private val thread = new Thread(new Runnable() {
+    override def run(): Unit = {
+      compileZonePaths
+    }
+  })
+
+  def dirty = version += 1
+
+  private def compileZonePaths = {
+
+    Try {
+      ZonePaths.load
+    } match {
+      case Success(zp) =>
+        info("ZonePaths loaded")
+        zonePaths = zp
+      case Failure(e) => Game.handleException(e)
+    }
+
+    var compiledVersion = 0
+    while(running.get) {
+      if(version > compiledVersion) {
+        compiledVersion = version
+        val zp = ZonePaths.construct(Room.allRooms)
+        zonePaths = zp
+        ZonePaths.save(zp)
+      }
+
+      Try {
+        Thread.sleep(1000)
+      }
+    }
+  }
+
+  def load = {
+    thread.start
+  }
+
+  def close = {
+    running.set(false)
+    thread.interrupt()
+  }
 
   def shortest(paths: Iterable[Path]) : Option[Path] = Some(paths).filter(_.nonEmpty).map(_.minBy(_.weight))
 
@@ -133,8 +187,6 @@ case class Path(val exits: List[Exit], portal: Option[Portal]=None, prepath: Lis
   private def mapCmds(exits: List[Exit]) : List[String] = {
     val cmds = List.newBuilder[String]
     var run = RunList()
-
-
 
     def addRunTo = {
       if(!run.isEmpty) {
@@ -295,13 +347,12 @@ object ZonePaths {
   val savePath = "zonePaths.paths"
 
   case class Link(start: Long, end: Long)
-  def construct(rooms: Set[Room]) : ZonePaths = {
+  def construct(rooms: Iterable[Room]) : ZonePaths = {
     val time = System.currentTimeMillis()
-    val zoneLinks: Set[Exit] = rooms.flatMap {_.externalExits.toSet}
+    val zoneLinks: Set[Exit] = rooms.flatMap {_.externalExits}.toSet
     val zlsByZone = zoneLinks.groupBy(_.from.get.zoneName)
     val edges: Set[Path] = zoneLinks.flatMap { e=>
       val to = e.to.get
-      if(to.zoneName == "beer") println("BEERR!!!")
       val rv: Set[Path] = zlsByZone.get(to.zoneName).map{
         _.filter(_.fromId != e.toId).flatMap { ex=> to.to(ex.from.get).map(_ + ex)}
       }.getOrElse(Set.empty)
@@ -333,7 +384,7 @@ object ZonePaths {
           if (weight(ij) > weight(ik) + weight(kj)) {
             val np = links(ik) + links(kj)
             val fz = np.last.get.to.get.zoneName
-            //if(np.exits.filter(_.to.get.zoneName == fz).size == 1)
+//            if(np.exits.filter(_.to.get.zoneName == fz).size == 1)
               links(ij) = np
           }
         }
@@ -342,8 +393,10 @@ object ZonePaths {
     }
 
     val diff = System.currentTimeMillis() - time
-    println(s"Construction of zone paths took $diff ms")
-    new ZonePaths(links.values.toList)
+    val paths = links.values.toList.filter(p=>p.endRoom.get.coords.cont == false && !ddEnd(p.exits))
+
+    println(s"Construction of zone paths took $diff ms with ${paths.size} paths")
+    new ZonePaths(paths)
   }
 
   def load() : ZonePaths = {
@@ -351,9 +404,28 @@ object ZonePaths {
     new ZonePaths(lists.map{le=>Path(le)})
   }
 
+  // is the penultimate element the same zn as the final element?
+  @tailrec
+  def ddEnd(exits: List[Exit]) : Boolean = {
+    exits match {
+      case Nil => false
+      case List(a,b,c) => a.to.get.zoneName == c.to.get.zoneName
+      case x :: xs => ddEnd(xs)
+    }
+  }
+
   def save(zonePaths: ZonePaths) = {
     val pathsToSave: List[List[Exit]] = zonePaths.paths.map(_.exits)
     Store.save(savePath,pathsToSave)
+  }
+
+  def main(args: Array[String]) : Unit = {
+
+
+
+    Room.load
+    Zone.load
+    val zp = ZonePaths.construct(Room.allRooms)
   }
 }
 
@@ -404,23 +476,4 @@ class ZonePaths(val paths: List[Path]) {
 
 
   def paths(start: String,end: String) : List[Path] = map.getOrElse((start,end),Nil)
-}
-
-object AStarTester {
-  def main(args: Array[String]) = {
-    Room.load
-
-    val start = Room(12664).get
-    val end = Room(12071).get
-
-    val pather = new AStarPather(start,(s:Room,e:Room)=>{
-      math.abs(s.coords.x - e.coords.x) + math.abs(s.coords.y - e.coords.y)
-    })
-
-    val time = System.currentTimeMillis()
-    val op = pather.to(end)
-    val diff = System.currentTimeMillis() - time
-    op.foreach(_.exits.foreach(println))
-    println(s"diff==$diff")
-  }
 }

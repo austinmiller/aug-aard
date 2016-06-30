@@ -6,6 +6,7 @@ import java.util.regex.Matcher
 import aard.db.Store
 import aard.script.GmcpRoom
 import aug.script.{Alias, Game, Trigger}
+import aard.script.Shortcuts._
 import aug.util.JsonUtil
 import com.google.common.cache.{CacheBuilder, CacheLoader, LoadingCache}
 
@@ -69,7 +70,7 @@ object Room {
 
   def apply(id: Long) = rooms.get(id)
 
-  val patherCache: LoadingCache[Room, Pather] = CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader[Room,Pather]() {
+  val patherCache: LoadingCache[Room, Pather] = CacheBuilder.newBuilder().maximumSize(100).build(new CacheLoader[Room,Pather]() {
     override def load(key: Room): Pather = new Pather(key,zoneRooms(key.zoneName).toSet)
   })
 
@@ -99,7 +100,13 @@ object Room {
   def deleteMazeExits(): Unit = {
     zoneRooms().foreach {r=>
       if(r.hasMazeExits) {
-        addRoom(r.deleteMazeExits())
+        info(s"deleting exits for <${r.id}>")
+        val nr = r.deleteMazeExits()
+        if(current.map(_.id == r.id).getOrElse(false)) {
+          current = Some(nr)
+          Game.send("l")
+        }
+        addRoom(nr)
       }
     }
     patherCache.invalidateAll()
@@ -171,6 +178,8 @@ object Room {
 
   def printRList(begin: Int = 0, end: Int = 20) = rlist map (_.print(begin,end))
 
+  def allRooms = rooms.values.toList
+
   def addRoom(room: Room) : Unit = synchronized {
 
     if(room.id < 0) {
@@ -189,6 +198,7 @@ object Room {
 
     Zone.register(room.zoneName)
     Store.save(s"$path/$zn.zone",roomsToSave)
+    Path.dirty
   }
 
   def saveAll = {
@@ -271,9 +281,20 @@ object Room {
     Alias.alias("r zls", (m: Matcher) => aliasZoneLinks)
     Alias.alias("r zones", (m: Matcher) => aliasZones)
     Alias.alias("r find (.*)", (m: Matcher) => aliasFind(m.group(1)))
+    Alias.alias("r here (.*)", (m: Matcher) => aliasFindHere(m.group(1)))
     Alias.alias("r save all", m=> saveAll)
     Alias.alias("r nopath (.*)", m=> aliasNoPath(m.group(1)))
     Alias.alias("r hidden (w|n|e|s|u|d) (.*)",m=>aliasHiddenExit(m.group(1),m.group(2)))
+    Alias.alias("r recompile",m=>Path.dirty)
+
+    Alias.alias("rand",m=>{
+      forRoom() { r=>
+        rand(r.exits.values.toList) match {
+          case None => info("The current room has no exits!")
+          case Some(e) => Game.send(e.name)
+        }
+      }
+    })
 
     Alias.alias("cache clear",m=> clearCaches())
 
@@ -314,6 +335,25 @@ object Room {
       runTo(Path.recall)
       Game.send(s"rt ${m.group(1)}")
       Game.send("where") // collect zone name, otherwise why are we using rt?
+    })
+
+    Alias.alias("knoss",m=>{
+      List(
+        "buy silver",
+        "unkeep silver",
+        "run s2es",
+        "buy steak",
+        "unkeep steak",
+        "run n2wswn",
+        "enter shack",
+        "give steak hobo",
+        "run esen2en2w",
+        "enter crack",
+        "give silver ratling",
+        "run 2e4nwn",
+        "give identification guard",
+        "give pass guard"
+      ).foreach(Game.send)
     })
 
     roomsByName ++= rooms.values.groupBy(_.name)
@@ -437,6 +477,17 @@ object Room {
   def aliasFind(sub: String) = synchronized {
     rlist = Some(RList(rooms.values.filter(_.name.toLowerCase.contains(sub)).toArray))
     rlist map (_.print())
+  }
+
+  def aliasFindHere(sub: String) = synchronized {
+    forRoom() { cur=>
+
+      rlist = Some(RList(rooms.values.filter{room=>
+        room.name.toLowerCase.contains(sub) && room.zoneName == cur.zoneName
+      }.toArray))
+      rlist map (_.print())
+    }
+
   }
 
   def aliasGotoZone(zoneName: String): Unit = {
